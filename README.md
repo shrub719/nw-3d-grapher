@@ -1,4 +1,5 @@
 # NumWorks 3D Grapher
+> [Documentation](https://github.com/shrub719/3d-grapher-docs)
 
 3D Grapher app for NumWorks Epsilon.  
 
