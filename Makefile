@@ -80,7 +80,7 @@ $(BUILD_DIR)/icon.o: icon.png
 
 .PRECIOUS: $(BUILD_DIR)
 $(BUILD_DIR):
-	$(Q) mkdir -p $@
+	$(Q) mkdir -p $@/src
 
 .PHONY: clean
 clean:
