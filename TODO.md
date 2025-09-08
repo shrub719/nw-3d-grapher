@@ -15,7 +15,7 @@
     - Frustum?? How does foreshortening stuff work
 
 ## To do
-- [ ] File structure
+- [x] File structure
 - [ ] Rasterise dummy camera space mesh
 - [ ] Transform dummy object space mesh to camera space
 - [ ] Transform dummy domain space mesh to camera space
