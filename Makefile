@@ -13,6 +13,14 @@ endef
 
 src = main.cpp \
 	  icon.png
+src = $(addprefix src/,\
+	main.cpp \
+	menu.cpp \
+	pompeiu.cpp \
+	graph_gen.cpp \
+	renderer.cpp \
+	graph_display.cpp \
+)
 
 CPPFLAGS = -std=c++11 -fno-exceptions
 CPPFLAGS += -Os -Wall
