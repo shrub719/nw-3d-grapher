@@ -1,4 +1,3 @@
-Q ?= @
 CC = arm-none-eabi-gcc
 CXX = arm-none-eabi-g++
 BUILD_DIR = target
@@ -11,8 +10,6 @@ define object_for
 $(addprefix $(BUILD_DIR)/,$(addsuffix .o,$(basename $(1))))
 endef
 
-src = main.cpp \
-	  icon.png
 src = $(addprefix src/,\
 	main.cpp \
 	menu.cpp \
@@ -24,7 +21,7 @@ src = $(addprefix src/,\
 
 CPPFLAGS = -std=c++11 -fno-exceptions
 CPPFLAGS += -Os -Wall
-CPPFLAGS += $(shell $(NWLINK) eadk-cflags-device)
+CPPFLAGS += $(shell $(NWLINK) eadk-cflags-device)  # what does this do?
 CFLAGS = -std=c99
 CFLAGS += $(shell $(NWLINK) eadk-cflags-device)
 CFLAGS += -Os -Wall
@@ -55,34 +52,34 @@ build: $(BUILD_DIR)/$(NAME).bin
 
 .PHONY: run
 run: $(BUILD_DIR)/$(NAME).nwa
-	@echo "INSTALL $<"
-	$(Q) $(NWLINK) install-nwa $<
+	@ echo "INSTALL $<"
+	@ $(NWLINK) install-nwa $<
 
 $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.nwa
-	@echo "BIN     $@"
-	$(Q) $(NWLINK) nwa-bin $< $@
+	@ echo "BIN     $@"
+	@ $(NWLINK) nwa-bin $< $@
 
 $(BUILD_DIR)/$(NAME).nwa: $(call object_for,$(src)) $(BUILD_DIR)/icon.o
-	@echo "LD      $@"
-	$(Q) $(CC) $(CPPFLAGS) $(LDFLAGS) $^ -o $@
+	@ echo "LD      $@"
+	@ $(CC) $(CPPFLAGS) $(LDFLAGS) $^ -o $@
 
 $(addprefix $(BUILD_DIR)/,%.o): %.c | $(BUILD_DIR)
-	@echo "C       $^"
-	$(Q) $(CC) $(CFLAGS)$(SFLAGS) -c $^ -o $@
+	@ echo "C       $^"
+	@ $(CC) $(CFLAGS)$(SFLAGS) -c $^ -o $@
 
 $(addprefix $(BUILD_DIR)/,%.o): %.cpp | $(BUILD_DIR)
-	@echo "CXX     $^"
-	$(Q) $(CXX) $(CPPFLAGS) $(SFLAGS) -c $^ -o $@
+	@ echo "CXX     $^"
+	@ $(CXX) $(CPPFLAGS) $(SFLAGS) -c $^ -o $@
 
 $(BUILD_DIR)/icon.o: assets/icon.png
-	@echo "ICON    $<"
-	$(Q) $(NWLINK) png-icon-o $< $@
+	@ echo "ICON    $<"
+	@ $(NWLINK) png-icon-o $< $@
 
 .PRECIOUS: $(BUILD_DIR)
 $(BUILD_DIR):
-	$(Q) mkdir -p $@/src
+	@ mkdir -p $@/src
 
 .PHONY: clean
 clean:
-	@echo "CLEAN"
-	$(Q) rm -rf $(BUILD_DIR)
+	@ echo "CLEAN"
+	@ rm -rf $(BUILD_DIR)
