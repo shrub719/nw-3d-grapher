@@ -64,6 +64,9 @@ static inline void pushRectUniform(Rect rect, Color color) {
 static inline void drawString(const char * text, Point point, bool largeFont, Color textColor, Color backgroundColor) {
   eadk_display_draw_string(text, point, largeFont, textColor, backgroundColor);
 }
+static inline void waitForVblank() {
+  eadk_display_wait_for_vblank();
+}
 
 }
 
