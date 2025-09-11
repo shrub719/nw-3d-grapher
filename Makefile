@@ -49,24 +49,6 @@ CPPFLAGS += -fvisibility=internal
 LDFLAGS += -flinker-output=nolto-rel
 endif
 
-# Simulator
-.PHONY: sim
-sim: $(BUILD_DIR)/$(NAME).bin | $(SIM_DIR)/output/release/simulator/linux/epsilon.bin 
-	@ echo "SIM      "
-	./$(SIM_DIR)/output/release/simulator/linux/epsilon.bin  --nwb $(BUILD_DIR)/$(NAME).bin
-
-$(SIM_DIR)/output/release/simulator/linux/epsilon.bin: | $(SIM_DIR)
-	@ echo "BUILD   sim"
-	@ cd $(SIM_DIR) && make PLATFORM=simulator -j 1
-
-.PHONY: clone
-clone: $(SIM_DIR)
-
-.PRECIOUS: $(SIM_DIR)
-$(SIM_DIR):
-	@ echo "CLONE   sim"
-	@ git clone https://github.com/numworks/epsilon.git epsilon_simulator -b version-20
-
 
 # NWA (from NW)
 .PHONY: build
@@ -105,3 +87,27 @@ $(BUILD_DIR):
 clean:
 	@ echo "CLEAN"
 	@ rm -rf $(BUILD_DIR)
+
+
+# Simulator
+.PHONY: sim
+sim: $(BUILD_DIR)/$(NAME).bin | $(SIM_DIR)/output/release/simulator/linux/epsilon.bin 
+	@ echo "SIM      "
+	./$(SIM_DIR)/output/release/simulator/linux/epsilon.bin  --nwb $(BUILD_DIR)/$(NAME).bin
+
+$(SIM_DIR)/output/release/simulator/linux/epsilon.bin: | $(SIM_DIR)
+	@ echo "BUILD   sim"
+	@ cd $(SIM_DIR) && make PLATFORM=simulator -j 1
+
+.PHONY: clone
+clone: $(SIM_DIR)
+
+.PRECIOUS: $(SIM_DIR)
+$(SIM_DIR):
+	@ echo "CLONE   sim"
+	@ git clone https://github.com/numworks/epsilon.git epsilon_simulator -b version-20
+
+.PHONY: clean-sim
+clean-sim:
+	@ echo "CLEAN   sim"
+	@ rm -rf $(SIM_DIR)
