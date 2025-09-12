@@ -1,0 +1,5 @@
+[package]
+name = "nw-3d-grapher"
+version = "0.1.0"
+authors = ["shrub719"]
+edition = "2018"
