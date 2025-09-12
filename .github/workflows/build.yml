@@ -1,9 +1,15 @@
 name: Build
 on: 
   pull_request:
-    paths: src/**
+    paths: 
+      - 'src/**'
+      - '.github/workflows/*'
+      - 'Makefile'
   push:
-    paths: src/**
+    paths: 
+      - 'src/**'
+      - '.github/workflows/*'
+      - 'Makefile'
 
 jobs:
   build:
