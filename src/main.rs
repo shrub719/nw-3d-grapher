@@ -28,7 +28,9 @@ fn random_coordinate() -> u16 {
 
 #[no_mangle]
 pub fn main() -> isize {
-    for _ in 0..100 {
+    let mut big_array: [f32; 400] = [0.0; 400];
+    for i in 0..100 {
+        big_array[i] = 1.0;
         let c = eadk::Color { rgb565: random_u16() };
         let r = eadk::Rect { x: random_coordinate(), y: random_coordinate(), width: random_coordinate(), height: random_coordinate() };
         eadk::display::push_rect_uniform(r, c);
