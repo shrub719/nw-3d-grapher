@@ -93,11 +93,12 @@ clean:
 .PHONY: sim
 sim: $(BUILD_DIR)/$(NAME).bin | $(SIM_DIR)/output/release/simulator/linux/epsilon.bin 
 	@ echo "SIM      "
-	./$(SIM_DIR)/output/release/simulator/linux/epsilon.bin  --nwb $(BUILD_DIR)/$(NAME).bin
+	./$(SIM_DIR)/output/release/simulator/linux/epsilon.bin --nwb $(BUILD_DIR)/$(NAME).bin
 
 $(SIM_DIR)/output/release/simulator/linux/epsilon.bin: | $(SIM_DIR)
 	@ echo "BUILD   sim"
 	@ cd $(SIM_DIR) && make PLATFORM=simulator -j 1
+# multiple jobs??
 
 .PHONY: clone
 clone: $(SIM_DIR)
