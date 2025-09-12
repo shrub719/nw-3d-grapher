@@ -1,8 +1,18 @@
+cargo-features = ["profile-rustflags"]
 [package]
 name = "nw-3d-grapher"
 version = "0.1.0"
 authors = ["shrub719"]
 edition = "2018"
+
+[[bin]]
+name = "NW3DGrapher"
+path = "src/main.rs"
+
+[lib]
+name = "nw_3d_grapher_sim"
+path = "src/main.rs"
+crate-type = ["cdylib"]
 
 [profile.dev]
 panic="abort"
