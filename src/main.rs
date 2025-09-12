@@ -16,7 +16,7 @@ pub static EADK_APP_API_LEVEL: u32 = 0;
 #[used]
 #[cfg(target_os = "none")]
 #[link_section = ".rodata.eadk_app_icon"]
-pub static EADK_APP_ICON: [u8; 4250] = *include_bytes!("../target/icon.nwi");
+pub static EADK_APP_ICON: [u8; 2769] = *include_bytes!("../target/icon.nwi");
 
 fn random_u16() -> u16 {
     return eadk::random() as u16;
