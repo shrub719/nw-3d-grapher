@@ -21,12 +21,18 @@ jobs:
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: nightly    
           target: thumbv7em-none-eabihf
+
+      - name: Install just
+        uses: extractions/setup-just@v3
         
-      - name: Build
-        run: make
+      - name: Build app
+        run: just build
+
       - name: Upload build artifacts
-        uses: actions-rs/cargo@v1
+        uses: actions/upload-artifact@v4
         with:
-          command: build
+          name: nw-3d-grapher
+          path: target/**/NW3DGrapher
+        
