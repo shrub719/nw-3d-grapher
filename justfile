@@ -1,13 +1,13 @@
 current_target := "x86_64-unknown-linux-gnu" # TODO: get target
 
 build:
-    cargo build --release --bin NW3DGrapher --target=thumbv7em-none-eabihf
+    cargo build --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
 send:
-    cargo run --release --bin NW3DGrapher --target=thumbv7em-none-eabihf
+    cargo run --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
 dev:
-    cargo build --bin NW3DGrapher --target=thumbv7em-none-eabihf
+    cargo build --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
 build_sim:
     cargo build --release --lib --target={{current_target}}

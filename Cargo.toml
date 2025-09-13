@@ -1,12 +1,12 @@
 cargo-features = ["profile-rustflags"]
 [package]
-name = "nw-3d-grapher"
+name = "nw_3d_grapher"
 version = "0.1.0"
 authors = ["shrub719"]
 edition = "2018"
 
 [[bin]]
-name = "NW3DGrapher"
+name = "nw_3d_grapher"
 path = "src/main.rs"
 
 [lib]
