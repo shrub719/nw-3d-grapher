@@ -3,6 +3,14 @@
 pub struct Color {
     pub rgb565: u16
 }
+impl Color{
+    #[inline]
+    pub const fn from_rgb(r: u16, g: u16, b: u16) -> Self {
+        Color {
+            rgb565: r << 11 | g << 5 | b,
+        }
+    }
+}
 
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -459,6 +467,17 @@ fn panic(panic: &PanicInfo<'_>) -> ! {
     loop {
         
     } // FIXME: Do something better. Exit the app maybe?
+}
+
+pub fn debug_info(text: &str, wait: usize) {
+    display::draw_string(
+        text,
+        Point { x: 10, y: 30 },
+        false,
+        Color::from_rgb(0, 0, 0),
+        Color::from_rgb(255, 255, 255),
+    );
+    timing::msleep(wait as u32);
 }
 
 unsafe extern "C" {
