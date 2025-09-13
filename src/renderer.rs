@@ -1,7 +1,7 @@
 use crate::{ mat::*, eadk::* };
 
 pub type Triangle2<T> = [Point2<T>; 3];
-pub type Triangle3<T> = [Poin3<T>; 3];
+pub type Triangle3<T> = [Point3<T>; 3];
 
 pub fn fill_triangle(
     v1: Point2<u16>,

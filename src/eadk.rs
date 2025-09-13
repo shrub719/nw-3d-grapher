@@ -99,5 +99,14 @@ use core::panic::PanicInfo;
 
 #[panic_handler]
 fn panic(_panic: &PanicInfo<'_>) -> ! {
-    loop {} // FIXME: Do something better. Exit the app maybe?
+    display::push_rect_uniform(
+        Rect {
+            x: 0,
+            y: 0,
+            width: 320,
+            height: 240
+        },
+        Color { rgb565: 63488 }
+    );
+    loop {}
 }

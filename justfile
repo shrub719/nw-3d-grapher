@@ -6,6 +6,9 @@ build:
 send:
     cargo run --release --bin NW3DGrapher --target=thumbv7em-none-eabihf
 
+dev:
+    cargo build --bin NW3DGrapher --target=thumbv7em-none-eabihf
+
 build_sim:
     cargo build --release --lib --target={{current_target}}
 

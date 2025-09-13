@@ -39,8 +39,11 @@ pub fn main() -> isize {
     let mut big_array: [f32; 400] = [0.0; 400];
     for i in 0..100 {
         big_array[i] = 1.0;
-        renderer::fill_triangle(random_point(), random_point(), random_point());
+        let v1 = random_point();
+        let v2 = Point2::<u16> { x: v1.x+20, y: v1.y+20};
+        let v3 = v2.clone();
+        renderer::fill_triangle(v1, v2, v3);
     }
-    eadk::timing::msleep(5000);
+    eadk::timing::msleep(2000);
     0
 }
