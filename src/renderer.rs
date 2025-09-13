@@ -11,6 +11,7 @@ pub struct FrameBuffer {
     buffer: [Color; (FB_WIDTH * FB_HEIGHT) as usize]
 }
 impl FrameBuffer {
+    // frame buffer split into several tiles each frame to accommodate for small memory
     pub fn new(tile_row: u16, tile_column: u16) -> Self {
         Self { 
             tile_row,
@@ -62,17 +63,6 @@ fn random_point() -> Point2<u16> {
 
 
 pub fn draw_screen() {
-    // let mut tris: [Triangle2::<u16>; 4] = [
-    //     [
-    //         Point2 { x: 0, y: 0 }; 3
-    //     ]; 4
-    // ];
-    // for i in 0..4 {
-    //     let v1 = random_point();
-    //     let v2 = random_point();
-    //     let v3 = random_point();
-    //     tris[i] = [v1, v2, v3];
-    // }
     let mut tris: [Triangle2::<u16>; 4] = [
         [random_point(), random_point(), random_point()],
         [random_point(), random_point(), random_point()],
@@ -82,6 +72,7 @@ pub fn draw_screen() {
 
     // debug_info(&format!("{:?}", tris), 1000);
 
+    // loops through tiles on the screen, rendering each tile separately
     for row in 0..FB_TILE {
         for column in 0.. FB_TILE {
             let mut frame_buffer = FrameBuffer::new(row, column);
@@ -95,30 +86,30 @@ pub fn draw_screen() {
 }
 
 fn fill_triangle(tri: Triangle2<u16>, color: Color, frame_buffer: &mut FrameBuffer) {
-    // for i in 0..FB_WIDTH*FB_HEIGHT {
-    //     let b = ((i % FB_WIDTH) as f32 / FB_WIDTH as f32 * 255.0) as u16;
-    //     let g = ((i / FB_WIDTH) as f32 / FB_HEIGHT as f32 * 255.0) as u16;
-    //     frame_buffer.buffer[i] = Color::from_rgb(0, g, b);
-    // }
+    // TODO: triangle culling/splitting on frame buffer edges
+    // TODO: fix some triangles appearing only as their vertices
     let [mut v0, mut v1, mut v2] = tri;
     
+    // sort in ascending order of y value
     use core::mem::swap;
     if v0.y > v1.y { swap(&mut v0, &mut v1) }
     if v0.y > v2.y { swap(&mut v0, &mut v2) }
     if v1.y > v2.y { swap(&mut v1, &mut v2) }
 
-//     debug_info(&format!(r#"
-// {} {}
-// {} {}
-// {} {}
-//         "#, v0.x, v0.y, v1.x, v1.y, v2.x, v2.y), 1000);
+    // debug_info(&format!(r#"
+    // {} {}
+    // {} {}
+    // {} {}
+    // "#, v0.x, v0.y, v1.x, v1.y, v2.x, v2.y), 1000);
 
+    // account for bottom/top edge cases
     if v1.y == v2.y {
         fill_bottom_flat_tri([v0, v1, v2], color, frame_buffer);
     }
     else if v0.y == v1.y {
         fill_top_flat_tri([v0, v1, v2], color, frame_buffer);
     }
+    // split triangle into flat bottom/top
     else {
         let mut v3 = Point2::new(
             interpolate_coord(v0.x, v2.x, v0.y, v2.y, v1.y), 
