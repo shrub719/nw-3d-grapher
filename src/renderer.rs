@@ -74,11 +74,10 @@ pub fn draw_screen() {
     //     tris[i] = [v1, v2, v3];
     // }
     let mut tris: [Triangle2::<u16>; 4] = [
-        [
-            random_point(),
-            random_point(),
-            random_point()
-        ]; 4
+        [random_point(), random_point(), random_point()],
+        [random_point(), random_point(), random_point()],
+        [random_point(), random_point(), random_point()],
+        [random_point(), random_point(), random_point()]
     ];
 
     // debug_info(&format!("{:?}", tris), 1000);

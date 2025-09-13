@@ -51,8 +51,14 @@ pub fn main() -> isize {
         unsafe { HEAP.init(eadk::HEAP_START as usize, heap_size) }
     }
 
-    for _ in 0..50 {
+    let mut keyboard_state: eadk::input::KeyboardState = eadk::input::KeyboardState::scan();
+    while !keyboard_state.key_down(eadk::input::Key::Back) {
         renderer::draw_screen();
+        keyboard_state = eadk::input::KeyboardState::scan();
+        while !keyboard_state.key_down(eadk::input::Key::Ok) {
+            keyboard_state = eadk::input::KeyboardState::scan();
+            eadk::timing::msleep(50);
+        }
     }
-    loop {}
+    0
 }
