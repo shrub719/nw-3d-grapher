@@ -1,7 +1,11 @@
 #![no_std]
 #![no_main]
+#![allow(unused)]
 
 pub mod eadk;
+mod renderer;
+mod mat;
+use crate::mat::*;
 
 #[used]
 #[cfg(target_os = "none")]
@@ -22,6 +26,10 @@ fn random_u16() -> u16 {
     return eadk::random() as u16;
 }
 
+fn random_point() -> Point2<u16> {
+    return Point2 { x: random_u16(), y: random_u16() };
+}
+
 fn random_coordinate() -> u16 {
     return (eadk::random() % 0xFF) as u16;
 }
@@ -31,10 +39,7 @@ pub fn main() -> isize {
     let mut big_array: [f32; 400] = [0.0; 400];
     for i in 0..100 {
         big_array[i] = 1.0;
-        let c = eadk::Color { rgb565: random_u16() };
-        let r = eadk::Rect { x: random_coordinate(), y: random_coordinate(), width: random_coordinate(), height: random_coordinate() };
-        eadk::display::push_rect_uniform(r, c);
-        eadk::display::wait_for_vblank();
+        renderer::fill_triangle(random_point(), random_point(), random_point());
     }
     eadk::timing::msleep(5000);
     0
