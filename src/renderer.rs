@@ -29,6 +29,13 @@ impl FrameBuffer {
             &self.buffer
         );
     }
+
+    pub fn set_pixel(&mut self, mut x: usize, mut y: usize, color: Color) {
+        x -= self.tile_column * FB_WIDTH;
+        y -= self.tile_row * FB_HEIGHT;
+        let index = y * FB_WIDTH + x;
+        self.buffer[index] = color;
+    }
 }
 
 fn random_u16() -> u16 {
@@ -66,10 +73,7 @@ pub fn draw_screen(fill: usize) {
 pub fn draw_triangle(tri: Triangle2<u16>, frame_buffer: &mut FrameBuffer, fill: usize) {
     let [v1, v2, v3] = tri;
     
-    let length = FB_WIDTH * FB_HEIGHT;
-    for i in 0..length {
-        if fill < i {
-            frame_buffer.buffer[i] = Color{ rgb565: 0xF00 };
-        }
-    }
+    let x = frame_buffer.tile_column * FB_WIDTH + 20;
+    let y = frame_buffer.tile_row * FB_HEIGHT + 20;
+    frame_buffer.set_pixel(x, y, Color::from_rgb(255, 255, 255));
 }
