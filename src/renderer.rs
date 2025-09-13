@@ -76,10 +76,24 @@ fn random_point() -> Point {
 
 
 pub fn draw_screen() {
-    let mut tris: [Triangle; TEST_N] = [Triangle {
-            vertices: [random_point(), random_point(), random_point()],
-            color: Color::from_rgb(0, 255, 255)
-        }; TEST_N];
+    // let mut tris: [Triangle; TEST_N] = [Triangle {
+    //         vertices: [random_point(), random_point(), random_point()],
+    //         color: Color::from_rgb(0, 255, 255)
+    //     }; TEST_N
+    // ];
+
+    let mut tris: [Triangle; 2] = [
+        Triangle { vertices: [
+            Point::new(0, 0),
+            Point::new(0, 240),
+            Point::new(320, 240)
+        ], color: Color::from_rgb(random_coordinate(), 255, 255) },
+        Triangle { vertices: [
+            Point::new(0, 0),
+            Point::new(320, 0),
+            Point::new(320, 240)
+        ], color: Color::from_rgb(255, random_coordinate(), 255) }
+    ];
 
     // debug_info(&format!("{:?}", tris), 1000);
 

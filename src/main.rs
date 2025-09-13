@@ -55,7 +55,7 @@ pub fn main() -> isize {
     while !keyboard_state.key_down(eadk::input::Key::Back) {
         renderer::draw_screen();
         keyboard_state = eadk::input::KeyboardState::scan();
-        while !keyboard_state.key_down(eadk::input::Key::Ok) {
+        while !(keyboard_state.key_down(eadk::input::Key::Ok) || keyboard_state.key_down(eadk::input::Key::Back)) {
             keyboard_state = eadk::input::KeyboardState::scan();
             eadk::timing::msleep(50);
         }
