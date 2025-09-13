@@ -50,13 +50,8 @@ pub fn main() -> isize {
         let heap_size: usize = heap_size();
         unsafe { HEAP.init(eadk::HEAP_START as usize, heap_size) }
     }
-    
-    for i in 0..20 {
-        renderer::draw_screen(i * 500);
-        if i == 10 {
-            eadk::debug_info("10", 1000);
-        }
-    }    
-    eadk::timing::msleep(2000);
-    0
+
+    renderer::draw_screen();
+    eadk::timing::msleep(500);
+    loop {}
 }

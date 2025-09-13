@@ -46,7 +46,7 @@ fn random_point() -> Point2<u16> {
     return Point2 { x: random_u16(), y: random_u16() };
 }
 
-pub fn draw_screen(fill: usize) {
+pub fn draw_screen() {
     let mut tris: [Triangle2::<u16>; 4] = [
         [
             Point2 { x: 0, y: 0 }; 3
@@ -63,17 +63,23 @@ pub fn draw_screen(fill: usize) {
         for column in 0.. FB_TILE {
             let mut frame_buffer = FrameBuffer::new(row, column);
             for tri in tris {
-                draw_triangle(tri, &mut frame_buffer, fill);
+                draw_triangle(tri, &mut frame_buffer);
             }
             frame_buffer.push();
         }
     }
 }
 
-pub fn draw_triangle(tri: Triangle2<u16>, frame_buffer: &mut FrameBuffer, fill: usize) {
-    let [v1, v2, v3] = tri;
+pub fn draw_triangle(tri: Triangle2<u16>, frame_buffer: &mut FrameBuffer) {
+    // let [mut v0, mut v1, mut v2] = tri;
     
-    let x = frame_buffer.tile_column * FB_WIDTH + 20;
-    let y = frame_buffer.tile_row * FB_HEIGHT + 20;
-    frame_buffer.set_pixel(x, y, Color::from_rgb(255, 255, 255));
+    // use core::mem::swap;
+    // if v0.y > v1.y { swap(&mut v0, &mut v1) }
+    // if v0.y > v2.y { swap(&mut v0, &mut v2) }
+    // if v1.y > v2.y { swap(&mut v1, &mut v2) }
+    for i in 0..FB_WIDTH*FB_HEIGHT {
+        let b = ((i % FB_WIDTH) as f32 / FB_WIDTH as f32 * 255.0) as u16;
+        let g = ((i / FB_WIDTH) as f32 / FB_HEIGHT as f32 * 255.0) as u16;
+        frame_buffer.buffer[i] = Color::from_rgb(0, g, b);
+    }
 }

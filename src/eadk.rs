@@ -7,7 +7,7 @@ impl Color{
     #[inline]
     pub const fn from_rgb(r: u16, g: u16, b: u16) -> Self {
         Color {
-            rgb565: r << 11 | g << 5 | b,
+            rgb565: ((r & 0b11111000) << 8) | ((g & 0b11111100) << 3) | (b >> 3),
         }
     }
 }
