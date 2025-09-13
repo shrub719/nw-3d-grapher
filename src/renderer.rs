@@ -108,16 +108,12 @@ fn fill_triangle(tri: Triangle2<u16>, color: Color, frame_buffer: &mut FrameBuff
     }
     else {
         let mut v3 = Point2::new(
-            (v0.x as f32 + (
-                (
-                    (v1.y as f32 - v0.y as f32) / (v2.y as f32 - v0.y as f32)
-                ) * (v2.x as f32 - v0.x as f32)
-            )) as u16, 
+            interpolate_coord(v0.x, v2.x, v0.y, v2.y, v1.y), 
             v1.y
         );
         debug_info(&format!("{} {}", v3.x, v3.y), 1000);
-        fill_bottom_flat_tri([v0, v1, v3], color, frame_buffer);
-        fill_top_flat_tri([v1, v3, v2], color, frame_buffer);
+        fill_triangle([v0, v1, v3], color, frame_buffer);
+        fill_triangle([v1, v3, v2], color, frame_buffer);
     }
 }
 
@@ -131,7 +127,7 @@ fn fill_bottom_flat_tri(tri: Triangle2<u16>, color: Color, frame_buffer: &mut Fr
     let mut cur_x2 = v0.x as f32;
     
     for cur_y in v0.y..=v1.y {
-        draw_line(cur_x1 as u16, cur_y, cur_x2 as u16, cur_y, color, frame_buffer);
+        draw_scanline(cur_x1 as u16, cur_y, cur_x2 as u16, cur_y, color, frame_buffer);
         cur_x1 += inv_m1;
         cur_x2 += inv_m2;
     }
@@ -147,13 +143,21 @@ fn fill_top_flat_tri(tri: Triangle2<u16>, color: Color, frame_buffer: &mut Frame
     let mut cur_x2 = v2.x as f32;
     
     for cur_y in (v0.y..=v2.y).rev() {
-        draw_line(cur_x1 as u16, cur_y, cur_x2 as u16, cur_y, color, frame_buffer);
+        draw_scanline(cur_x1 as u16, cur_y, cur_x2 as u16, cur_y, color, frame_buffer);
         cur_x1 -= inv_m1;
         cur_x2 -= inv_m2;
     }
 }
 
-fn draw_line(x1: u16, y1: u16, x2: u16, y2: u16, color: Color, frame_buffer: &mut FrameBuffer) {
+fn interpolate_coord(x0: u16, x1: u16, y0: u16, y1: u16, y_interpolate: u16) -> u16 {
+        (x0 as f32 + (
+            (
+                (y_interpolate as f32 - y0 as f32) / (y1 as f32 - y0 as f32)
+            ) * (x1 as f32 - x0 as f32)
+        )) as u16
+}
+
+fn draw_scanline(x1: u16, y1: u16, x2: u16, y2: u16, color: Color, frame_buffer: &mut FrameBuffer) {
     for x in x1..=x2 {
         frame_buffer.set_pixel(x as usize, y1 as usize, color);
     }
