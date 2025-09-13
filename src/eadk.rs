@@ -11,6 +11,12 @@ pub struct Rect {
     pub height: u16
 }
 
+#[repr(C)]
+pub struct Point {
+    pub x: u16,
+    pub y: u16,
+}
+
 pub mod backlight {
     pub fn set_brightness(brightness: u8) {
         unsafe {
@@ -33,6 +39,15 @@ pub mod backlight {
 pub mod display {
     use super::Rect;
     use super::Color;
+    use super::Point;
+
+    #[cfg(target_os = "none")]
+    use alloc::ffi::CString;
+
+    #[cfg(not(target_os = "none"))]
+    use std::ffi::CString;
+
+    use core::ffi::c_char;
 
     pub fn push_rect(rect: Rect, pixels: &[Color]) {
         unsafe {
@@ -52,10 +67,37 @@ pub mod display {
         }
     }
 
+    pub fn draw_string(
+        text: &str,
+        point: Point,
+        large_font: bool,
+        text_color: Color,
+        background_color: Color,
+    ) {
+        let c_string =
+            CString::new(text).expect("Can't convert str to C_String. Maybe invalid caracter.");
+        unsafe {
+            eadk_display_draw_string(
+                c_string.as_ptr(),
+                point,
+                large_font,
+                text_color,
+                background_color,
+            )
+        }
+    }
+
     extern "C" {
         fn eadk_display_push_rect_uniform(rect: Rect, color: Color);
         fn eadk_display_push_rect(rect: Rect, color: *const Color);
         fn eadk_display_wait_for_vblank();
+        fn eadk_display_draw_string(
+            text: *const c_char,
+            point: Point,
+            large_font: bool,
+            text_color: Color,
+            background_color: Color,
+        );
     }
 }
 
@@ -95,20 +137,56 @@ extern "C" {
     fn eadk_random() -> u32;
 }
 
+#[cfg(target_os = "none")]
 use core::panic::PanicInfo;
 
+#[cfg(target_os = "none")]
+use alloc::string::String;
+
+fn write_wrapped(text: &str, limit: usize) {
+    let mut line_count = 0;
+
+    let mut line = String::new();
+    for i in 0..text.len() {
+        line.push(text.as_bytes()[i] as char);
+
+        if line.len() >= limit || text.as_bytes()[i] as char == '\n' || i >= text.len() - 1 {
+            display::draw_string(
+                line.as_str(),
+                Point {
+                    x: 10,
+                    y: (10 + 20 * line_count) as u16,
+                },
+                false,
+                Color { rgb565: 65503 },
+                Color { rgb565: 63488 },
+            );
+            line.clear();
+            line_count += 1;
+        }
+    }
+}
+
+#[cfg(target_os = "none")]
 #[panic_handler]
-fn panic(_panic: &PanicInfo<'_>) -> ! {
+fn panic(panic: &PanicInfo<'_>) -> ! {
+    use alloc::format;
+
     display::push_rect_uniform(
         Rect {
             x: 0,
             y: 0,
             width: 320,
-            height: 240
+            height: 240,
         },
-        Color { rgb565: 63488 }
-    );
-    loop {}
+        Color { rgb565: 63488 },
+    ); // Show a red screen
+
+    write_wrapped(format!("{}", panic).as_str(), 42);
+
+    loop {
+        
+    } // FIXME: Do something better. Exit the app maybe?
 }
 
 unsafe extern "C" {
