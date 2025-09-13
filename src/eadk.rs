@@ -470,13 +470,7 @@ fn panic(panic: &PanicInfo<'_>) -> ! {
 }
 
 pub fn debug_info(text: &str, wait: usize) {
-    display::draw_string(
-        text,
-        Point { x: 10, y: 30 },
-        false,
-        Color::from_rgb(0, 0, 0),
-        Color::from_rgb(255, 255, 255),
-    );
+    write_wrapped(text, 42);
     timing::msleep(wait as u32);
 }
 

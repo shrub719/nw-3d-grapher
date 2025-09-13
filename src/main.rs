@@ -51,7 +51,8 @@ pub fn main() -> isize {
         unsafe { HEAP.init(eadk::HEAP_START as usize, heap_size) }
     }
 
-    renderer::draw_screen();
-    eadk::timing::msleep(500);
+    for _ in 0..50 {
+        renderer::draw_screen();
+    }
     loop {}
 }

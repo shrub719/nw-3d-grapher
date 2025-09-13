@@ -1,7 +1,7 @@
 pub type Matrix3 = [[f32; 3]; 3];
 pub type Matrix4 = [[f32; 4]; 4];
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub struct Point2<T> {
     pub x: T,
     pub y: T,
