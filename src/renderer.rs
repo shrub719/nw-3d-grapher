@@ -1,17 +1,30 @@
-use crate::{ mat::*, eadk::* };
-use crate::{ config::* };
+use crate::{ eadk::*, config::* };
 use alloc::format;
 
-pub type Triangle2<T> = [Point2<T>; 3];
-pub type Triangle3<T> = [Point3<T>; 3];
+#[derive(Clone, Copy, Debug)]
+pub struct Point {
+    pub x: u16,
+    pub y: u16
+}
+impl Point {
+    pub fn new(x: u16, y: u16) -> Self {
+        Self { x, y }
+    }
+}
 
+#[derive(Clone, Copy)]
+pub struct Triangle {
+    vertices: [Point; 3],
+    color: Color
+}
+
+// frame buffer split into several tiles each frame to accommodate for small memory
 pub struct FrameBuffer {
     tile_row: u16,
     tile_column: u16,
     buffer: [Color; (FB_WIDTH * FB_HEIGHT) as usize]
 }
 impl FrameBuffer {
-    // frame buffer split into several tiles each frame to accommodate for small memory
     pub fn new(tile_row: u16, tile_column: u16) -> Self {
         Self { 
             tile_row,
@@ -57,18 +70,16 @@ fn random_coordinate() -> u16 {
     return (random() % 0xFF) as u16;
 }
 
-fn random_point() -> Point2<u16> {
-    return Point2 { x: random_coordinate(), y: random_coordinate() };
+fn random_point() -> Point {
+    return Point { x: random_coordinate(), y: random_coordinate() };
 }
 
 
 pub fn draw_screen() {
-    let mut tris: [Triangle2::<u16>; 4] = [
-        [random_point(), random_point(), random_point()],
-        [random_point(), random_point(), random_point()],
-        [random_point(), random_point(), random_point()],
-        [random_point(), random_point(), random_point()]
-    ];
+    let mut tris: [Triangle; TEST_N] = [Triangle {
+            vertices: [random_point(), random_point(), random_point()],
+            color: Color::from_rgb(0, 255, 255)
+        }; TEST_N];
 
     // debug_info(&format!("{:?}", tris), 1000);
 
@@ -77,7 +88,7 @@ pub fn draw_screen() {
         for column in 0.. FB_TILE {
             let mut frame_buffer = FrameBuffer::new(row, column);
             for tri in tris {
-                fill_triangle(tri, Color::from_rgb(0, 255, 255), &mut frame_buffer);
+                fill_triangle(tri, &mut frame_buffer);
             }
             frame_buffer.push();
         }
@@ -85,10 +96,11 @@ pub fn draw_screen() {
     display::wait_for_vblank();
 }
 
-fn fill_triangle(tri: Triangle2<u16>, color: Color, frame_buffer: &mut FrameBuffer) {
+fn fill_triangle(tri: Triangle, frame_buffer: &mut FrameBuffer) {
     // TODO: triangle culling/splitting on frame buffer edges
     // TODO: fix some triangles appearing only as their vertices
-    let [mut v0, mut v1, mut v2] = tri;
+    let [mut v0, mut v1, mut v2] = tri.vertices;
+    let color = tri.color;
     
     // sort in ascending order of y value
     use core::mem::swap;
@@ -104,26 +116,24 @@ fn fill_triangle(tri: Triangle2<u16>, color: Color, frame_buffer: &mut FrameBuff
 
     // account for bottom/top edge cases
     if v1.y == v2.y {
-        fill_bottom_flat_tri([v0, v1, v2], color, frame_buffer);
+        fill_bottom_flat_tri(v0, v1, v2, color, frame_buffer);
     }
     else if v0.y == v1.y {
-        fill_top_flat_tri([v0, v1, v2], color, frame_buffer);
+        fill_top_flat_tri(v0, v1, v2, color, frame_buffer);
     }
     // split triangle into flat bottom/top
     else {
-        let mut v3 = Point2::new(
+        let mut v3 = Point::new(
             interpolate_coord(v0.x, v2.x, v0.y, v2.y, v1.y), 
             v1.y
         );
         // debug_info(&format!("{} {}", v3.x, v3.y), 1000);
-        fill_triangle([v0, v1, v3], color, frame_buffer);
-        fill_triangle([v1, v3, v2], color, frame_buffer);
+        fill_bottom_flat_tri(v0, v1, v3, color, frame_buffer);
+        fill_top_flat_tri(v1, v3, v2, color, frame_buffer);
     }
 }
 
-fn fill_bottom_flat_tri(tri: Triangle2<u16>, color: Color, frame_buffer: &mut FrameBuffer) {
-    let [v0, v1, v2] = tri;
-
+fn fill_bottom_flat_tri(v0: Point, v1: Point, v2: Point, color: Color, frame_buffer: &mut FrameBuffer) {
     let inv_m1 = (v1.x as f32 - v0.x as f32) / (v1.y as f32 - v0.y as f32);
     let inv_m2 = (v2.x as f32 - v0.x as f32) / (v2.y as f32 - v0.y as f32);
 
@@ -137,9 +147,7 @@ fn fill_bottom_flat_tri(tri: Triangle2<u16>, color: Color, frame_buffer: &mut Fr
     }
 }
 
-fn fill_top_flat_tri(tri: Triangle2<u16>, color: Color, frame_buffer: &mut FrameBuffer) {
-    let [v0, v1, v2] = tri;
-
+fn fill_top_flat_tri(v0: Point, v1: Point, v2: Point, color: Color, frame_buffer: &mut FrameBuffer) {
     let inv_m1 = (v2.x as f32 - v0.x as f32) / (v2.y as f32 - v0.y as f32);
     let inv_m2 = (v2.x as f32 - v1.x as f32) / (v2.y as f32 - v1.y as f32);
 
