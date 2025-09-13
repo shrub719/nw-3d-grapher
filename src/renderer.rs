@@ -1,4 +1,5 @@
 use crate::{ eadk::*, config::* };
+use core::ops::AddAssign;
 use alloc::format;
 
 #[derive(Clone, Copy, Debug)]
@@ -11,11 +12,24 @@ impl Point {
         Self { x, y }
     }
 }
+impl AddAssign for Point {
+    fn add_assign(&mut self, other: Self) {
+        self.x += other.x;
+        self.y += other.y;
+    }
+}
 
 #[derive(Clone, Copy)]
 pub struct Triangle {
     vertices: [Point; 3],
     color: Color
+}
+impl AddAssign<Point> for Triangle {
+    fn add_assign(&mut self, point: Point) {
+        for mut vertex in self.vertices {
+            vertex += point;
+        }
+    }
 }
 
 // frame buffer split into several tiles each frame to accommodate for small memory
@@ -45,6 +59,7 @@ impl FrameBuffer {
         );
     }
 
+    #[inline]
     pub fn set_pixel(&mut self, mut x: u16, mut y: u16, color: Color) {
         x -= self.tile_column * FB_WIDTH;
         y -= self.tile_row * FB_HEIGHT;
@@ -82,7 +97,7 @@ pub fn draw_screen() {
     //     }; TEST_N
     // ];
 
-    let mut tris: [Triangle; 2] = [
+    let mut tris: [Triangle; 4] = [
         Triangle { vertices: [
             Point::new(0, 0),
             Point::new(0, 240),
@@ -92,7 +107,17 @@ pub fn draw_screen() {
             Point::new(0, 0),
             Point::new(320, 0),
             Point::new(320, 240)
-        ], color: Color::from_rgb(255, random_coordinate(), 255) }
+        ], color: Color::from_rgb(255, random_coordinate(), 255) },
+        Triangle { vertices: [
+            Point::new(0, 0),
+            Point::new(0, 240),
+            Point::new(320, 240)
+        ], color: Color::from_rgb(random_coordinate(), 255, 255) },
+        Triangle { vertices: [
+            Point::new(0, 0),
+            Point::new(320, 0),
+            Point::new(320, 240)
+        ], color: Color::from_rgb(255, random_coordinate(), 255) },
     ];
 
     // debug_info(&format!("{:?}", tris), 1000);
