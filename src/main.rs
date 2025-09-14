@@ -43,17 +43,10 @@ use crate::renderer::*;
 #[cfg(target_os = "none")]
 use alloc::vec;
 
-fn random_u16() -> u16 {
-    return eadk::random() as u16;
-}
-
 fn random_coordinate() -> u16 {
     return (eadk::random() % 0xFF) as u16;
 }
 
-fn random_point() -> RVector2 {
-    return RVector2 { x: random_coordinate() as isize, y: random_coordinate() as isize };
-}
 
 #[no_mangle]
 pub fn main() -> isize {
@@ -66,9 +59,9 @@ pub fn main() -> isize {
     // usually this would be recalculated for every change in function/domain
     let mut mesh = Mesh {
         indices: vec![
-            Vector3::new(random_coordinate() as f32, 0.0, 50.0),
-            Vector3::new(0.4, 100.0, 5.09),
-            Vector3::new(100.0, random_coordinate() as f32, -1.0)
+            Vector3::new(random_coordinate() as f32, 0.0, 0.0),
+            Vector3::new(0.4, 100.0, 0.5),
+            Vector3::new(100.0, random_coordinate() as f32, 1.0)
         ],
         tris: vec![Triangle ([0, 1, 2]); TEST_N],
         transformed_indices: vec![]

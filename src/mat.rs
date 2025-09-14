@@ -8,7 +8,7 @@ use alloc::vec;
 pub struct Mesh {
     pub tris: Vec<Triangle>,
     pub indices: Vec<Vector3>,
-    pub transformed_indices: Vec<RVector2>
+    pub transformed_indices: Vec<RVector3>
 }
 impl Mesh {
     pub fn new() -> Self {
@@ -22,38 +22,42 @@ impl Mesh {
     pub fn transform(&mut self) {
         self.transformed_indices.clear();
         for vertex in &self.indices {
-            self.transformed_indices.push(RVector2::from_vector3(vertex));
+            self.transformed_indices.push(RVector3::from_vector3(vertex));
         }
     }
 }
 
 #[derive(Clone, Copy, Debug)]
-pub struct RVector2 {
+pub struct RVector3 {
     pub x: isize,
-    pub y: isize
+    pub y: isize,
+    pub z: f32
 }
-impl RVector2 {
-    pub fn new(x: isize, y: isize) -> Self {
-        Self { x, y }
+impl RVector3 {
+    pub fn new(x: isize, y: isize, z: f32) -> Self {
+        Self { x, y, z }
     }
 
     pub fn from_vector3 (vector3: &Vector3) -> Self {
         Self {
            x: vector3.x as isize,
-           y: vector3.y as isize 
+           y: vector3.y as isize,
+           z: vector3.z
         }
     }
 }
-impl AddAssign for RVector2 {
+impl AddAssign for RVector3 {
     fn add_assign(&mut self, other: Self) {
         self.x += other.x;
         self.y += other.y;
+        self.z += other.z;
     }
 }
-impl SubAssign for RVector2 {
+impl SubAssign for RVector3 {
     fn sub_assign(&mut self, other: Self) {
         self.x -= other.x;
         self.y -= other.y;
+        self.z -= other.z;
     }
 }
 

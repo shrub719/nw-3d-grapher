@@ -1,4 +1,4 @@
-use crate::{ eadk::*, config::*, mat::{ RVector2, Vector3, Triangle, Mesh } };
+use crate::{ eadk::*, config::*, mat::{ RVector3, Vector3, Triangle, Mesh } };
 use core::ops::{ AddAssign, SubAssign };
 #[cfg(target_os = "none")]
 use alloc::format;
@@ -11,7 +11,7 @@ use alloc::vec::Vec;
 pub struct FrameBuffer {
     row: usize,
     column: usize,
-    offset_vector: RVector2,
+    offset_vector: RVector3,
     buffer: [Color; FB_WIDTH * FB_HEIGHT]
 }
 impl FrameBuffer {
@@ -19,7 +19,7 @@ impl FrameBuffer {
         Self { 
             row: 0,
             column: 0,
-            offset_vector: RVector2::new(0, 0),
+            offset_vector: RVector3::new(0, 0, 0.0),
             buffer: [Color{ rgb565: 0x000 }; FB_WIDTH * FB_HEIGHT]
         }
     }
@@ -31,7 +31,7 @@ impl FrameBuffer {
     pub fn set_offset(&mut self, row: usize, column: usize) {
         self.row = row;
         self.column = column;
-        self.offset_vector = RVector2::new((self.column * FB_WIDTH) as isize, (self.row * FB_HEIGHT) as isize);
+        self.offset_vector = RVector3::new((self.column * FB_WIDTH) as isize, (self.row * FB_HEIGHT) as isize, 0.0);
     }
 
     pub fn set_pixel(&mut self, x: usize, y: usize, color: Color) {
@@ -82,12 +82,13 @@ pub fn draw_screen(mesh: &Mesh) {
     display::wait_for_vblank();
 }
 
-fn fill_triangle(mut v0: RVector2, mut v1: RVector2, mut v2: RVector2, frame_buffer: &mut FrameBuffer) {
+fn fill_triangle(mut v0: RVector3, mut v1: RVector3, mut v2: RVector3, frame_buffer: &mut FrameBuffer) {
     v0 -= frame_buffer.offset_vector;
     v1 -= frame_buffer.offset_vector;
     v2 -= frame_buffer.offset_vector;
 
-    let color = Color::from_rgb(random() as u16, random() as u16, random() as u16);
+    let value = (((v0.z + v1.z + v2.z) / 3.0) * 255.0) as u16;
+    let color = Color::from_rgb(0, 0, value);
 
     use core::mem::swap;
     if v0.y > v1.y { swap(&mut v0, &mut v1) }
