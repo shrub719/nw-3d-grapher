@@ -1,7 +1,11 @@
-use crate::{ eadk::*, config::*, mat::{ Vector3, Triangle3 } };
+use crate::{ eadk::*, config::*, mat::{ Vector3, Triangle3, Mesh3 } };
 use core::ops::{ AddAssign, SubAssign };
 #[cfg(target_os = "none")]
 use alloc::format;
+#[cfg(target_os = "none")]
+use alloc::vec;
+#[cfg(target_os = "none")]
+use alloc::vec::Vec;
 
 #[derive(Clone, Copy, Debug)]
 pub struct RVector2 {
@@ -38,8 +42,11 @@ pub struct RTriangle2 {
     pub color: Color
 }
 impl RTriangle2 {
-    pub fn from_triangle3 (triangle3: &Triangle3 ) -> Self {
-        let vertices = triangle3.0.map(RVector2::from_vector3);
+    pub fn from_triangle3 (triangle3: &Triangle3, indices: &Vec<Vector3> ) -> Self {
+        let mut vertices = [RVector2::new(0, 0); 3];
+        for i in 0..3 {
+            vertices[i] = RVector2::from_vector3(&indices[triangle3.0[i]]);
+        }
 
         Self {
             vertices,
@@ -119,14 +126,23 @@ fn random_point() -> RVector2 {
 }
 
 pub fn draw_screen() {
-    let mut indices = [
-        Vector3::new(random_coordinate() as f32, 0.0, 50.0),
-        Vector3::new(0.4, 100.0, 5.09),
-        Vector3::new(100.0, 74.0, -1.0)
-    ];
-    let mut tris = [Triangle3 ([
-        &indices[0], &indices[1], &indices[2]
-    ]); TEST_N];
+    // let mut indices = [
+    //     Vector3::new(random_coordinate() as f32, 0.0, 50.0),
+    //     Vector3::new(0.4, 100.0, 5.09),
+    //     Vector3::new(100.0, 74.0, -1.0)
+    // ];
+    // let mut tris = [Triangle3 ([
+    //     0, 1, 2
+    // ]); TEST_N];
+
+    let mesh = Mesh3 {
+        indices: vec![
+            Vector3::new(random_coordinate() as f32, 0.0, 50.0),
+            Vector3::new(0.4, 100.0, 5.09),
+            Vector3::new(100.0, 74.0, -1.0)
+        ],
+        tris: vec![Triangle3 ([0, 1, 2]); TEST_N]
+    };
 
     // debug_info(&format!("{:?}", tris), 1000);
 
@@ -136,8 +152,8 @@ pub fn draw_screen() {
         for column in 0.. FB_TILE {
             frame_buffer.clear();
             frame_buffer.set_offset(row, column);
-            for tri in tris {
-                fill_triangle(RTriangle2::from_triangle3(&tri), &mut frame_buffer);
+            for tri in &mesh.tris {
+                fill_triangle(RTriangle2::from_triangle3(&tri, &mesh.indices), &mut frame_buffer);
             }
             frame_buffer.push();
         }

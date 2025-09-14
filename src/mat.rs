@@ -1,5 +1,22 @@
 use crate::eadk::*;
 use core::ops::{ AddAssign, SubAssign, MulAssign, Index, IndexMut };
+#[cfg(target_os = "none")]
+use alloc::vec::Vec;
+#[cfg(target_os = "none")]
+use alloc::vec;
+
+pub struct Mesh3 {
+    pub tris: Vec<Triangle3>,
+    pub indices: Vec<Vector3>
+}
+impl Mesh3 {
+    pub fn new() -> Self {
+        Self {
+            tris: vec![],
+            indices: vec![]
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug)]
 pub struct Vector3 {
@@ -47,7 +64,7 @@ impl MulAssign<Matrix3> for Vector3 {
 }
 
 #[derive(Clone, Copy)]
-pub struct Triangle3<'a>(pub [&'a Vector3; 3]);
+pub struct Triangle3(pub [usize; 3]);
 
 
 #[derive(Debug, Clone, Copy)]
