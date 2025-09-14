@@ -1,54 +1,11 @@
-use crate::{ eadk::*, config::* };
-use core::ops::{ AddAssign, SubAssign };
+use crate::{ eadk::*, config::*, mat::{ Vector2, Triangle2 } };
 use alloc::format;
-
-#[derive(Clone, Copy, Debug)]
-pub struct Point {
-    pub x: isize,
-    pub y: isize
-}
-impl Point {
-    pub fn new(x: isize, y: isize) -> Self {
-        Self { x, y }
-    }
-}
-impl AddAssign for Point {
-    fn add_assign(&mut self, other: Self) {
-        self.x += other.x;
-        self.y += other.y;
-    }
-}
-impl SubAssign for Point {
-    fn sub_assign(&mut self, other: Self) {
-        self.x -= other.x;
-        self.y -= other.y;
-    }
-}
-
-#[derive(Clone, Copy)]
-pub struct Triangle {
-    vertices: [Point; 3],
-    color: Color
-}
-impl AddAssign<Point> for Triangle {
-    fn add_assign(&mut self, point: Point) {
-        for vertex in &mut self.vertices {
-            *vertex += point;
-        }
-    }
-}
-impl SubAssign<Point> for Triangle {
-    fn sub_assign(&mut self, point: Point) {
-        for vertex in &mut self.vertices {
-            *vertex -= point;
-        }
-    }
-}
 
 // frame buffer split into several tiles each frame to accommodate for small memory
 pub struct FrameBuffer {
     row: usize,
     column: usize,
+    offset_vector: Vector2;
     buffer: [Color; FB_WIDTH * FB_HEIGHT]
 }
 impl FrameBuffer {
@@ -56,6 +13,7 @@ impl FrameBuffer {
         Self { 
             row: 0,
             column: 0,
+            offset_vector: Vector2::new(0, 0),
             buffer: [Color{ rgb565: 0x000 }; FB_WIDTH * FB_HEIGHT]
         }
     }
@@ -66,15 +24,12 @@ impl FrameBuffer {
 
     pub fn set_offset(&mut self, row: usize, column: usize) {
         self.row = row;
-        self.column = column
+        self.column = column;
+        self.offset_vector = Vector2::new((self.column * FB_WIDTH) as isize, (self.row * FB_HEIGHT) as isize);
     }
 
     pub fn set_pixel(&mut self, x: usize, y: usize, color: Color) {
         self.buffer[y * FB_WIDTH + x] = color;
-    }
-
-    pub fn get_offset_vector(&self) -> Point {
-        Point::new((self.column * FB_WIDTH) as isize, (self.row * FB_HEIGHT) as isize)
     }
 
     pub fn push(&self) {
@@ -98,12 +53,12 @@ fn random_coordinate() -> u16 {
     return (random() % 0xFF) as u16;
 }
 
-fn random_point() -> Point {
-    return Point { x: random_coordinate() as isize, y: random_coordinate() as isize };
+fn random_point() -> Vector2 {
+    return Vector2 { x: random_coordinate() as isize, y: random_coordinate() as isize };
 }
 
 pub fn draw_screen() {
-    let mut tris: [Triangle; TEST_N] = [Triangle {
+    let mut tris: [Triangle2; TEST_N] = [Triangle2 {
             vertices: [random_point(), random_point(), random_point()],
             color: Color::from_rgb(0, 255, 255)
         }; TEST_N
@@ -126,8 +81,8 @@ pub fn draw_screen() {
     display::wait_for_vblank();
 }
 
-fn fill_triangle(mut tri: Triangle, frame_buffer: &mut FrameBuffer) {
-    tri -= frame_buffer.get_offset_vector();
+fn fill_triangle(mut tri: Triangle2, frame_buffer: &mut FrameBuffer) {
+    tri -= frame_buffer.offset_vector;
 
     let [mut t0, mut t1, mut t2] = tri.vertices;
     let color = tri.color;
