@@ -1,14 +1,14 @@
 use crate::{ eadk::*, config::* };
-use core::ops::AddAssign;
+use core::ops::{ AddAssign, SubAssign };
 use alloc::format;
 
 #[derive(Clone, Copy, Debug)]
 pub struct Point {
-    pub x: u16,
-    pub y: u16
+    pub x: isize,
+    pub y: isize
 }
 impl Point {
-    pub fn new(x: u16, y: u16) -> Self {
+    pub fn new(x: isize, y: isize) -> Self {
         Self { x, y }
     }
 }
@@ -16,6 +16,12 @@ impl AddAssign for Point {
     fn add_assign(&mut self, other: Self) {
         self.x += other.x;
         self.y += other.y;
+    }
+}
+impl SubAssign for Point {
+    fn sub_assign(&mut self, other: Self) {
+        self.x -= other.x;
+        self.y -= other.y;
     }
 }
 
@@ -26,54 +32,61 @@ pub struct Triangle {
 }
 impl AddAssign<Point> for Triangle {
     fn add_assign(&mut self, point: Point) {
-        for mut vertex in self.vertices {
-            vertex += point;
+        for vertex in &mut self.vertices {
+            *vertex += point;
+        }
+    }
+}
+impl SubAssign<Point> for Triangle {
+    fn sub_assign(&mut self, point: Point) {
+        for vertex in &mut self.vertices {
+            *vertex -= point;
         }
     }
 }
 
 // frame buffer split into several tiles each frame to accommodate for small memory
 pub struct FrameBuffer {
-    tile_row: u16,
-    tile_column: u16,
-    buffer: [Color; (FB_WIDTH * FB_HEIGHT) as usize]
+    row: usize,
+    column: usize,
+    buffer: [Color; FB_WIDTH * FB_HEIGHT]
 }
 impl FrameBuffer {
-    pub fn new(tile_row: u16, tile_column: u16) -> Self {
+    pub fn new() -> Self {
         Self { 
-            tile_row,
-            tile_column,
-            buffer: [Color{ rgb565: 0x000 }; (FB_WIDTH * FB_HEIGHT) as usize]
+            row: 0,
+            column: 0,
+            buffer: [Color{ rgb565: 0x000 }; FB_WIDTH * FB_HEIGHT]
         }
+    }
+
+    pub fn clear(&mut self) {
+        self.buffer = [Color{ rgb565: 0x000 }; FB_WIDTH * FB_HEIGHT];
+    }
+
+    pub fn set_offset(&mut self, row: usize, column: usize) {
+        self.row = row;
+        self.column = column
+    }
+
+    pub fn set_pixel(&mut self, x: usize, y: usize, color: Color) {
+        self.buffer[y * FB_WIDTH + x] = color;
+    }
+
+    pub fn get_offset_vector(&self) -> Point {
+        Point::new((self.column * FB_WIDTH) as isize, (self.row * FB_HEIGHT) as isize)
     }
 
     pub fn push(&self) {
         display::push_rect(
             Rect{ 
-                x: self.tile_column * FB_WIDTH,
-                y: self.tile_row * FB_HEIGHT,
-                width: FB_WIDTH,
-                height: FB_HEIGHT
+                x: (self.column * FB_WIDTH) as u16,
+                y: (self.row * FB_HEIGHT) as u16,
+                width: (FB_WIDTH) as u16,
+                height: (FB_HEIGHT) as u16
             },
             &self.buffer
         );
-    }
-
-    #[inline]
-    pub fn set_pixel(&mut self, mut x: u16, mut y: u16, color: Color) {
-        x -= self.tile_column * FB_WIDTH;
-        y -= self.tile_row * FB_HEIGHT;
-        let index = y * FB_WIDTH + x;
-        self.buffer[index as usize] = color;
-    }
-
-    pub fn contains(&self, x: u16, y: u16) -> bool {
-        let x0 = self.tile_column * FB_WIDTH;
-        let x1 = x0 + FB_WIDTH;
-        let y0 = self.tile_row * FB_HEIGHT;
-        let y1 = y0 + FB_HEIGHT;
-
-        (x0 <= x && x < x1) && (y0 <= y && y < y1)
     }
 }
 
@@ -86,46 +99,24 @@ fn random_coordinate() -> u16 {
 }
 
 fn random_point() -> Point {
-    return Point { x: random_coordinate(), y: random_coordinate() };
+    return Point { x: random_coordinate() as isize, y: random_coordinate() as isize };
 }
 
-
 pub fn draw_screen() {
-    // let mut tris: [Triangle; TEST_N] = [Triangle {
-    //         vertices: [random_point(), random_point(), random_point()],
-    //         color: Color::from_rgb(0, 255, 255)
-    //     }; TEST_N
-    // ];
-
-    let mut tris: [Triangle; 4] = [
-        Triangle { vertices: [
-            Point::new(0, 0),
-            Point::new(0, 240),
-            Point::new(320, 240)
-        ], color: Color::from_rgb(random_coordinate(), 255, 255) },
-        Triangle { vertices: [
-            Point::new(0, 0),
-            Point::new(320, 0),
-            Point::new(320, 240)
-        ], color: Color::from_rgb(255, random_coordinate(), 255) },
-        Triangle { vertices: [
-            Point::new(0, 0),
-            Point::new(0, 240),
-            Point::new(320, 240)
-        ], color: Color::from_rgb(random_coordinate(), 255, 255) },
-        Triangle { vertices: [
-            Point::new(0, 0),
-            Point::new(320, 0),
-            Point::new(320, 240)
-        ], color: Color::from_rgb(255, random_coordinate(), 255) },
+    let mut tris: [Triangle; TEST_N] = [Triangle {
+            vertices: [random_point(), random_point(), random_point()],
+            color: Color::from_rgb(0, 255, 255)
+        }; TEST_N
     ];
 
     // debug_info(&format!("{:?}", tris), 1000);
 
     // loops through tiles on the screen, rendering each tile separately
+    let mut frame_buffer = FrameBuffer::new();
     for row in 0..FB_TILE {
         for column in 0.. FB_TILE {
-            let mut frame_buffer = FrameBuffer::new(row, column);
+            frame_buffer.clear();
+            frame_buffer.set_offset(row, column);
             for tri in tris {
                 fill_triangle(tri, &mut frame_buffer);
             }
@@ -135,83 +126,64 @@ pub fn draw_screen() {
     display::wait_for_vblank();
 }
 
-fn fill_triangle(tri: Triangle, frame_buffer: &mut FrameBuffer) {
-    // TODO: triangle culling/splitting on frame buffer edges
-    // TODO: fix some triangles appearing only as their vertices
-    let [mut v0, mut v1, mut v2] = tri.vertices;
+fn fill_triangle(mut tri: Triangle, frame_buffer: &mut FrameBuffer) {
+    tri -= frame_buffer.get_offset_vector();
+
+    let [mut t0, mut t1, mut t2] = tri.vertices;
     let color = tri.color;
-    
-    // sort in ascending order of y value
+
     use core::mem::swap;
-    if v0.y > v1.y { swap(&mut v0, &mut v1) }
-    if v0.y > v2.y { swap(&mut v0, &mut v2) }
-    if v1.y > v2.y { swap(&mut v1, &mut v2) }
+    if t0.y > t1.y { swap(&mut t0, &mut t1) }
+    if t0.y > t2.y { swap(&mut t0, &mut t2) }
+    if t1.y > t2.y { swap(&mut t1, &mut t2) }
 
-    // debug_info(&format!(r#"
-    // {} {}
-    // {} {}
-    // {} {}
-    // "#, v0.x, v0.y, v1.x, v1.y, v2.x, v2.y), 1000);
+    let triangle_height = t2.y - t0.y;
+    let triangle_heightf = triangle_height as f32;
 
-    // account for bottom/top edge cases
-    if v1.y == v2.y {
-        fill_bottom_flat_tri(v0, v1, v2, color, frame_buffer);
-    }
-    else if v0.y == v1.y {
-        fill_top_flat_tri(v0, v1, v2, color, frame_buffer);
-    }
-    // split triangle into flat bottom/top
-    else {
-        let mut v3 = Point::new(
-            interpolate_coord(v0.x, v2.x, v0.y, v2.y, v1.y), 
-            v1.y
-        );
-        // debug_info(&format!("{} {}", v3.x, v3.y), 1000);
-        fill_bottom_flat_tri(v0, v1, v3, color, frame_buffer);
-        fill_top_flat_tri(v1, v3, v2, color, frame_buffer);
-    }
-}
+    'height_iter: for i in 0..triangle_height {
+        let second_half = i > (t1.y - t0.y) || (t1.y == t0.y);
+        let segment_heightf = if second_half {
+            (t2.y - t1.y) as f32
+        } else {
+            (t1.y - t0.y) as f32
+        };
 
-fn fill_bottom_flat_tri(v0: Point, v1: Point, v2: Point, color: Color, frame_buffer: &mut FrameBuffer) {
-    let inv_m1 = (v1.x as f32 - v0.x as f32) / (v1.y as f32 - v0.y as f32);
-    let inv_m2 = (v2.x as f32 - v0.x as f32) / (v2.y as f32 - v0.y as f32);
+        let alpha = i as f32 / triangle_heightf;
+        let beta = if second_half {
+            (i as f32 - (t1.y - t0.y) as f32) / segment_heightf
+        } else {
+            i as f32 / segment_heightf
+        };
 
-    let mut cur_x1 = v0.x as f32;
-    let mut cur_x2 = v0.x as f32;
-    
-    for cur_y in v0.y..=v1.y {
-        draw_scanline(cur_x1 as u16, cur_x2 as u16, cur_y, color, frame_buffer);
-        cur_x1 += inv_m1;
-        cur_x2 += inv_m2;
-    }
-}
+        let mut a = t0.x as f32 + ((t2.x - t0.x) as f32 * alpha);
+        let mut b = if second_half {
+            t1.x as f32 + ((t2.x - t1.x) as f32 * beta)
+        } else {
+            t0.x as f32 + ((t1.x - t0.x) as f32 * beta)
+        };
 
-fn fill_top_flat_tri(v0: Point, v1: Point, v2: Point, color: Color, frame_buffer: &mut FrameBuffer) {
-    let inv_m1 = (v2.x as f32 - v0.x as f32) / (v2.y as f32 - v0.y as f32);
-    let inv_m2 = (v2.x as f32 - v1.x as f32) / (v2.y as f32 - v1.y as f32);
+        if a > b {
+            swap(&mut a, &mut b);
+        }
 
-    let mut cur_x1 = v2.x as f32;
-    let mut cur_x2 = v2.x as f32;
-    
-    for cur_y in (v0.y..=v2.y).rev() {
-        draw_scanline(cur_x1 as u16, cur_x2 as u16, cur_y, color, frame_buffer);
-        cur_x1 -= inv_m1;
-        cur_x2 -= inv_m2;
-    }
-}
+        let y = t0.y + i;
+        if y < 0 {
+            continue 'height_iter;
+        }
+        if y >= FB_HEIGHT as isize {
+            break 'height_iter;
+        }
 
-fn interpolate_coord(x0: u16, x1: u16, y0: u16, y1: u16, y_interpolate: u16) -> u16 {
-        (x0 as f32 + (
-            (
-                (y_interpolate as f32 - y0 as f32) / (y1 as f32 - y0 as f32)
-            ) * (x1 as f32 - x0 as f32)
-        )) as u16
-}
+        if (b as usize) < 1 {
+            // prevent line bug
+            continue;
+        }
 
-fn draw_scanline(x1: u16, x2: u16, y: u16, color: Color, frame_buffer: &mut FrameBuffer) {
-    for x in x1..=x2 {
-        if frame_buffer.contains(x, y) {
-            frame_buffer.set_pixel(x, y, color);
+        for j in (a as usize)..=(b as usize) {
+            if j >= FB_WIDTH as usize {
+                continue 'height_iter;
+            }
+            frame_buffer.set_pixel(j, y as usize, color);
         }
     }
 }
