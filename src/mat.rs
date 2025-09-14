@@ -25,18 +25,18 @@ impl SubAssign for Vector2 {
 }
 
 #[derive(Clone, Copy)]
-pub struct Triangle2 {
+pub struct RTriangle {
     pub vertices: [Vector2; 3],
     pub color: Color
 }
-impl AddAssign<Vector2> for Triangle2 {
+impl AddAssign<Vector2> for RTriangle {
     fn add_assign(&mut self, point: Vector2) {
         for vertex in &mut self.vertices {
             *vertex += point;
         }
     }
 }
-impl SubAssign<Vector2> for Triangle2 {
+impl SubAssign<Vector2> for RTriangle {
     fn sub_assign(&mut self, point: Vector2) {
         for vertex in &mut self.vertices {
             *vertex -= point;

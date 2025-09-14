@@ -1,4 +1,4 @@
-use crate::{ eadk::*, config::*, mat::{ Vector2, Triangle2 } };
+use crate::{ eadk::*, config::*, mat::{ Vector2, RTriangle } };
 use alloc::format;
 
 // frame buffer split into several tiles each frame to accommodate for small memory
@@ -58,7 +58,7 @@ fn random_point() -> Vector2 {
 }
 
 pub fn draw_screen() {
-    let mut tris: [Triangle2; TEST_N] = [Triangle2 {
+    let mut tris: [RTriangle; TEST_N] = [RTriangle {
             vertices: [random_point(), random_point(), random_point()],
             color: Color::from_rgb(0, 255, 255)
         }; TEST_N
@@ -81,7 +81,7 @@ pub fn draw_screen() {
     display::wait_for_vblank();
 }
 
-fn fill_triangle(mut tri: Triangle2, frame_buffer: &mut FrameBuffer) {
+fn fill_triangle(mut tri: RTriangle, frame_buffer: &mut FrameBuffer) {
     tri -= frame_buffer.offset_vector;
 
     let [mut v0, mut v1, mut v2] = tri.vertices;
