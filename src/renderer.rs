@@ -1,11 +1,11 @@
-use crate::{ eadk::*, config::*, mat::{ Vector2, RTriangle } };
+use crate::{ eadk::*, config::*, mat::{ RVector, RTriangle } };
 use alloc::format;
 
 // frame buffer split into several tiles each frame to accommodate for small memory
 pub struct FrameBuffer {
     row: usize,
     column: usize,
-    offset_vector: Vector2,
+    offset_vector: RVector,
     buffer: [Color; FB_WIDTH * FB_HEIGHT]
 }
 impl FrameBuffer {
@@ -13,7 +13,7 @@ impl FrameBuffer {
         Self { 
             row: 0,
             column: 0,
-            offset_vector: Vector2::new(0, 0),
+            offset_vector: RVector::new(0, 0),
             buffer: [Color{ rgb565: 0x000 }; FB_WIDTH * FB_HEIGHT]
         }
     }
@@ -25,7 +25,7 @@ impl FrameBuffer {
     pub fn set_offset(&mut self, row: usize, column: usize) {
         self.row = row;
         self.column = column;
-        self.offset_vector = Vector2::new((self.column * FB_WIDTH) as isize, (self.row * FB_HEIGHT) as isize);
+        self.offset_vector = RVector::new((self.column * FB_WIDTH) as isize, (self.row * FB_HEIGHT) as isize);
     }
 
     pub fn set_pixel(&mut self, x: usize, y: usize, color: Color) {
@@ -53,8 +53,8 @@ fn random_coordinate() -> u16 {
     return (random() % 0xFF) as u16;
 }
 
-fn random_point() -> Vector2 {
-    return Vector2 { x: random_coordinate() as isize, y: random_coordinate() as isize };
+fn random_point() -> RVector {
+    return RVector { x: random_coordinate() as isize, y: random_coordinate() as isize };
 }
 
 pub fn draw_screen() {
