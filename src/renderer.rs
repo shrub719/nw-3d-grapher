@@ -5,7 +5,7 @@ use alloc::format;
 pub struct FrameBuffer {
     row: usize,
     column: usize,
-    offset_vector: Vector2;
+    offset_vector: Vector2,
     buffer: [Color; FB_WIDTH * FB_HEIGHT]
 }
 impl FrameBuffer {
