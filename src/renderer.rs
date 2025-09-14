@@ -50,7 +50,7 @@ impl RTriangle2 {
 
         Self {
             vertices,
-            color: Color::from_rgb(0, 255, 255)  // TODO: calculate color based on z
+            color: Color::from_rgb(random() as u16, random() as u16, random() as u16)  // TODO: calculate color based on z
         }
     }
 }
@@ -113,19 +113,7 @@ impl FrameBuffer {
     }
 }
 
-fn random_u16() -> u16 {
-    return random() as u16;
-}
-
-fn random_coordinate() -> u16 {
-    return (random() % 0xFF) as u16;
-}
-
-fn random_point() -> RVector2 {
-    return RVector2 { x: random_coordinate() as isize, y: random_coordinate() as isize };
-}
-
-pub fn draw_screen() {
+pub fn draw_screen(mesh: &Mesh3) {
     // let mut indices = [
     //     Vector3::new(random_coordinate() as f32, 0.0, 50.0),
     //     Vector3::new(0.4, 100.0, 5.09),
@@ -134,15 +122,6 @@ pub fn draw_screen() {
     // let mut tris = [Triangle3 ([
     //     0, 1, 2
     // ]); TEST_N];
-
-    let mesh = Mesh3 {
-        indices: vec![
-            Vector3::new(random_coordinate() as f32, 0.0, 50.0),
-            Vector3::new(0.4, 100.0, 5.09),
-            Vector3::new(100.0, 74.0, -1.0)
-        ],
-        tris: vec![Triangle3 ([0, 1, 2]); TEST_N]
-    };
 
     // debug_info(&format!("{:?}", tris), 1000);
 

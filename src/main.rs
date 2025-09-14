@@ -41,6 +41,22 @@ mod config;
 mod renderer;
 mod mat;
 use crate::mat::*;
+#[cfg(target_os = "none")]
+use alloc::vec;
+use crate::config::*;
+use crate::renderer::*;
+
+fn random_u16() -> u16 {
+    return eadk::random() as u16;
+}
+
+fn random_coordinate() -> u16 {
+    return (eadk::random() % 0xFF) as u16;
+}
+
+fn random_point() -> RVector2 {
+    return RVector2 { x: random_coordinate() as isize, y: random_coordinate() as isize };
+}
 
 #[no_mangle]
 pub fn main() -> isize {
@@ -50,9 +66,19 @@ pub fn main() -> isize {
         unsafe { HEAP.init(eadk::HEAP_START as usize, heap_size) }
     }
 
+    let mesh = Mesh3 {
+        indices: vec![
+            Vector3::new(random_coordinate() as f32, 0.0, 50.0),
+            Vector3::new(0.4, 100.0, 5.09),
+            Vector3::new(100.0, random_coordinate() as f32, -1.0)
+        ],
+        tris: vec![Triangle3 ([0, 1, 2]); TEST_N]
+    };
+
     let mut keyboard_state: eadk::input::KeyboardState = eadk::input::KeyboardState::scan();
     while !keyboard_state.key_down(eadk::input::Key::Back) {
-        renderer::draw_screen();
+        renderer::draw_screen(&mesh);
+
         keyboard_state = eadk::input::KeyboardState::scan();
         while !(keyboard_state.key_down(eadk::input::Key::Ok) || keyboard_state.key_down(eadk::input::Key::Back)) {
             keyboard_state = eadk::input::KeyboardState::scan();
