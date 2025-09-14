@@ -84,44 +84,44 @@ pub fn draw_screen() {
 fn fill_triangle(mut tri: Triangle2, frame_buffer: &mut FrameBuffer) {
     tri -= frame_buffer.offset_vector;
 
-    let [mut t0, mut t1, mut t2] = tri.vertices;
+    let [mut v0, mut v1, mut v2] = tri.vertices;
     let color = tri.color;
 
     use core::mem::swap;
-    if t0.y > t1.y { swap(&mut t0, &mut t1) }
-    if t0.y > t2.y { swap(&mut t0, &mut t2) }
-    if t1.y > t2.y { swap(&mut t1, &mut t2) }
+    if v0.y > v1.y { swap(&mut v0, &mut v1) }
+    if v0.y > v2.y { swap(&mut v0, &mut v2) }
+    if v1.y > v2.y { swap(&mut v1, &mut v2) }
 
-    let triangle_height = t2.y - t0.y;
+    let triangle_height = v2.y - v0.y;
     let triangle_heightf = triangle_height as f32;
 
-    'height_iter: for i in 0..triangle_height {
-        let second_half = i > (t1.y - t0.y) || (t1.y == t0.y);
-        let segment_heightf = if second_half {
-            (t2.y - t1.y) as f32
+    'height_iter: for y_scan in 0..triangle_height {
+        let is_second_half = y_scan > (v1.y - v0.y) || (v1.y == v0.y);
+        let segment_heightf = if is_second_half {
+            (v2.y - v1.y) as f32
         } else {
-            (t1.y - t0.y) as f32
+            (v1.y - v0.y) as f32
         };
 
-        let alpha = i as f32 / triangle_heightf;
-        let beta = if second_half {
-            (i as f32 - (t1.y - t0.y) as f32) / segment_heightf
+        let height_progress = y_scan as f32 / triangle_heightf;
+        let segment_progress = if is_second_half {
+            (y_scan as f32 - (v1.y - v0.y) as f32) / segment_heightf
         } else {
-            i as f32 / segment_heightf
+            y_scan as f32 / segment_heightf
         };
 
-        let mut a = t0.x as f32 + ((t2.x - t0.x) as f32 * alpha);
-        let mut b = if second_half {
-            t1.x as f32 + ((t2.x - t1.x) as f32 * beta)
+        let mut x_left = v0.x as f32 + ((v2.x - v0.x) as f32 * height_progress);
+        let mut x_right = if is_second_half {
+            v1.x as f32 + ((v2.x - v1.x) as f32 * segment_progress)
         } else {
-            t0.x as f32 + ((t1.x - t0.x) as f32 * beta)
+            v0.x as f32 + ((v1.x - v0.x) as f32 * segment_progress)
         };
 
-        if a > b {
-            swap(&mut a, &mut b);
+        if x_left > x_right {
+            swap(&mut x_left, &mut x_right);
         }
 
-        let y = t0.y + i;
+        let y = v0.y + y_scan;
         if y < 0 {
             continue 'height_iter;
         }
@@ -129,16 +129,15 @@ fn fill_triangle(mut tri: Triangle2, frame_buffer: &mut FrameBuffer) {
             break 'height_iter;
         }
 
-        if (b as usize) < 1 {
-            // prevent line bug
-            continue;
+        if (x_right as usize) < 1 {
+            continue 'height_iter;
         }
 
-        for j in (a as usize)..=(b as usize) {
-            if j >= FB_WIDTH as usize {
+        for x_scan in (x_left as usize)..=(x_right as usize) {
+            if x_scan >= FB_WIDTH as usize {
                 continue 'height_iter;
             }
-            frame_buffer.set_pixel(j, y as usize, color);
+            frame_buffer.set_pixel(x_scan, y as usize, color);
         }
     }
 }
