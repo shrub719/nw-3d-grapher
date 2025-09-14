@@ -1,11 +1,72 @@
-use crate::{ eadk::*, config::*, mat::{ RVector, RTriangle } };
+use crate::{ eadk::*, config::*, mat::{ Vector3, Triangle3 } };
+use core::ops::{ AddAssign, SubAssign };
+#[cfg(target_os = "none")]
 use alloc::format;
+
+#[derive(Clone, Copy, Debug)]
+pub struct RVector2 {
+    pub x: isize,
+    pub y: isize
+}
+impl RVector2 {
+    pub fn new(x: isize, y: isize) -> Self {
+        Self { x, y }
+    }
+
+    pub fn from_vector3 (vector3: &Vector3) -> Self {
+        Self {
+           x: vector3.x as isize,
+           y: vector3.y as isize 
+        }
+    }
+}
+impl AddAssign for RVector2 {
+    fn add_assign(&mut self, other: Self) {
+        self.x += other.x;
+        self.y += other.y;
+    }
+}
+impl SubAssign for RVector2 {
+    fn sub_assign(&mut self, other: Self) {
+        self.x -= other.x;
+        self.y -= other.y;
+    }
+}
+
+pub struct RTriangle2 {
+    pub vertices: [RVector2; 3],
+    pub color: Color
+}
+impl RTriangle2 {
+    pub fn from_triangle3 (triangle3: &Triangle3 ) -> Self {
+        let vertices = triangle3.0.map(RVector2::from_vector3);
+
+        Self {
+            vertices,
+            color: Color::from_rgb(0, 255, 255)  // TODO: calculate color based on z
+        }
+    }
+}
+impl AddAssign<RVector2> for RTriangle2 {
+    fn add_assign(&mut self, point: RVector2) {
+        for vertex in &mut self.vertices {
+            *vertex += point;
+        }
+    }
+}
+impl SubAssign<RVector2> for RTriangle2 {
+    fn sub_assign(&mut self, point: RVector2) {
+        for vertex in &mut self.vertices {
+            *vertex -= point;
+        }
+    }
+}
 
 // frame buffer split into several tiles each frame to accommodate for small memory
 pub struct FrameBuffer {
     row: usize,
     column: usize,
-    offset_vector: RVector,
+    offset_vector: RVector2,
     buffer: [Color; FB_WIDTH * FB_HEIGHT]
 }
 impl FrameBuffer {
@@ -13,7 +74,7 @@ impl FrameBuffer {
         Self { 
             row: 0,
             column: 0,
-            offset_vector: RVector::new(0, 0),
+            offset_vector: RVector2::new(0, 0),
             buffer: [Color{ rgb565: 0x000 }; FB_WIDTH * FB_HEIGHT]
         }
     }
@@ -25,7 +86,7 @@ impl FrameBuffer {
     pub fn set_offset(&mut self, row: usize, column: usize) {
         self.row = row;
         self.column = column;
-        self.offset_vector = RVector::new((self.column * FB_WIDTH) as isize, (self.row * FB_HEIGHT) as isize);
+        self.offset_vector = RVector2::new((self.column * FB_WIDTH) as isize, (self.row * FB_HEIGHT) as isize);
     }
 
     pub fn set_pixel(&mut self, x: usize, y: usize, color: Color) {
@@ -53,16 +114,19 @@ fn random_coordinate() -> u16 {
     return (random() % 0xFF) as u16;
 }
 
-fn random_point() -> RVector {
-    return RVector { x: random_coordinate() as isize, y: random_coordinate() as isize };
+fn random_point() -> RVector2 {
+    return RVector2 { x: random_coordinate() as isize, y: random_coordinate() as isize };
 }
 
 pub fn draw_screen() {
-    let mut tris: [RTriangle; TEST_N] = [RTriangle {
-            vertices: [random_point(), random_point(), random_point()],
-            color: Color::from_rgb(0, 255, 255)
-        }; TEST_N
+    let mut indices = [
+        Vector3::new(random_coordinate() as f32, 0.0, 50.0),
+        Vector3::new(0.4, 100.0, 5.09),
+        Vector3::new(100.0, 74.0, -1.0)
     ];
+    let mut tris = [Triangle3 ([
+        &indices[0], &indices[1], &indices[2]
+    ]); TEST_N];
 
     // debug_info(&format!("{:?}", tris), 1000);
 
@@ -73,7 +137,7 @@ pub fn draw_screen() {
             frame_buffer.clear();
             frame_buffer.set_offset(row, column);
             for tri in tris {
-                fill_triangle(tri, &mut frame_buffer);
+                fill_triangle(RTriangle2::from_triangle3(&tri), &mut frame_buffer);
             }
             frame_buffer.push();
         }
@@ -81,7 +145,7 @@ pub fn draw_screen() {
     display::wait_for_vblank();
 }
 
-fn fill_triangle(mut tri: RTriangle, frame_buffer: &mut FrameBuffer) {
+fn fill_triangle(mut tri: RTriangle2, frame_buffer: &mut FrameBuffer) {
     tri -= frame_buffer.offset_vector;
 
     let [mut v0, mut v1, mut v2] = tri.vertices;

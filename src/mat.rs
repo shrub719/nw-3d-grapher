@@ -7,7 +7,6 @@ pub struct Vector3 {
     pub y: f32,
     pub z: f32
 }
-
 impl Vector3 {
     pub fn new(x: f32, y: f32, z: f32) -> Self {
         Self { x, y, z }
@@ -47,29 +46,8 @@ impl MulAssign<Matrix3> for Vector3 {
     }
 }
 
-
-#[derive(Clone, Copy, Debug)]
-pub struct RVector {
-    pub x: isize,
-    pub y: isize
-}
-impl RVector {
-    pub fn new(x: isize, y: isize) -> Self {
-        Self { x, y }
-    }
-}
-impl AddAssign for RVector {
-    fn add_assign(&mut self, other: Self) {
-        self.x += other.x;
-        self.y += other.y;
-    }
-}
-impl SubAssign for RVector {
-    fn sub_assign(&mut self, other: Self) {
-        self.x -= other.x;
-        self.y -= other.y;
-    }
-}
+#[derive(Clone, Copy)]
+pub struct Triangle3<'a>(pub [&'a Vector3; 3]);
 
 
 #[derive(Debug, Clone, Copy)]
@@ -77,24 +55,3 @@ pub struct Matrix4(pub [[f32; 4]; 4]);
 
 #[derive(Debug, Clone, Copy)]
 pub struct Matrix3(pub [[f32; 3]; 3]);
-
-
-#[derive(Clone, Copy)]
-pub struct RTriangle {
-    pub vertices: [RVector; 3],
-    pub color: Color
-}
-impl AddAssign<RVector> for RTriangle {
-    fn add_assign(&mut self, point: RVector) {
-        for vertex in &mut self.vertices {
-            *vertex += point;
-        }
-    }
-}
-impl SubAssign<RVector> for RTriangle {
-    fn sub_assign(&mut self, point: RVector) {
-        for vertex in &mut self.vertices {
-            *vertex -= point;
-        }
-    }
-}
