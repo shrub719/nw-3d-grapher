@@ -69,7 +69,7 @@ pub fn main() -> isize {
         transformed_indices: vec![]
     };
 
-    let scale = eadk::random() as f32;
+    let scale = 2.0;
     let matrix = Matrix3 ( [
         [scale, 0.0, 0.0],
         [0.0, scale, 0.0],
