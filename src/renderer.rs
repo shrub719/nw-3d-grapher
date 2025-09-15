@@ -84,7 +84,8 @@ fn fill_triangle(mut v0: RVector3, mut v1: RVector3, mut v2: RVector3, frame_buf
     v2 -= frame_buffer.offset_vector;
 
     let value = (((v0.z + v1.z + v2.z) / 3.0) * 255.0) as u16;
-    let color = Color::from_rgb(0, 0, value);
+    let value2 = random() as u16;
+    let color = Color::from_rgb(value2, value2, value);
 
     use core::mem::swap;
     if v0.y > v1.y { swap(&mut v0, &mut v1) }

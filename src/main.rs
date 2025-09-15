@@ -61,18 +61,19 @@ pub fn main() -> isize {
     // usually this would be recalculated for every change in function/domain
     let mut mesh = Mesh {
         indices: vec![
-            Vector3::new(random_coordinate() as f32, 0.0, 0.0),
+            Vector3::new(0.0, 0.0, 0.0),
             Vector3::new(0.4, 100.0, 0.5),
-            Vector3::new(100.0, random_coordinate() as f32, 1.0)
+            Vector3::new(100.0, 100.0, 1.0)
         ],
         tris: vec![Triangle ([0, 1, 2]); TEST_N],
         transformed_indices: vec![]
     };
 
+    let scale = eadk::random() as f32;
     let matrix = Matrix3 ( [
-        [2.0, 0.0, 0.0],
-        [0.0, 2.0, 0.0],
-        [0.0, 0.0, 2.0]
+        [scale, 0.0, 0.0],
+        [0.0, scale, 0.0],
+        [0.0, 0.0, scale]
     ] );
 
     // main loop - runs every frame
