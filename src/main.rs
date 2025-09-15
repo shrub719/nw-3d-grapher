@@ -37,7 +37,9 @@ pub mod eadk;
 mod config;
 mod renderer;
 mod mat;
+mod mesh;
 use crate::mat::*;
+use crate::mesh::*;
 use crate::config::*;
 use crate::renderer::*;
 #[cfg(target_os = "none")]

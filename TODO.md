@@ -16,7 +16,7 @@
 
 ## To do
 - [x] File structure
-- [ ] Rasterise dummy camera space mesh
+- [x] Rasterise dummy camera space mesh
 - [ ] Transform dummy object space mesh to camera space
 - [ ] Transform dummy domain space mesh to camera space
 - [ ] Generate domain space mesh from explicit function

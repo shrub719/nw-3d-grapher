@@ -1,11 +1,7 @@
-use crate::{ eadk::*, config::*, mat::{ RVector3, Vector3, Triangle, Mesh } };
+use crate::{ eadk::*, config::*, mat::{ RVector3, Vector3, Triangle }, mesh::Mesh };
 use core::ops::{ AddAssign, SubAssign };
 #[cfg(target_os = "none")]
 use alloc::format;
-#[cfg(target_os = "none")]
-use alloc::vec;
-#[cfg(target_os = "none")]
-use alloc::vec::Vec;
 
 // frame buffer split into several tiles each frame to accommodate for small memory
 pub struct FrameBuffer {
