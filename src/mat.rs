@@ -16,7 +16,7 @@ impl RVector3 {
         Self { x, y, z }
     }
 
-    pub fn from_vector3 (vector3: &Vector3) -> Self {
+    pub fn from_vector3 (vector3: Vector3) -> Self {
         Self {
            x: vector3.x as isize,
            y: vector3.y as isize,
@@ -72,10 +72,10 @@ impl IndexMut<usize> for Vector3 {
     }
 }
 // technically the wrong order but idc
-impl Mul<Matrix3> for Vector3 {
-    type Output = Self;
+impl Mul<&Matrix3> for &Vector3 {
+    type Output = Vector3;
 
-    fn mul(self, matrix: Matrix3) -> Self {
+    fn mul(self, matrix: &Matrix3) -> Vector3 {
         let mut result = Vector3::new(0.0, 0.0, 0.0);
         for i in 0..3 {
             let mut sum: f32 = 0.0;

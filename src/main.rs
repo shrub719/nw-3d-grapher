@@ -69,10 +69,16 @@ pub fn main() -> isize {
         transformed_indices: vec![]
     };
 
+    let matrix = Matrix3 ( [
+        [2.0, 0.0, 0.0],
+        [0.0, 2.0, 0.0],
+        [0.0, 0.0, 2.0]
+    ] );
+
     // main loop - runs every frame
     let mut keyboard_state: eadk::input::KeyboardState = eadk::input::KeyboardState::scan();
     while !keyboard_state.key_down(eadk::input::Key::Back) {
-        mesh.transform();
+        mesh.transform(&matrix);
         renderer::draw_screen(&mesh);
 
         keyboard_state = eadk::input::KeyboardState::scan();
