@@ -1,6 +1,7 @@
 #![cfg_attr(target_os = "none", no_std)]
 #![no_main]
 #![allow(unused)]
+#![feature(f16)]
 
 #[allow(unused_imports)]
 #[cfg(target_os = "none")]

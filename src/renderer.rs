@@ -9,7 +9,7 @@ pub struct FrameBuffer {
     column: usize,
     offset_vector: RVector3,
     buffer: [Color; FB_WIDTH * FB_HEIGHT],
-    depth_buffer: [f32; FB_WIDTH * FB_HEIGHT]
+    depth_buffer: [f16; FB_WIDTH * FB_HEIGHT]
 }
 impl FrameBuffer {
     pub fn new() -> Self {
@@ -34,11 +34,12 @@ impl FrameBuffer {
     }
 
     pub fn set_pixel(&mut self, x: usize, y: usize, z: f32, color: Color) {
+        let z_16 = z as f16;
         let index = y * FB_WIDTH + x;
         let curr_depth = self.depth_buffer[index];
-        if z < curr_depth {
+        if z_16 < curr_depth {
             self.buffer[index] = color;
-            self.depth_buffer[index] = z;
+            self.depth_buffer[index] = z_16;
         }
     }
 
