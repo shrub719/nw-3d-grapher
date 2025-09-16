@@ -8,7 +8,8 @@ pub struct FrameBuffer {
     row: usize,
     column: usize,
     offset_vector: RVector3,
-    buffer: [Color; FB_WIDTH * FB_HEIGHT]
+    buffer: [Color; FB_WIDTH * FB_HEIGHT],
+    depth_buffer: [f32; FB_WIDTH * FB_HEIGHT]
 }
 impl FrameBuffer {
     pub fn new() -> Self {
@@ -16,7 +17,8 @@ impl FrameBuffer {
             row: 0,
             column: 0,
             offset_vector: RVector3::new(0, 0, 0.0),
-            buffer: [Color{ rgb565: 0x000 }; FB_WIDTH * FB_HEIGHT]
+            buffer: [Color{ rgb565: 0x000 }; FB_WIDTH * FB_HEIGHT],
+            depth_buffer: [1.0; FB_WIDTH * FB_HEIGHT],
         }
     }
 
@@ -30,8 +32,13 @@ impl FrameBuffer {
         self.offset_vector = RVector3::new((self.column * FB_WIDTH) as isize, (self.row * FB_HEIGHT) as isize, 0.0);
     }
 
-    pub fn set_pixel(&mut self, x: usize, y: usize, color: Color) {
-        self.buffer[y * FB_WIDTH + x] = color;
+    pub fn set_pixel(&mut self, x: usize, y: usize, z: f32, color: Color) {
+        let index = y * FB_WIDTH + x;
+        let curr_depth = self.depth_buffer[index];
+        if z < curr_depth {
+            self.buffer[index] = color;
+            self.depth_buffer[index] = z;
+        }
     }
 
     pub fn push(&self) {
@@ -134,7 +141,7 @@ fn fill_triangle(mut v0: RVector3, mut v1: RVector3, mut v2: RVector3, frame_buf
             if x_scan >= FB_WIDTH as usize {
                 continue 'height_iter;
             }
-            frame_buffer.set_pixel(x_scan, y as usize, color);
+            frame_buffer.set_pixel(x_scan, y as usize, v0.z, color);  // TODO: linearly interpolate depth
         }
     }
 }
