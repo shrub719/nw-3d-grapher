@@ -3,7 +3,7 @@ cargo-features = ["profile-rustflags"]
 name = "nw_3d_grapher"
 version = "0.1.0"
 authors = ["shrub719"]
-edition = "2018"
+edition = "2024"
 
 [[bin]]
 name = "nw_3d_grapher"

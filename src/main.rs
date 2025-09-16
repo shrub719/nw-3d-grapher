@@ -21,17 +21,17 @@ extern crate alloc;
 
 #[used]
 #[cfg(target_os = "none")]
-#[link_section = ".rodata.eadk_app_name"]
+#[unsafe(link_section = ".rodata.eadk_app_name")]
 pub static EADK_APP_NAME: [u8; 11] = *b"3D Grapher\0";
 
 #[used]
 #[cfg(target_os = "none")]
-#[link_section = ".rodata.eadk_api_level"]
+#[unsafe(link_section = ".rodata.eadk_api_level")]
 pub static EADK_APP_API_LEVEL: u32 = 0;
 
 #[used]
 #[cfg(target_os = "none")]
-#[link_section = ".rodata.eadk_app_icon"]
+#[unsafe(link_section = ".rodata.eadk_app_icon")]
 pub static EADK_APP_ICON: [u8; 2769] = *include_bytes!("../target/icon.nwi");
 
 pub mod eadk;
@@ -51,7 +51,7 @@ fn random_coordinate() -> u16 {
 }
 
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub fn main() -> isize {
     #[cfg(target_os = "none")]
     {

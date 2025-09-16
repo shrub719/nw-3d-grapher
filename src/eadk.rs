@@ -40,7 +40,7 @@ pub mod backlight {
         }
     }
 
-    extern "C" {
+    unsafe extern "C" {
         fn eadk_backlight_set_brightness(brightness: u8);
         fn eadk_backlight_brightness() -> u8;
     }
@@ -98,7 +98,7 @@ pub mod display {
         }
     }
 
-    extern "C" {
+    unsafe extern "C" {
         fn eadk_display_push_rect_uniform(rect: Rect, color: Color);
         fn eadk_display_push_rect(rect: Rect, color: *const Color);
         fn eadk_display_wait_for_vblank();
@@ -131,7 +131,7 @@ pub mod timing {
         }
     }
 
-    extern "C" {
+    unsafe extern "C" {
         fn eadk_timing_usleep(us: u32);
         fn eadk_timing_msleep(us: u32);
         fn eadk_timing_millis() -> u64;
@@ -144,7 +144,7 @@ pub fn random() -> u32 {
     }
 }
 
-extern "C" {
+unsafe extern "C" {
     fn eadk_random() -> u32;
 }
 
