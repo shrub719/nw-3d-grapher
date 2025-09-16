@@ -66,7 +66,8 @@ pub fn main() -> isize {
             Vector3::new(100.0, 100.0, 1.0)
         ],
         tris: vec![Triangle ([0, 1, 2]); TEST_N],
-        transformed_indices: vec![]
+        transformed_indices: vec![],
+        lines: vec![]
     };
 
     let scale = 2.0;

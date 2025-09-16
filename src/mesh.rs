@@ -6,6 +6,7 @@ use alloc::vec::Vec;
 
 pub struct Mesh {
     pub tris: Vec<Triangle>,
+    pub lines: Vec<Line>,
     pub indices: Vec<Vector3>,
     pub transformed_indices: Vec<RVector3>
 }
@@ -13,6 +14,7 @@ impl Mesh {
     pub fn new() -> Self {
         Self {
             tris: vec![],
+            lines: vec![],
             indices: vec![],
             transformed_indices: vec![]
         }
@@ -26,3 +28,10 @@ impl Mesh {
         }
     }
 }
+
+// TODO: add normals to triangle struct? for lighting
+#[derive(Clone, Copy)]
+pub struct Triangle(pub [usize; 3]);
+
+#[derive(Clone, Copy)]
+pub struct Line(pub [usize; 2]);

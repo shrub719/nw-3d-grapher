@@ -1,4 +1,4 @@
-use crate::{ eadk::*, config::*, mat::{ RVector3, Vector3, Triangle }, mesh::Mesh };
+use crate::{ eadk::*, config::*, mat::{ RVector3, Vector3 }, mesh::{ Mesh, Triangle, Line } };
 use core::ops::{ AddAssign, SubAssign };
 #[cfg(target_os = "none")]
 use alloc::format;
