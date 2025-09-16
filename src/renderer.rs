@@ -47,7 +47,7 @@ impl FrameBuffer {
     }
 }
 
-pub fn draw_screen(mesh: &Mesh) {
+pub fn draw_screen(mesh: &Mesh, color: Color) {
     // let mut indices = [
     //     Vector3::new(random_coordinate() as f32, 0.0, 50.0),
     //     Vector3::new(0.4, 100.0, 5.09),
@@ -62,7 +62,7 @@ pub fn draw_screen(mesh: &Mesh) {
     // loops through tiles on the screen, rendering each tile separately
     let mut frame_buffer = FrameBuffer::new();
     for row in 0..FB_TILE {
-        for column in 0.. FB_TILE {
+        for column in (0..FB_TILE).rev() {
             frame_buffer.clear();
             frame_buffer.set_offset(row, column);
             for tri in &mesh.tris {
@@ -70,7 +70,8 @@ pub fn draw_screen(mesh: &Mesh) {
                     mesh.transformed_indices[tri.0[0]],
                     mesh.transformed_indices[tri.0[1]],
                     mesh.transformed_indices[tri.0[2]],
-                    &mut frame_buffer);
+                    &mut frame_buffer,
+                    color);
             }
             frame_buffer.push();
         }
@@ -78,14 +79,10 @@ pub fn draw_screen(mesh: &Mesh) {
     display::wait_for_vblank();
 }
 
-fn fill_triangle(mut v0: RVector3, mut v1: RVector3, mut v2: RVector3, frame_buffer: &mut FrameBuffer) {
+fn fill_triangle(mut v0: RVector3, mut v1: RVector3, mut v2: RVector3, frame_buffer: &mut FrameBuffer, color: Color) {
     v0 -= frame_buffer.offset_vector;
     v1 -= frame_buffer.offset_vector;
     v2 -= frame_buffer.offset_vector;
-
-    let value = (((v0.z + v1.z + v2.z) / 3.0) * 255.0) as u16;
-    let value2 = random() as u16;
-    let color = Color::from_rgb(value2, value2, value);
 
     use core::mem::swap;
     if v0.y > v1.y { swap(&mut v0, &mut v1) }

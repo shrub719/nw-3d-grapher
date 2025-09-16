@@ -79,8 +79,9 @@ pub fn main() -> isize {
     // main loop - runs every frame
     let mut keyboard_state: eadk::input::KeyboardState = eadk::input::KeyboardState::scan();
     while !keyboard_state.key_down(eadk::input::Key::Back) {
+        let color = eadk::Color::from_rgb(eadk::random() as u16, eadk::random() as u16, eadk::random() as u16);
         mesh.transform(&matrix);
-        renderer::draw_screen(&mesh);
+        renderer::draw_screen(&mesh, color);
 
         keyboard_state = eadk::input::KeyboardState::scan();
         while !(keyboard_state.key_down(eadk::input::Key::Ok) || keyboard_state.key_down(eadk::input::Key::Back)) {
