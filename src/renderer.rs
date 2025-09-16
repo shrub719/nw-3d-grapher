@@ -61,8 +61,8 @@ pub fn draw_screen(mesh: &Mesh, color: Color) {
 
     // loops through tiles on the screen, rendering each tile separately
     let mut frame_buffer = FrameBuffer::new();
-    for row in 0..FB_TILE {
-        for column in (0..FB_TILE).rev() {
+    for column in (0..FB_TILE).rev() {
+        for row in 0..FB_TILE {
             frame_buffer.clear();
             frame_buffer.set_offset(row, column);
             for tri in &mesh.tris {
