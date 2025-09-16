@@ -24,6 +24,7 @@ impl FrameBuffer {
 
     pub fn clear(&mut self) {
         self.buffer = [Color{ rgb565: 0x000 }; FB_WIDTH * FB_HEIGHT];
+        self.depth_buffer = [1.0; FB_WIDTH * FB_HEIGHT];
     }
 
     pub fn set_offset(&mut self, row: usize, column: usize) {

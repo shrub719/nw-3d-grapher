@@ -74,7 +74,7 @@ pub fn main() -> isize {
     let matrix = Matrix3 ( [
         [scale, 0.0, 0.0],
         [0.0, scale, 0.0],
-        [0.0, 0.0, scale]
+        [0.0, 0.0, 1.0]
     ] );
 
     // main loop - runs every frame
