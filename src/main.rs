@@ -1,6 +1,7 @@
 #![cfg_attr(target_os = "none", no_std)]
 #![no_main]
 #![allow(unused)]
+#![feature(f16)]
 
 #[allow(unused_imports)]
 #[cfg(target_os = "none")]
@@ -74,7 +75,7 @@ pub fn main() -> isize {
     let matrix = Matrix3 ( [
         [scale, 0.0, 0.0],
         [0.0, scale, 0.0],
-        [0.0, 0.0, scale]
+        [0.0, 0.0, 1.0]
     ] );
 
     // main loop - runs every frame
