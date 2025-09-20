@@ -39,17 +39,8 @@ mod config;
 mod renderer;
 mod mat;
 mod mesh;
-use crate::mat::*;
-use crate::mesh::*;
-use crate::config::*;
-use crate::renderer::*;
-#[cfg(target_os = "none")]
-use alloc::vec;
-
-fn random_coordinate() -> u16 {
-    return (eadk::random() % 0xFF) as u16;
-}
-
+mod grapher;
+use grapher::Grapher;
 
 #[unsafe(no_mangle)]
 pub fn main() -> isize {
@@ -59,40 +50,8 @@ pub fn main() -> isize {
         unsafe { HEAP.init(eadk::HEAP_START as usize, heap_size) }
     }
 
-    // usually this would be recalculated for every change in function/domain
-    let mut mesh = Mesh {
-        indices: vec![
-            Vector3::new(0.0, 0.0, 0.0),
-            Vector3::new(0.0, 120.0, 0.5),
-            Vector3::new(160.0, 0.0, 1.0),
-            Vector3::new(160.0, 120.0, 1.0),
-        ],
-        tris: vec![Triangle ([0, 1, 3]), Triangle ([0, 2, 3])],
-        transformed_indices: vec![],
-        lines: vec![]
-    };
+    let mut grapher = Grapher::new();
+    grapher.main_loop();
 
-    let scale = 2.0;
-    let matrix = Matrix3 ( [
-        [scale, 0.0, 0.0],
-        [0.0, scale, 0.0],
-        [0.0, 0.0, 1.0]
-    ] );
-
-    let mut rend = renderer::Renderer::new();
-
-    // main loop - runs every frame
-    let mut keyboard_state: eadk::input::KeyboardState = eadk::input::KeyboardState::scan();
-    while !keyboard_state.key_down(eadk::input::Key::Back) {
-        let color = eadk::Color::from_rgb(eadk::random() as u16, eadk::random() as u16, eadk::random() as u16);
-        mesh.transform(&matrix);
-        rend.draw_screen(&mesh, color);
-
-        keyboard_state = eadk::input::KeyboardState::scan();
-        while !(keyboard_state.key_down(eadk::input::Key::Ok) || keyboard_state.key_down(eadk::input::Key::Back)) {
-            keyboard_state = eadk::input::KeyboardState::scan();
-            eadk::timing::msleep(50);
-        }
-    }
     0
 }

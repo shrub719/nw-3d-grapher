@@ -67,18 +67,6 @@ impl Renderer {
     }
 
     pub fn draw_screen(&mut self, mesh: &Mesh, color: Color) {
-        // let mut indices = [
-        //     Vector3::new(random_coordinate() as f32, 0.0, 50.0),
-        //     Vector3::new(0.4, 100.0, 5.09),
-        //     Vector3::new(100.0, 74.0, -1.0)
-        // ];
-        // let mut tris = [Triangle ([
-        //     0, 1, 2
-        // ]); TEST_N];
-
-        // debug_info(&format!("{:?}", tris), 1000);
-
-        // loops through tiles on the screen, rendering each tile separately
         for column in (0..FB_TILE).rev() {
             for row in 0..FB_TILE {
                 self.frame_buffer.clear();
