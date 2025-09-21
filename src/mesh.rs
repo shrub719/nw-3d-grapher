@@ -3,6 +3,7 @@ use crate::mat::*;
 use alloc::vec;
 #[cfg(target_os = "none")]
 use alloc::vec::Vec;
+use crate::config::TEST_N;
 
 pub struct Mesh {
     pub tris: Vec<Triangle>,
@@ -20,44 +21,10 @@ impl Mesh {
                 Vector3::new(160.0, 0.0, 1.0),
                 Vector3::new(160.0, 120.0, 1.0),
             ],
-            tris: vec![
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-                Triangle ([0, 1, 3]), 
-                Triangle ([0, 2, 3]),
-            ],
+            tris: [
+                vec![Triangle ([0, 1, 3]); TEST_N], 
+                vec![Triangle ([0, 2, 3]); TEST_N]
+            ].concat(),
             transformed_indices: vec![],
             lines: vec![]
         }
