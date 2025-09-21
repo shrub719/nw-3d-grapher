@@ -7,4 +7,6 @@ pub const FB_WIDTH: usize = SCREEN_WIDTH / FB_TILE;
 pub const FB_HEIGHT: usize = SCREEN_HEIGHT / FB_TILE;
 
 pub const MAX_TRIS: usize = 500;
-pub const TEST_N: usize = 50;
+
+pub const TEST_N: usize = 500;
+pub const TEST_SCALE: f32 = 2.0;
