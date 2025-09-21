@@ -23,8 +23,12 @@ impl FrameBuffer {
     }
 
     pub fn clear(&mut self) {
-        self.buffer = [Color{ rgb565: 0x000 }; FB_WIDTH * FB_HEIGHT];
-        self.depth_buffer = [1.0; FB_WIDTH * FB_HEIGHT];
+        for px in self.buffer.iter_mut() {
+            *px = Color { rgb565: 0x000 };
+        }
+        for d in self.depth_buffer.iter_mut() {
+            *d = 1.0;
+        }
     }
 
     pub fn set_offset(&mut self, row: usize, column: usize) {
@@ -70,7 +74,7 @@ impl Renderer {
         for column in (0..FB_TILE).rev() {
             for row in 0..FB_TILE {
                 self.frame_buffer.clear();
-                self.frame_buffer.set_offset(row, column);
+                // self.frame_buffer.set_offset(row, column); // FIXME
                 for tri in &mesh.tris {
                     self.fill_triangle(
                         mesh.transformed_indices[tri.0[0]],
@@ -78,7 +82,7 @@ impl Renderer {
                         mesh.transformed_indices[tri.0[2]],
                         color);
                 }
-                self.frame_buffer.push();
+                // self.frame_buffer.push();  // FIXME
             }
         }
         display::wait_for_vblank();
