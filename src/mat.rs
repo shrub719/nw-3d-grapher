@@ -9,10 +9,10 @@ use alloc::vec;
 pub struct RVector3 {
     pub x: isize,
     pub y: isize,
-    pub z: f32
+    pub z: f16
 }
 impl RVector3 {
-    pub fn new(x: isize, y: isize, z: f32) -> Self {
+    pub fn new(x: isize, y: isize, z: f16) -> Self {
         Self { x, y, z }
     }
 
@@ -20,7 +20,7 @@ impl RVector3 {
         Self {
            x: vector3.x as isize,
            y: vector3.y as isize,
-           z: vector3.z
+           z: vector3.z as f16,
         }
     }
 }

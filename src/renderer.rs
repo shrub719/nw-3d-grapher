@@ -111,12 +111,11 @@ impl Renderer {
                 if x_scan >= FB_WIDTH as usize {
                     continue 'height_iter;
                 }
-                let z = v0.z as f16;
                 let index = y as usize * FB_WIDTH + x_scan;
                 let curr_depth = self.depth_buffer[index];
-                if z < curr_depth {
+                if v0.z < curr_depth {
                     self.buffer[index] = color;
-                    self.depth_buffer[index] = z;
+                    self.depth_buffer[index] = v0.z;
                 }
             }
         }
