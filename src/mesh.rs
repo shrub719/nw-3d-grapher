@@ -13,10 +13,15 @@ pub struct Mesh {
 impl Mesh {
     pub fn new() -> Self {
         Self {
-            tris: Vec::with_capacity(50),
-            lines: Vec::with_capacity(50),
-            indices: Vec::with_capacity(50),
-            transformed_indices: Vec::with_capacity(50)
+            indices: vec![
+            Vector3::new(0.0, 0.0, 0.0),
+            Vector3::new(0.0, 120.0, 0.5),
+            Vector3::new(160.0, 0.0, 1.0),
+            Vector3::new(160.0, 120.0, 1.0),
+            ],
+            tris: vec![Triangle ([0, 1, 3]), Triangle ([0, 2, 3])],
+            transformed_indices: vec![],
+            lines: vec![]
         }
     }
 

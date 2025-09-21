@@ -31,6 +31,7 @@ impl Grapher {
         let mut keyboard_state: eadk::input::KeyboardState = eadk::input::KeyboardState::scan();
         while !keyboard_state.key_down(eadk::input::Key::Back) {
             let color = eadk::Color::from_rgb(eadk::random() as u16, eadk::random() as u16, eadk::random() as u16);
+            self.mesh.transform(&matrix);
             self.renderer.draw_screen(&self.mesh, color);
 
             keyboard_state = eadk::input::KeyboardState::scan();
