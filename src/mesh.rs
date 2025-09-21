@@ -13,10 +13,10 @@ pub struct Mesh {
 impl Mesh {
     pub fn new() -> Self {
         Self {
-            tris: vec![],
-            lines: vec![],
-            indices: vec![],
-            transformed_indices: vec![]
+            tris: Vec::with_capacity(50),
+            lines: Vec::with_capacity(50),
+            indices: Vec::with_capacity(50),
+            transformed_indices: Vec::with_capacity(50)
         }
     }
 
