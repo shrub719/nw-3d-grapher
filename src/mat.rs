@@ -88,20 +88,19 @@ impl Mul<&Matrix3> for &Vector3 {
     }
 }
 
-// TODO: add Matrix4
-// TODO: should i even use a 4d matrix? 
-// they're only needed cause it makes hardware accelerated translations easier,
-// and i don't need that. a Matrix3 + Vector3 works better
-// #[derive(Debug, Clone, Copy)]
-// pub struct Matrix4(pub [[f32; 4]; 4]);
-// impl MulAssign for Matrix4 {
-//     fn mul_assign(&mut self, other: Matrix4) {
-//         let self_copy = *self;
-//         for i in 0..4 {
-            
-//         }
-//     }
-// }
+// TODO: add Matrix4 impl
+#[derive(Debug, Clone, Copy)]
+pub struct Matrix4(pub [[f32; 4]; 4]);
+impl Matrix4 {
+    pub fn new() -> Self {
+        Matrix4 ( [
+            [1.0, 0.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0, 0.0],
+            [0.0, 0.0, 1.0, 0.0],
+            [0.0, 0.0, 0.0, 1.0]
+        ] )
+    }
+}
 
 // void matrix_mul(float (&multiplier)[3][3], float (&matrix)[3][3]) {
 //     float result[3][3];

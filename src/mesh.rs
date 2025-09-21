@@ -7,9 +7,10 @@ use crate::config::*;
 
 // TODO: add projection matrix
 const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
-    [1.0, 0.0, 0.0],
-    [0.0, 1.0, 0.0],
-    [0.0, 0.0, 1.0]
+    [1.0, 0.0, 0.0, 0.0],
+    [0.0, 1.0, 0.0, 0.0],
+    [0.0, 0.0, 1.0, 0.0],
+    [0.0, 0.0, 0.0, 1.0]
 ] );
 
 struct Domain {
@@ -92,7 +93,7 @@ impl Mesh {
 
         self.transformed_indices.clear();
         for vertex in &self.indices {
-            self.transformed_indices.push(RVector3::from_vector3(vertex * matrix));
+            self.transformed_indices.push(RVector3::from_vector3(vertex * &matrix));
         }
     }
 }
