@@ -46,18 +46,6 @@ impl FrameBuffer {
             self.depth_buffer[index] = z_16;
         }
     }
-
-    pub fn push(&self) {
-        display::push_rect(
-            Rect{ 
-                x: (self.column * FB_WIDTH) as u16,
-                y: (self.row * FB_HEIGHT) as u16,
-                width: (FB_WIDTH) as u16,
-                height: (FB_HEIGHT) as u16
-            },
-            &self.buffer
-        );
-    }
 }
 
 pub struct Renderer {
@@ -74,7 +62,6 @@ impl Renderer {
         for column in (0..FB_TILE).rev() {
             for row in 0..FB_TILE {
                 self.frame_buffer.clear();
-                // self.frame_buffer.set_offset(row, column); // FIXME
                 for tri in &mesh.tris {
                     self.fill_triangle(
                         mesh.transformed_indices[tri.0[0]],
@@ -82,7 +69,15 @@ impl Renderer {
                         mesh.transformed_indices[tri.0[2]],
                         color);
                 }
-                // self.frame_buffer.push();  // FIXME
+                display::push_rect(
+                    Rect { 
+                        x: (column * FB_WIDTH) as u16,
+                        y: (row * FB_HEIGHT) as u16,
+                        width: (FB_WIDTH) as u16,
+                        height: (FB_HEIGHT) as u16
+                    },
+                    &self.frame_buffer.buffer
+                );
             }
         }
         display::wait_for_vblank();
