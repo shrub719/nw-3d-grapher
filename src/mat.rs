@@ -88,6 +88,7 @@ impl Mul<&Matrix3> for &Vector3 {
     }
 }
 
+// TODO: add Matrix4
 // TODO: should i even use a 4d matrix? 
 // they're only needed cause it makes hardware accelerated translations easier,
 // and i don't need that. a Matrix3 + Vector3 works better
