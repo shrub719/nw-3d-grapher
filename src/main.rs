@@ -39,6 +39,7 @@ mod config;
 mod renderer;
 mod mat;
 mod mesh;
+mod input;
 mod grapher;
 use grapher::Grapher;
 
