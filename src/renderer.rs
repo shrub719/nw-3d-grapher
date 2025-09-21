@@ -3,22 +3,15 @@ use core::ops::{ AddAssign, SubAssign };
 #[cfg(target_os = "none")]
 use alloc::format;
 
-// frame buffer split into several tiles each frame to accommodate for small memory
-pub struct FrameBuffer {
-    row: usize,
-    column: usize,
-    pub offset_vector: RVector3,
+pub struct Renderer {
     buffer: [Color; FB_WIDTH * FB_HEIGHT],
-    depth_buffer: [f16; FB_WIDTH * FB_HEIGHT]
+    depth_buffer: [f16; FB_WIDTH * FB_HEIGHT],
 }
-impl FrameBuffer {
+impl Renderer {
     pub fn new() -> Self {
-        Self { 
-            row: 0,
-            column: 0,
-            offset_vector: RVector3::new(0, 0, 0.0),
+        Renderer {
             buffer: [Color{ rgb565: 0x000 }; FB_WIDTH * FB_HEIGHT],
-            depth_buffer: [1.0; FB_WIDTH * FB_HEIGHT],
+            depth_buffer: [1.0; FB_WIDTH * FB_HEIGHT]
         }
     }
 
@@ -31,37 +24,10 @@ impl FrameBuffer {
         }
     }
 
-    pub fn set_offset(&mut self, row: usize, column: usize) {
-        self.row = row;
-        self.column = column;
-        self.offset_vector = RVector3::new((self.column * FB_WIDTH) as isize, (self.row * FB_HEIGHT) as isize, 0.0);
-    }
-
-    pub fn set_pixel(&mut self, x: usize, y: usize, z: f32, color: Color) {
-        let z_16 = z as f16;
-        let index = y * FB_WIDTH + x;
-        let curr_depth = self.depth_buffer[index];
-        if z_16 < curr_depth {
-            self.buffer[index] = color;
-            self.depth_buffer[index] = z_16;
-        }
-    }
-}
-
-pub struct Renderer {
-    frame_buffer: FrameBuffer
-}
-impl Renderer {
-    pub fn new() -> Self {
-        Renderer {
-            frame_buffer: FrameBuffer::new()
-        }
-    }
-
     pub fn draw_screen(&mut self, mesh: &Mesh, color: Color) {
         for column in (0..FB_TILE).rev() {
             for row in 0..FB_TILE {
-                self.frame_buffer.clear();
+                self.clear();
                 for tri in &mesh.tris {
                     self.fill_triangle(
                         mesh.transformed_indices[tri.0[0]],
@@ -76,7 +42,7 @@ impl Renderer {
                         width: (FB_WIDTH) as u16,
                         height: (FB_HEIGHT) as u16
                     },
-                    &self.frame_buffer.buffer
+                    &self.buffer
                 );
             }
         }
@@ -84,9 +50,9 @@ impl Renderer {
     }
 
     fn fill_triangle(&mut self, mut v0: RVector3, mut v1: RVector3, mut v2: RVector3, color: Color) {
-        v0 -= self.frame_buffer.offset_vector;
-        v1 -= self.frame_buffer.offset_vector;
-        v2 -= self.frame_buffer.offset_vector;
+        // v0 -= self.frame_buffer.offset_vector;
+        // v1 -= self.frame_buffer.offset_vector;
+        // v2 -= self.frame_buffer.offset_vector;
 
         use core::mem::swap;
         if v0.y > v1.y { swap(&mut v0, &mut v1) }
@@ -138,7 +104,13 @@ impl Renderer {
                 if x_scan >= FB_WIDTH as usize {
                     continue 'height_iter;
                 }
-                self.frame_buffer.set_pixel(x_scan, y as usize, v0.z, color);  // TODO: linearly interpolate depth
+                let z = v0.z as f16;
+                let index = y as usize * FB_WIDTH + x_scan;
+                let curr_depth = self.depth_buffer[index];
+                if z < curr_depth {
+                    self.buffer[index] = color;
+                    self.depth_buffer[index] = z;
+                }
             }
         }
     }
