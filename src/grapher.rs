@@ -19,7 +19,7 @@ impl Grapher {
     }
 
     pub fn main_loop(&mut self) {
-        let scale = 2.0;
+        let scale = 1.0;
         let matrix = Matrix3 ( [
             [scale, 0.0, 0.0],
             [0.0, scale, 0.0],

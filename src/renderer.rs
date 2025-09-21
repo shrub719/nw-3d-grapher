@@ -29,11 +29,18 @@ impl Renderer {
             for row in 0..FB_TILE {
                 self.clear();
                 for tri in &mesh.tris {
+                    let offset_vector = RVector3::new(
+                        (column * FB_WIDTH) as isize, 
+                        (row * FB_HEIGHT) as isize, 
+                        0.0
+                    );
                     self.fill_triangle(
                         mesh.transformed_indices[tri.0[0]],
                         mesh.transformed_indices[tri.0[1]],
                         mesh.transformed_indices[tri.0[2]],
-                        color);
+                        offset_vector,
+                        color
+                    );
                 }
                 display::push_rect(
                     Rect { 
@@ -49,10 +56,10 @@ impl Renderer {
         display::wait_for_vblank();
     }
 
-    fn fill_triangle(&mut self, mut v0: RVector3, mut v1: RVector3, mut v2: RVector3, color: Color) {
-        // v0 -= self.frame_buffer.offset_vector;
-        // v1 -= self.frame_buffer.offset_vector;
-        // v2 -= self.frame_buffer.offset_vector;
+    fn fill_triangle(&mut self, mut v0: RVector3, mut v1: RVector3, mut v2: RVector3, offset_vector: RVector3, color: Color) {
+        v0 -= offset_vector;
+        v1 -= offset_vector;
+        v2 -= offset_vector;
 
         use core::mem::swap;
         if v0.y > v1.y { swap(&mut v0, &mut v1) }

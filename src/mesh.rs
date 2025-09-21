@@ -13,6 +13,7 @@ pub struct Mesh {
 impl Mesh {
     pub fn new() -> Self {
         Self {
+            // TODO: remember to use with_capacity
             indices: vec![
                 Vector3::new(0.0, 0.0, 0.0),
                 Vector3::new(0.0, 120.0, 0.5),
