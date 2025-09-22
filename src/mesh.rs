@@ -86,7 +86,7 @@ impl Mesh {
         }
     }
 
-    pub fn rotate(&mut self, rotation_direction: Vector3) {
+    pub fn update_rotation(&mut self, rotation_direction: Vector3) {
         // TODO: do this nicer
         self.rotation.x += rotation_direction.x * ROTATION_SPEED;
         self.rotation.y += rotation_direction.y * ROTATION_SPEED;

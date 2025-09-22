@@ -31,7 +31,7 @@ impl Grapher {
                 // regen mesh
             }
             if self.input.upd.rotation {
-                self.mesh.rotate(self.input.rotation_direction);
+                self.mesh.update_rotation(self.input.rotation_direction);
             }
 
             self.mesh.transform();
