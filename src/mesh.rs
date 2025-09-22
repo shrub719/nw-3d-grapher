@@ -8,8 +8,8 @@ use crate::config::*;
 
 // TODO: add projection matrix
 const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
-    [1.0, 0.0, 0.0, 160.0],
-    [0.0, 1.0, 0.0, 120.0],
+    [160.0, 0.0, 0.0, 160.0],
+    [0.0, 120.0, 0.0, 120.0],
     [0.0, 0.0, 1.0, 0.0],
     [0.0, 0.0, 0.0, 1.0]
 ] );
@@ -20,28 +20,42 @@ struct Domain {
     pub z0: f32,
     pub x1: f32,
     pub y1: f32,
-    pub z1: f32
+    pub z1: f32,
+    pub matrix: Matrix4
 }
 impl Domain {
     pub fn new() -> Self {
         Domain {
-            x0: -10.0,
-            y0: -10.0,
-            z0: -10.0,
-            x1: 10.0,
-            y1: 10.0,
-            z1: 10.0
+            x0: 0.0,
+            y0: 0.0,
+            z0: 0.0,
+            x1: 320.0,
+            y1: 240.0,
+            z1: 1.0,
+            matrix: Matrix4::new()
         }
     }
 
-    pub fn get_domain_matrix(&self) -> Matrix4 {
-        Matrix4 ( [
-            [1.0, 0.0, 0.0, -160.0],
-            [0.0, 1.0, 0.0, -120.0],
-            [0.0, 0.0, 1.0, 0.0],
-            [0.0, 0.0, 0.0, 1.0]
+    pub fn update_matrix(&mut self) {
+        // TODO: only get on update
+        let dx = self.x1 - self.x0;
+        let dy = self.y1 - self.y0;
+        let dz = self.z1 - self.z0;
+
+        let x_scale = 2.0 / dx;
+        let y_scale = 2.0 / dy;
+        let z_scale = 2.0 / dz;
+
+        let x_trans = -self.x0 - dx/2.0;
+        let y_trans = -self.y0 - dy/2.0;
+        let z_trans = -self.z0 - dz/2.0;
+
+        self.matrix = Matrix4 ( [
+            [x_scale, 0.0    , 0.0    , x_trans*x_scale],
+            [0.0    , y_scale, 0.0    , y_trans*y_scale],
+            [0.0    , 0.0    , z_scale, z_trans*z_scale],
+            [0.0    , 0.0    , 0.0    , 1.0            ]
         ] )
-        // TODO
     }
 }
 
@@ -121,6 +135,10 @@ impl Mesh {
         }
     }
 
+    pub fn update_domain(&mut self) {
+        self.domain.update_matrix();
+    }
+
     pub fn update_rotation(&mut self, rotation_direction: Vector3) {
         // TODO: do this nicer
         self.rotation.x += rotation_direction.x * ROTATION_SPEED;
@@ -131,7 +149,7 @@ impl Mesh {
     pub fn transform(&mut self) {
         let mut matrix = PROJECTION_MATRIX;
         matrix *= self.rotation.get_rotation_matrix();
-        matrix *= self.domain.get_domain_matrix();
+        matrix *= self.domain.matrix;
 
         self.transformed_indices.clear();
         for vertex in &self.indices {
