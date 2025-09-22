@@ -1,11 +1,18 @@
 use crate::{mat::*, eadk::input::*};
 
-#[derive(Default)]
 pub struct Updates {
     pub domain: bool,
     pub rotation: bool,
-    pub quit: bool,
-    pub cont: bool
+    pub quit: bool
+}
+impl Default for Updates {
+    fn default() -> Self {
+        Updates {
+            domain: false,
+            rotation: false,
+            quit: false
+        }
+    }
 }
 
 pub struct InputHandler {
@@ -16,7 +23,11 @@ pub struct InputHandler {
 impl InputHandler {
     pub fn new() -> Self {
         InputHandler {
-            upd: Updates::default(),
+            upd: Updates {
+                domain: true,
+                rotation: true,
+                quit: false
+            },
             keyboard_state: KeyboardState::scan(),
             rotation_direction: Vector3::new(0.0, 0.0, 0.0)
         }
@@ -53,9 +64,6 @@ impl InputHandler {
             self.rotation_direction.z = -1.0;
         }
         
-        if self.keyboard_state.key_down(Key::Ok) {
-            self.upd.cont = true;
-        }
         if self.keyboard_state.key_down(Key::Home) {
             self.upd.quit = true;
         }

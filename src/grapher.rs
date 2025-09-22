@@ -25,9 +25,9 @@ impl Grapher {
         // main loop - runs every frame
         let color = eadk::Color::from_rgb(eadk::random() as u16, eadk::random() as u16, eadk::random() as u16);
         while !self.input.upd.quit {
-            self.input.update();
             if self.input.upd.domain {
-                // regen mesh
+                eadk::debug_info(&"updating domain", 300);
+                self.mesh.update_domain();
             }
             if self.input.upd.rotation {
                 self.mesh.update_rotation(self.input.rotation_direction);
@@ -35,6 +35,8 @@ impl Grapher {
 
             self.mesh.transform();
             self.renderer.draw_screen(&self.mesh, color);
+
+            self.input.update();
         }
     }
 }

@@ -37,7 +37,6 @@ impl Domain {
     }
 
     pub fn update_matrix(&mut self) {
-        // TODO: only get on update
         let dx = self.x1 - self.x0;
         let dy = self.y1 - self.y0;
         let dz = self.z1 - self.z0;
