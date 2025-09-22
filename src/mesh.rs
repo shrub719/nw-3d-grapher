@@ -32,6 +32,10 @@ impl Domain {
             z1: 10.0
         }
     }
+
+    pub fn get_domain_matrix(&self) -> Matrix4 {
+        Matrix4::new()
+    }
 }
 
 struct Rotation {
@@ -47,6 +51,10 @@ impl Rotation {
             z: 0.0
         }
     }
+
+    pub fn get_rotation_matrix(&self) -> Matrix4 {
+        Matrix4::new()
+    }
 }
 
 pub struct Mesh {
@@ -55,8 +63,7 @@ pub struct Mesh {
     pub indices: Vec<Vector3>,
     pub transformed_indices: Vec<RVector3>,
     domain: Domain,
-    rotation: Rotation,
-    projection_matrix: Matrix4
+    rotation: Rotation
 }
 impl Mesh {
     pub fn new() -> Self {
@@ -76,7 +83,6 @@ impl Mesh {
             lines: vec![],
             domain: Domain::new(),
             rotation: Rotation::new(),
-            projection_matrix: PROJECTION_MATRIX
         }
     }
 
@@ -90,6 +96,9 @@ impl Mesh {
     // FIXME: the copying/referencing here is all over the place
     pub fn transform(&mut self) {
         let mut matrix = Matrix4::new();
+        matrix *= self.domain.get_domain_matrix();
+        matrix *= self.rotation.get_rotation_matrix();
+        matrix *= PROJECTION_MATRIX;
 
         self.transformed_indices.clear();
         for vertex in &self.indices {

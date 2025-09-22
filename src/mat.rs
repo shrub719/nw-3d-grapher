@@ -87,6 +87,22 @@ impl Mul<&Matrix3> for &Vector3 {
         result
     }
 }
+impl Mul<&Matrix4> for &Vector3 {
+    type Output = Vector3;
+
+    fn mul(self, matrix: &Matrix4) -> Vector3 {
+        let self_4 = [self.x, self.y, self.z, 1.0];
+        let mut result = Vector3::new(0.0, 0.0, 0.0);
+        for i in 0..4 {
+            let mut sum: f32 = 0.0;
+            for j in 0..4 {
+                sum += matrix.0[i][j] * self_4[j];
+            }
+            result[i] = sum;
+        }
+        result
+    }
+}
 
 // TODO: add Matrix4 impl
 #[derive(Debug, Clone, Copy)]
@@ -101,6 +117,22 @@ impl Matrix4 {
         ] )
     }
 }
+impl MulAssign for Matrix4 {
+    fn mul_assign(&mut self, other: Matrix4) {
+        let self_copy = *self;
+        for i in 0..4 {
+            for j in 0..4 {
+                let mut sum: f32 = 0.0;
+                for k in 0..4 {
+                    // OTHER * SELF so that other transformation applies after self
+                    sum += other.0[k][j] * self_copy.0[i][k];
+                }
+                self.0[i][j] = sum;
+            }
+        }
+    }
+}
+
 
 // void matrix_mul(float (&multiplier)[3][3], float (&matrix)[3][3]) {
 //     float result[3][3];

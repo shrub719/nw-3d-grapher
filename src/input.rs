@@ -18,6 +18,11 @@ impl InputHandler {
 
     pub fn update(&mut self) {
         self.keyboard_state = KeyboardState::scan();
+        self.rotation_direction = Vector3::new(0.0, 0.0, 0.0);
+
+        if self.keyboard_state.key_down(Key::Left) {
+            self.rotation_direction.x = 1.0;
+        }
     }
 }
 
