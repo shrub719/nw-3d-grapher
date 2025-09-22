@@ -1,6 +1,6 @@
 pub const ROTATION_SPEED: f32 = 0.2;
 
-pub const TEST_N: usize = 500;
+pub const TEST_N: usize = 5;
 pub const TEST_SCALE: f32 = 2.0;
 
 pub const SCREEN_WIDTH: usize = 320;

@@ -23,9 +23,8 @@ impl Grapher {
 
     pub fn main_loop(&mut self) {
         // main loop - runs every frame
+        let color = eadk::Color::from_rgb(eadk::random() as u16, eadk::random() as u16, eadk::random() as u16);
         while !self.input.upd.quit {
-            let color = eadk::Color::from_rgb(eadk::random() as u16, eadk::random() as u16, eadk::random() as u16);
-
             self.input.update();
             if self.input.upd.domain {
                 // regen mesh
@@ -36,11 +35,6 @@ impl Grapher {
 
             self.mesh.transform();
             self.renderer.draw_screen(&self.mesh, color);
-
-            while !self.input.upd.cont {
-                self.input.update();
-                eadk::timing::msleep(50);
-            }
         }
     }
 }
