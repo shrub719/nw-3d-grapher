@@ -36,8 +36,9 @@ pub static EADK_APP_ICON: [u8; 2769] = *include_bytes!("../target/icon.nwi");
 
 pub mod eadk;
 mod config;
-mod renderer;
+mod trig;
 mod mat;
+mod renderer;
 mod mesh;
 mod input;
 mod grapher;
