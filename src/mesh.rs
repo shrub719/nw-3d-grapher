@@ -8,8 +8,8 @@ use crate::config::*;
 
 // TODO: add projection matrix
 const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
-    [1.0, 0.0, 0.0, 0.0],
-    [0.0, 1.0, 0.0, 0.0],
+    [1.0, 0.0, 0.0, 160.0],
+    [0.0, 1.0, 0.0, 120.0],
     [0.0, 0.0, 1.0, 0.0],
     [0.0, 0.0, 0.0, 1.0]
 ] );
@@ -35,7 +35,13 @@ impl Domain {
     }
 
     pub fn get_domain_matrix(&self) -> Matrix4 {
-        Matrix4::new()  // TODO
+        Matrix4 ( [
+            [1.0, 0.0, 0.0, -160.0],
+            [0.0, 1.0, 0.0, -120.0],
+            [0.0, 0.0, 1.0, 0.0],
+            [0.0, 0.0, 0.0, 1.0]
+        ] )
+        // TODO
     }
 }
 
@@ -100,9 +106,9 @@ impl Mesh {
             // TODO: remember to use with_capacity
             indices: vec![
                 Vector3::new(0.0, 0.0, 0.0),
-                Vector3::new(0.0, 120.0, 0.5),
-                Vector3::new(160.0, 0.0, 1.0),
-                Vector3::new(160.0, 120.0, 1.0),
+                Vector3::new(0.0, 120.0, 0.0),
+                Vector3::new(160.0, 0.0, 0.0),
+                Vector3::new(160.0, 120.0, 0.0),
             ],
             tris: [
                 vec![Triangle ([0, 1, 3]); TEST_N], 
@@ -123,10 +129,9 @@ impl Mesh {
     }
 
     pub fn transform(&mut self) {
-        let mut matrix = Matrix4::new();
-        matrix *= self.domain.get_domain_matrix();
+        let mut matrix = PROJECTION_MATRIX;
         matrix *= self.rotation.get_rotation_matrix();
-        matrix *= PROJECTION_MATRIX;
+        matrix *= self.domain.get_domain_matrix();
 
         self.transformed_indices.clear();
         for vertex in &self.indices {
