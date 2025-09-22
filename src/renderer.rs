@@ -25,7 +25,7 @@ impl Renderer {
     }
 
     pub fn draw_screen(&mut self, mesh: &Mesh, color: Color) {
-        for column in (0..FB_TILE).rev() {
+        for column in 0..FB_TILE {
             for row in 0..FB_TILE {
                 self.clear();
                 for tri in &mesh.tris {
