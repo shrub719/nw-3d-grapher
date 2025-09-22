@@ -23,7 +23,7 @@ impl Grapher {
 
     pub fn main_loop(&mut self) {
         // main loop - runs every frame
-        while !self.input.keyboard_state.key_down(eadk::input::Key::Back) {
+        while !self.input.quit {
             let color = eadk::Color::from_rgb(eadk::random() as u16, eadk::random() as u16, eadk::random() as u16);
 
             self.input.update();
@@ -37,7 +37,7 @@ impl Grapher {
             self.mesh.transform();
             self.renderer.draw_screen(&self.mesh, color);
 
-            while !(self.input.keyboard_state.key_down(eadk::input::Key::Ok) || self.input.keyboard_state.key_down(eadk::input::Key::Back)) {
+            while !self.input.cont {
                 self.input.update();
                 eadk::timing::msleep(50);
             }
