@@ -98,7 +98,9 @@ impl Mul<Matrix4> for Vector3 {
             for j in 0..4 {
                 sum += matrix.0[i][j] * self_4[j];
             }
-            result[i] = sum;
+            if i != 3 {
+                result[i] = sum;
+            }
         }
         result
     }
