@@ -23,21 +23,21 @@ impl Grapher {
 
     pub fn main_loop(&mut self) {
         // main loop - runs every frame
-        while !self.input.quit {
+        while !self.input.upd.quit {
             let color = eadk::Color::from_rgb(eadk::random() as u16, eadk::random() as u16, eadk::random() as u16);
 
             self.input.update();
-            if self.input.update_domain {
+            if self.input.upd.domain {
                 // regen mesh
             }
-            if self.input.update_rotation {
+            if self.input.upd.rotation {
                 self.mesh.rotate(self.input.rotation_direction);
             }
 
             self.mesh.transform();
             self.renderer.draw_screen(&self.mesh, color);
 
-            while !self.input.cont {
+            while !self.input.upd.cont {
                 self.input.update();
                 eadk::timing::msleep(50);
             }
