@@ -1,4 +1,5 @@
 use crate::mat::*;
+use crate::trig::*;
 #[cfg(target_os = "none")]
 use alloc::vec;
 #[cfg(target_os = "none")]
@@ -53,7 +54,35 @@ impl Rotation {
     }
 
     pub fn get_rotation_matrix(&self) -> Matrix4 {
-        Matrix4::new()
+        let mut matrix = Matrix4::new();
+
+        let sin_x = sin(self.x);
+        let cos_x = cos(self.x);
+        let sin_y = sin(self.y);
+        let cos_y = cos(self.y);
+        let sin_z = sin(self.z);
+        let cos_z = cos(self.z);
+
+        matrix *= Matrix4 ( [
+            [1.0   , 0.0   , 0.0   , 0.0],
+            [0.0   , cos_x , -sin_x, 0.0],
+            [0.0   , sin_x , cos_x , 0.0],
+            [0.0   , 0.0   , 0.0   , 1.0]
+        ] );
+        matrix *= Matrix4 ( [
+            [cos_y , 0.0   , sin_y , 0.0],
+            [0.0   , 1.0   , 0.0   , 0.0],
+            [-sin_y, 0.0   , cos_y , 0.0],
+            [0.0   , 0.0   , 0.0   , 1.0]
+        ] );
+        matrix *= Matrix4 ( [
+            [cos_z , -sin_z, 0.0   , 0.0],
+            [sin_z , cos_z , 0.0   , 0.0],
+            [0.0   , 0.0   , 1.0   , 0.0],
+            [0.0   , 0.0   , 0.0   , 1.0]
+        ] );
+
+        matrix
     }
 }
 
