@@ -18,7 +18,7 @@
 - [x] File structure
 - [x] Rasterise dummy camera space mesh
 - [ ] Transform dummy object space mesh to camera space
-- [ ] Transform dummy domain space mesh to camera space
+- [x] Transform dummy domain space mesh to camera space
 - [ ] Generate domain space mesh from explicit function
 - [ ] Generate domain space mesh from implicit function with marching cubes
     - [ ] March those cubes (create cube loop that minimises redundant calculation)

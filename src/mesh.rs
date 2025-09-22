@@ -6,11 +6,10 @@ use alloc::vec;
 use alloc::vec::Vec;
 use crate::config::*;
 
-// TODO: add projection matrix
 const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
     [160.0, 0.0, 0.0, 160.0],
     [0.0, 120.0, 0.0, 120.0],
-    [0.0, 0.0, 1.0, 0.0],
+    [0.0, 0.0, 1.0, 0.0],     // TODO: what's going on with the z coord
     [0.0, 0.0, 0.0, 1.0]
 ] );
 
@@ -139,7 +138,6 @@ impl Mesh {
     }
 
     pub fn update_rotation(&mut self, rotation_direction: Vector3) {
-        // TODO: do this nicer
         self.rotation.x += rotation_direction.x * ROTATION_SPEED;
         self.rotation.y += rotation_direction.y * ROTATION_SPEED;
         self.rotation.z += rotation_direction.z * ROTATION_SPEED;
