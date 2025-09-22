@@ -104,7 +104,6 @@ impl Mul<Matrix4> for Vector3 {
     }
 }
 
-// TODO: add Matrix4 impl
 #[derive(Debug, Clone, Copy)]
 pub struct Matrix4(pub [[f32; 4]; 4]);
 impl Matrix4 {
