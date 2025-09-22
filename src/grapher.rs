@@ -22,14 +22,6 @@ impl Grapher {
     }
 
     pub fn main_loop(&mut self) {
-        let scale = TEST_SCALE;
-        let matrix = Matrix3 ( [
-            [scale, 0.0, 0.0],
-            [0.0, scale, 0.0],
-            [0.0, 0.0, 1.0]
-        ] );
-
-
         // main loop - runs every frame
         while !self.input.keyboard_state.key_down(eadk::input::Key::Back) {
             let color = eadk::Color::from_rgb(eadk::random() as u16, eadk::random() as u16, eadk::random() as u16);

@@ -72,25 +72,25 @@ impl IndexMut<usize> for Vector3 {
     }
 }
 // technically the wrong order but idc
-impl Mul<&Matrix3> for &Vector3 {
+// impl Mul<&Matrix3> for &Vector3 {
+//     type Output = Vector3;
+
+//     fn mul(self, matrix: &Matrix3) -> Vector3 {
+//         let mut result = Vector3::new(0.0, 0.0, 0.0);
+//         for i in 0..3 {
+//             let mut sum: f32 = 0.0;
+//             for j in 0..3 {
+//                 sum += matrix.0[i][j] * self[j];
+//             }
+//             result[i] = sum;
+//         }
+//         result
+//     }
+// }
+impl Mul<Matrix4> for Vector3 {
     type Output = Vector3;
 
-    fn mul(self, matrix: &Matrix3) -> Vector3 {
-        let mut result = Vector3::new(0.0, 0.0, 0.0);
-        for i in 0..3 {
-            let mut sum: f32 = 0.0;
-            for j in 0..3 {
-                sum += matrix.0[i][j] * self[j];
-            }
-            result[i] = sum;
-        }
-        result
-    }
-}
-impl Mul<&Matrix4> for &Vector3 {
-    type Output = Vector3;
-
-    fn mul(self, matrix: &Matrix4) -> Vector3 {
+    fn mul(self, matrix: Matrix4) -> Vector3 {
         let self_4 = [self.x, self.y, self.z, 1.0];
         let mut result = Vector3::new(0.0, 0.0, 0.0);
         for i in 0..4 {
@@ -154,20 +154,20 @@ impl MulAssign for Matrix4 {
 // }
 
 // again, wrong order... kinda? *= isn't a mathematical operator
-#[derive(Debug, Clone, Copy)]
-pub struct Matrix3(pub [[f32; 3]; 3]);
-impl MulAssign for Matrix3 {
-    fn mul_assign(&mut self, other: Matrix3) {
-        let self_copy = *self;
-        for i in 0..3 {
-            for j in 0..3 {
-                let mut sum: f32 = 0.0;
-                for k in 0..3 {
-                    // OTHER * SELF so that other transformation applies after self
-                    sum += other.0[k][j] * self_copy.0[i][k];
-                }
-                self.0[i][j] = sum;
-            }
-        }
-    }
-}
+// #[derive(Debug, Clone, Copy)]
+// pub struct Matrix3(pub [[f32; 3]; 3]);
+// impl MulAssign for Matrix3 {
+//     fn mul_assign(&mut self, other: Matrix3) {
+//         let self_copy = *self;
+//         for i in 0..3 {
+//             for j in 0..3 {
+//                 let mut sum: f32 = 0.0;
+//                 for k in 0..3 {
+//                     // OTHER * SELF so that other transformation applies after self
+//                     sum += other.0[k][j] * self_copy.0[i][k];
+//                 }
+//                 self.0[i][j] = sum;
+//             }
+//         }
+//     }
+// }

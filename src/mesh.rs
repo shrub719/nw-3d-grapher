@@ -93,7 +93,6 @@ impl Mesh {
         self.rotation.z += rotation_direction.z * ROTATION_SPEED;
     }
 
-    // FIXME: the copying/referencing here is all over the place
     pub fn transform(&mut self) {
         let mut matrix = Matrix4::new();
         matrix *= self.domain.get_domain_matrix();
@@ -102,7 +101,7 @@ impl Mesh {
 
         self.transformed_indices.clear();
         for vertex in &self.indices {
-            self.transformed_indices.push(RVector3::from_vector3(vertex * &matrix));
+            self.transformed_indices.push(RVector3::from_vector3(*vertex * matrix));
         }
     }
 }
