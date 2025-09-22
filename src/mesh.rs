@@ -118,10 +118,10 @@ impl Mesh {
         Self {
             // TODO: remember to use with_capacity
             indices: vec![
-                Vector3::new(0.0, 0.0, 0.0),
-                Vector3::new(0.0, 120.0, 0.0),
-                Vector3::new(160.0, 0.0, 0.0),
-                Vector3::new(160.0, 120.0, 0.0),
+                Vector3::new(140.0, 100.0, 0.0),
+                Vector3::new(140.0, 140.0, 0.0),
+                Vector3::new(180.0, 100.0, 0.0),
+                Vector3::new(180.0, 140.0, 0.0),
             ],
             tris: [
                 vec![Triangle ([0, 1, 3]); TEST_N], 
