@@ -44,5 +44,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: nw-3d-grapher
-          path: target/**/NW3DGrapher
+          path: target/**/nw_3d_grapher
         
