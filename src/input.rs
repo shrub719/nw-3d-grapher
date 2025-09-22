@@ -27,9 +27,30 @@ impl InputHandler {
         self.rotation_direction = Vector3::new(0.0, 0.0, 0.0);
         self.upd = Updates::default();
 
-        if self.keyboard_state.key_down(Key::Left) {
+        // TODO: do this nicer
+        if self.keyboard_state.key_down(Key::Down) {
             self.upd.rotation = true;
             self.rotation_direction.x = 1.0;
+        }
+        else if self.keyboard_state.key_down(Key::Up) {
+            self.upd.rotation = true;
+            self.rotation_direction.x = -1.0;
+        }
+        if self.keyboard_state.key_down(Key::Left) {
+            self.upd.rotation = true;
+            self.rotation_direction.y = 1.0;
+        }
+        else if self.keyboard_state.key_down(Key::Right) {
+            self.upd.rotation = true;
+            self.rotation_direction.y = -1.0;
+        }
+        if self.keyboard_state.key_down(Key::Shift) {
+            self.upd.rotation = true;
+            self.rotation_direction.z = 1.0;
+        }
+        else if self.keyboard_state.key_down(Key::Alpha) {
+            self.upd.rotation = true;
+            self.rotation_direction.z = -1.0;
         }
         
         if self.keyboard_state.key_down(Key::Ok) {
