@@ -88,14 +88,21 @@ impl Renderer {
             };
 
             let mut x_left = v0.x as f32 + ((v2.x - v0.x) as f32 * height_progress);
-            let mut x_right = if is_second_half {
-                v1.x as f32 + ((v2.x - v1.x) as f32 * segment_progress)
+            let mut z_left = v0.z + ((v2.z - v0.z) * height_progress);
+
+            let mut x_right;
+            let mut z_right;
+            if is_second_half {
+                x_right = v1.x as f32 + ((v2.x - v1.x) as f32 * segment_progress);
+                z_right = v1.z + ((v2.z - v1.z) * segment_progress);
             } else {
-                v0.x as f32 + ((v1.x - v0.x) as f32 * segment_progress)
-            };
+                x_right = v0.x as f32 + ((v1.x - v0.x) as f32 * segment_progress);
+                z_right = v0.z + ((v1.z - v0.z) * segment_progress);
+            }
 
             if x_left > x_right {
                 swap(&mut x_left, &mut x_right);
+                swap(&mut z_left, &mut z_right);
             }
 
             let y = v0.y + y_scan;
@@ -110,16 +117,24 @@ impl Renderer {
                 continue 'height_iter;
             }
 
+            let scan_width = x_right - x_left;
             for x_scan in (x_left as usize)..=(x_right as usize) {
                 if x_scan >= FB_WIDTH as usize {
                     continue 'height_iter;
                 }
+
+                let scan_progress = if scan_width != 0.0 {
+                    (x_scan as f32 - x_left) / scan_width
+                } else {
+                    0.0
+                };
+                let z = (z_left + (z_right - z_left) * scan_progress) as f16;
+
                 let index = y as usize * FB_WIDTH + x_scan;
                 let curr_depth = self.depth_buffer[index];
-                let z_16 = v0.z as f16;
-                if z_16 < curr_depth {
+                if z < curr_depth {
                     self.buffer[index] = color;
-                    self.depth_buffer[index] = z_16;
+                    self.depth_buffer[index] = z;
                 }
             }
         }
