@@ -1,5 +1,5 @@
 pub mod settings {
-    pub const ROTATION_SPEED: f32 = 0.2;
+    pub const ROTATION_SPEED: f32 = 0.1;
 }
 
 pub mod test {

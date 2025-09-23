@@ -12,10 +12,13 @@ fn wrap_pi(mut x: f32) -> f32 {
 
 pub fn sin(mut x: f32) -> f32 {
     x = wrap_pi(x);
-    let x3 = x * x * x;
-    let x5 = x3 * x * x;
-    let x7 = x5 * x * x;
-    x - x3 / 6.0 + x5 / 120.0 - x7 / 5040.0
+    let x2 = x * x;
+    let x3 = x * x2;
+    let x5 = x3 * x2;
+    let x7 = x5 * x2;
+    let x9 = x7 * x2;
+
+    x - x3 / 6.0 + x5 / 120.0 - x7 / 5040.0 + x9 / 362880.0
 }
 
 pub fn cos(mut x: f32) -> f32 {
@@ -23,5 +26,7 @@ pub fn cos(mut x: f32) -> f32 {
     let x2 = x * x;
     let x4 = x2 * x2;
     let x6 = x4 * x2;
-    return 1.0 - x2 / 2.0 + x4 / 24.0 - x6 / 720.0;
+    let x8 = x6 * x2;
+    
+    1.0 - x2 / 2.0 + x4 / 24.0 - x6 / 720.0 + x8 / 40320.0
 }
