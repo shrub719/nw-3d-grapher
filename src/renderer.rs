@@ -28,12 +28,12 @@ impl Renderer {
         for column in 0..FB_TILE {
             for row in 0..FB_TILE {
                 self.clear();
+                let offset_vector = RVector3::new(
+                    (MARGIN_TOP + column * FB_WIDTH) as isize, 
+                    (MARGIN_SIDE + row * FB_HEIGHT) as isize, 
+                    0.0
+                );
                 for tri in &mesh.tris {
-                    let offset_vector = RVector3::new(
-                        (column * FB_WIDTH) as isize, 
-                        (row * FB_HEIGHT) as isize, 
-                        0.0
-                    );
                     self.fill_triangle(
                         mesh.transformed_indices[tri.0[0]],
                         mesh.transformed_indices[tri.0[1]],
@@ -44,8 +44,8 @@ impl Renderer {
                 }
                 display::push_rect(
                     Rect { 
-                        x: (column * FB_WIDTH) as u16,
-                        y: (row * FB_HEIGHT) as u16,
+                        x: offset_vector.x as u16,
+                        y: offset_vector.y as u16,
                         width: (FB_WIDTH) as u16,
                         height: (FB_HEIGHT) as u16
                     },
