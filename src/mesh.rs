@@ -130,13 +130,18 @@ impl Mesh {
                 Vector3::new(3.0, 3.0, -10.0),
             ],
             tris: vec![
+                // square1
                 [Triangle ([0, 1, 3]); test::TEST_N], 
                 [Triangle ([0, 2, 3]); test::TEST_N],
+
+                // square2
                 [Triangle ([4, 5, 7]); test::TEST_N], 
                 [Triangle ([4, 6, 7]); test::TEST_N],
 
+                // side1
                 [Triangle ([0, 1, 4]); test::TEST_N], 
                 [Triangle ([1, 4, 5]); test::TEST_N],
+                // FIXME: index oob: 604057136
             ].concat(),
             transformed_indices: vec![],
             lines: vec![],

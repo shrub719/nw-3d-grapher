@@ -30,9 +30,10 @@ impl Renderer {
                     (MARGIN_TOP + row * FB_HEIGHT) as isize, 
                     0.0
                 );
-                let mut i: u16 = 0;
+                let mut value: u16 = 0;
+                let inc = (255 / &mesh.tris.len()) as u16;
                 for tri in &mesh.tris {
-                    let color = Color::from_rgb(i, i, 255);
+                    let color = Color::from_rgb(value, value, 255);
                     self.fill_triangle(
                         mesh.transformed_indices[tri.0[0]],
                         mesh.transformed_indices[tri.0[1]],
@@ -40,7 +41,7 @@ impl Renderer {
                         offset_vector,
                         color
                     );
-                    i += 20
+                    value += inc;
                 }
                 display::push_rect(
                     Rect { 

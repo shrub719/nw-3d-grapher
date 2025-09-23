@@ -3,7 +3,7 @@ pub mod settings {
 }
 
 pub mod test {
-    pub const TEST_N: usize = 5;
+    pub const TEST_N: usize = 8;
     pub const TEST_SCALE: f32 = 2.0;
 }
 
