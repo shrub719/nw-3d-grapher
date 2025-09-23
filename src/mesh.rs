@@ -27,7 +27,7 @@ impl Domain {
         Domain {
             x0: -10.0,
             y0: -10.0,
-            z0: -100.0,
+            z0: -10.0,
             x1: 10.0,
             y1: 10.0,
             z1: 10.0,
@@ -121,10 +121,16 @@ impl Mesh {
                 Vector3::new(-3.0, 3.0, 10.0),
                 Vector3::new(3.0, -3.0, 10.0),
                 Vector3::new(3.0, 3.0, 10.0),
+                Vector3::new(-3.0, -3.0, -10.0),
+                Vector3::new(-3.0, 3.0, -10.0),
+                Vector3::new(3.0, -3.0, -10.0),
+                Vector3::new(3.0, 3.0, -10.0),
             ],
             tris: vec![
                 [Triangle ([0, 1, 3]); test::TEST_N], 
-                [Triangle ([0, 2, 3]); test::TEST_N]
+                [Triangle ([0, 2, 3]); test::TEST_N],
+                [Triangle ([4, 5, 7]); test::TEST_N], 
+                [Triangle ([4, 6, 7]); test::TEST_N],
             ].concat(),
             transformed_indices: vec![],
             lines: vec![],

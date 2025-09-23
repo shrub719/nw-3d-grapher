@@ -24,7 +24,7 @@ impl Renderer {
         }
     }
 
-    pub fn draw_screen(&mut self, mesh: &Mesh, color: Color) {
+    pub fn draw_screen(&mut self, mesh: &Mesh) {
         for column in 0..FB_TILE {
             for row in 0..FB_TILE {
                 self.clear();
@@ -33,7 +33,9 @@ impl Renderer {
                     (MARGIN_TOP + row * FB_HEIGHT) as isize, 
                     0.0
                 );
+                let mut i: u16 = 0;
                 for tri in &mesh.tris {
+                    let color = Color::from_rgb(i, i, 255);
                     self.fill_triangle(
                         mesh.transformed_indices[tri.0[0]],
                         mesh.transformed_indices[tri.0[1]],
@@ -41,6 +43,7 @@ impl Renderer {
                         offset_vector,
                         color
                     );
+                    i += 20
                 }
                 display::push_rect(
                     Rect { 
