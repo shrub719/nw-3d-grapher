@@ -29,8 +29,8 @@ impl Renderer {
             for row in 0..FB_TILE {
                 self.clear();
                 let offset_vector = RVector3::new(
-                    (MARGIN_TOP + column * FB_WIDTH) as isize, 
-                    (MARGIN_SIDE + row * FB_HEIGHT) as isize, 
+                    (MARGIN_SIDE + column * FB_WIDTH) as isize, 
+                    (MARGIN_TOP + row * FB_HEIGHT) as isize, 
                     0.0
                 );
                 for tri in &mesh.tris {
