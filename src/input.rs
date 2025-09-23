@@ -1,18 +1,10 @@
 use crate::{mat::*, eadk::input::*};
 
+#[derive(Default)]
 pub struct Updates {
     pub domain: bool,
     pub rotation: bool,
     pub quit: bool
-}
-impl Default for Updates {
-    fn default() -> Self {
-        Updates {
-            domain: false,
-            rotation: false,
-            quit: false
-        }
-    }
 }
 
 pub struct InputHandler {
