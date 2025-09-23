@@ -25,12 +25,12 @@ struct Domain {
 impl Domain {
     pub fn new() -> Self {
         Domain {
-            x0: 0.0,
-            y0: 0.0,
-            z0: 0.0,
-            x1: 320.0,
-            y1: 240.0,
-            z1: 1.0,
+            x0: -10.0,
+            y0: -10.0,
+            z0: -100.0,
+            x1: 10.0,
+            y1: 10.0,
+            z1: 10.0,
             matrix: Matrix4::new()
         }
     }
@@ -117,10 +117,10 @@ impl Mesh {
         Self {
             // TODO: remember to use with_capacity
             indices: vec![
-                Vector3::new(140.0, 100.0, 0.0),
-                Vector3::new(140.0, 140.0, 0.0),
-                Vector3::new(180.0, 100.0, 0.0),
-                Vector3::new(180.0, 140.0, 0.0),
+                Vector3::new(-5.0, -5.0, 10.0),
+                Vector3::new(-5.0, 5.0, 10.0),
+                Vector3::new(5.0, -5.0, 10.0),
+                Vector3::new(5.0, 5.0, 10.0),
             ],
             tris: vec![
                 [Triangle ([0, 1, 3]); test::TEST_N], 
