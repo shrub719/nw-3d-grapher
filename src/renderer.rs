@@ -1,7 +1,4 @@
-use crate::{ eadk::*, config::graphics::*, mat::{ RVector3, Vector3 }, mesh::{ Mesh, Triangle, Line } };
-use core::ops::{ AddAssign, SubAssign };
-#[cfg(target_os = "none")]
-use alloc::format;
+use crate::{ eadk::*, config::graphics::*, mat::RVector3, mesh::Mesh };
 
 pub struct Renderer {
     buffer: [Color; FB_WIDTH * FB_HEIGHT],

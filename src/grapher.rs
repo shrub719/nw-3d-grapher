@@ -1,9 +1,7 @@
 use crate::{
     renderer::*,
     mesh::*,
-    mat::*,
-    input::*,
-    eadk
+    input::*
 };
 
 pub struct Grapher {

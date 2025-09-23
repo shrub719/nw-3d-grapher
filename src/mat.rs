@@ -1,9 +1,4 @@
-use crate::eadk::*;
 use core::ops::{ AddAssign, SubAssign, Mul, MulAssign, Index, IndexMut };
-#[cfg(target_os = "none")]
-use alloc::vec::Vec;
-#[cfg(target_os = "none")]
-use alloc::vec;
 
 #[derive(Clone, Copy, Debug)]
 pub struct RVector3 {
