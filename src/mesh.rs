@@ -1,9 +1,12 @@
 use crate::mat::*;
 use crate::trig::*;
+use crate::eadk::info;
 #[cfg(target_os = "none")]
 use alloc::vec;
 #[cfg(target_os = "none")]
 use alloc::vec::Vec;
+#[cfg(target_os = "none")]
+use alloc::format;
 use crate::config::*;
 
 const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
@@ -143,6 +146,8 @@ impl Mesh {
     }
 
     pub fn update_domain(&mut self) {
+        // DEBUG
+        info(&format!("{} tris {} vx", self.tris.len(), self.indices.len()));
         self.domain.update_matrix();
     }
 

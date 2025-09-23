@@ -474,6 +474,23 @@ pub fn debug_info(text: &str, wait: usize) {
     timing::msleep(wait as u32);
 }
 
+pub fn info(text: &str) {
+    // pub fn draw_string(
+    //     text: &str,
+    //     point: Point,
+    //     large_font: bool,
+    //     text_color: Color,
+    //     background_color: Color,
+    // ) 
+    display::draw_string(
+        text,
+        Point { x: 0, y: 0 },
+        false,
+        Color::from_rgb(255, 255, 255),
+        Color::from_rgb(0, 0, 0)
+    );
+}
+
 unsafe extern "C" {
     pub static mut _heap_start: u8;
     pub static mut _heap_end: u8;
