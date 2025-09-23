@@ -123,8 +123,8 @@ impl Mesh {
                 Vector3::new(180.0, 140.0, 0.0),
             ],
             tris: vec![
-                [Triangle ([0, 1, 3]); TEST_N], 
-                [Triangle ([0, 2, 3]); TEST_N]
+                [Triangle ([0, 1, 3]); test::TEST_N], 
+                [Triangle ([0, 2, 3]); test::TEST_N]
             ].concat(),
             transformed_indices: vec![],
             lines: vec![],
@@ -138,9 +138,9 @@ impl Mesh {
     }
 
     pub fn update_rotation(&mut self, rotation_direction: Vector3) {
-        self.rotation.x += rotation_direction.x * ROTATION_SPEED;
-        self.rotation.y += rotation_direction.y * ROTATION_SPEED;
-        self.rotation.z += rotation_direction.z * ROTATION_SPEED;
+        self.rotation.x += rotation_direction.x * settings::ROTATION_SPEED;
+        self.rotation.y += rotation_direction.y * settings::ROTATION_SPEED;
+        self.rotation.z += rotation_direction.z * settings::ROTATION_SPEED;
     }
 
     pub fn transform(&mut self) {

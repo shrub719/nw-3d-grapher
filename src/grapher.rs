@@ -1,6 +1,5 @@
 use crate::{
     renderer::*,
-    config::*,
     mesh::*,
     mat::*,
     input::*,
