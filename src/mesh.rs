@@ -7,7 +7,7 @@ use alloc::vec::Vec;
 use crate::config::*;
 
 const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
-    [160.0, 0.0, 0.0, 160.0],
+    [120.0, 0.0, 0.0, 160.0],
     [0.0, 120.0, 0.0, 120.0],
     [0.0, 0.0, 1.0, 0.0],     // TODO: what's going on with the z coord
     [0.0, 0.0, 0.0, 1.0]
