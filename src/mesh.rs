@@ -122,9 +122,9 @@ impl Mesh {
                 Vector3::new(180.0, 100.0, 0.0),
                 Vector3::new(180.0, 140.0, 0.0),
             ],
-            tris: [
-                vec![Triangle ([0, 1, 3]); TEST_N], 
-                vec![Triangle ([0, 2, 3]); TEST_N]
+            tris: vec![
+                [Triangle ([0, 1, 3]); TEST_N], 
+                [Triangle ([0, 2, 3]); TEST_N]
             ].concat(),
             transformed_indices: vec![],
             lines: vec![],
