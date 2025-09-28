@@ -5,8 +5,6 @@ use crate::eadk::info;
 use alloc::vec;
 #[cfg(target_os = "none")]
 use alloc::vec::Vec;
-#[cfg(target_os = "none")]
-use alloc::format;
 use crate::config::*;
 
 const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
@@ -127,7 +125,6 @@ impl Mesh {
 
     pub fn update_domain(&mut self) {
         // DEBUG
-        info(&format!("{} tris", self.tris.len()));
         self.domain.update_matrix();
     }
 

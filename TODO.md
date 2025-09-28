@@ -1,7 +1,7 @@
 # To do
 - [ ] Finish 3D engine
     - [ ] Refactor tris
-        - [ ] Use vertices instead of indices
+        - [x] Use vertices instead of indices
         - [ ] Store + tranform normals
     - [ ] Use proper (configurable) projection matrix
     - [ ] Use delta time in manipulation calculations

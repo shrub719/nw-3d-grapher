@@ -3,15 +3,20 @@ use crate::{
     mesh::Mesh,
     mat::{ Vector3, Triangle3 },
     input::*,
+    timer::*,
     config::*
 };
 #[cfg(target_os = "none")]
 use alloc::vec;
+#[cfg(target_os = "none")]
+use alloc::format;
+use crate::eadk::info;
 
 pub struct Grapher {
     renderer: Renderer,
     mesh: Mesh,
-    input: InputHandler
+    input: InputHandler,
+    timer: Timer
 }
 impl Grapher {
     pub fn new() -> Self {
@@ -19,6 +24,7 @@ impl Grapher {
             renderer: Renderer::new(),
             mesh: Mesh::new(),
             input: InputHandler::new(),
+            timer: Timer::new()
         }
     }
 
@@ -61,6 +67,7 @@ impl Grapher {
         while !self.input.upd.quit {
             if self.input.upd.domain {
                 self.mesh.update_domain();
+                info(&format!("{} fps // {} tris", self.timer.get_fps(), self.mesh.tris.len()));
             }
             if self.input.upd.rotation {
                 self.mesh.update_rotation(self.input.rotation_direction);
