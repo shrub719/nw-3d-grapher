@@ -211,7 +211,18 @@ impl Quaternion {
         Quaternion { w, x, y, z }
     }
 
-    
+    pub fn get_rotation_matrix(&self) -> Matrix4 {
+        let (w, x, y, z) = (self.w, self.x, self.y, self.z);
+        let x2 = self.x * self.x;
+        let y2 = self.y * self.y;
+        let z2 = self.z * self.z;
+        Matrix4 ([
+            [1.0 - 2.0*y2 - 2.0*z2, 2.0*x*y - 2.0*w*z    , 2.0*x*z + 2.0*w*y    , 0.0],
+            [2.0*x*y + 2.0*w*z    , 1.0 - 2.0*x2 - 2.0*z2, 2.0*y*z - 2.0*w*x    , 0.0],
+            [2.0*x*z - 2.0*w*y    , 2.0*y*z + 2.0*w*x    , 1.0 - 2.0*x2 - 2.0*y2, 0.0],
+            [0.0            , 0.0            , 0.0            , 1.0]
+        ])
+    }
 }
 impl MulAssign for Quaternion {
     fn mul_assign(&mut self, o: Quaternion) {
