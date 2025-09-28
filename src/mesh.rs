@@ -132,8 +132,8 @@ impl Mesh {
         let mut matrix = PROJECTION_MATRIX;
         // TODO: can you use quaternions to do the rotation without the translation?
         matrix *= self.rotation.get_rotation_matrix();
-        matrix *= self.domain.matrix;
         matrix *= get_scale_matrix(self.scale);
+        matrix *= self.domain.matrix;
 
         self.transformed_tris.clear();
         for tri in &self.tris {
