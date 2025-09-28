@@ -13,14 +13,6 @@ use alloc::vec;
 use alloc::format;
 use crate::eadk::info;
 
-fn random_coord() -> f32 {
-    (random() as u16 as f32) / (u16::MAX as f32) * 20.0 - 10.0
-}
-
-fn random_point() -> Vector3 {
-    Vector3::new(random_coord(), random_coord(), random_coord())
-}
-
 pub struct Grapher {
     renderer: Renderer,
     mesh: Mesh,
@@ -38,18 +30,11 @@ impl Grapher {
     }
 
     pub fn main_loop(&mut self) {
-        for i in 0..test::TEST_N {
-            self.mesh.tris.push(
-                Triangle3([
-                    random_point(), random_point(), random_point()
-                ])
-            );
-        }
-
         // main loop - runs every frame
         while !self.input.upd.quit {
             if self.input.upd.domain {
                 self.mesh.update_domain();
+                self.mesh.generate_mesh(self.input.n_change);
             }
             if self.input.upd.rotation {
                 self.mesh.update_rotation(self.input.rotation_direction, self.timer.delta_time);

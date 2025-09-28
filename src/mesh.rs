@@ -1,6 +1,7 @@
 use crate::mat::*;
 use crate::trig::*;
 use crate::eadk::info;
+use crate::eadk::random;
 #[cfg(target_os = "none")]
 use alloc::vec;
 #[cfg(target_os = "none")]
@@ -21,6 +22,14 @@ fn get_scale_matrix(scale: f32) -> Matrix4 {
         [0.0  , 0.0  , scale, 0.0],
         [0.0  , 0.0  , 0.0  , 1.0]
     ])
+}
+
+fn random_coord() -> f32 {
+    (random() as u16 as f32) / (u16::MAX as f32) * 20.0 - 10.0
+}
+
+fn random_point() -> Vector3 {
+    Vector3::new(random_coord(), random_coord(), random_coord())
 }
 
 struct Domain {
@@ -120,17 +129,35 @@ pub struct Mesh {
     // pub lines: Vec<Line>,
     domain: Domain,
     rotation: Rotation,
+    n_tris: usize,
     scale: f32
 }
 impl Mesh {
     pub fn new() -> Self {
         Self {
-            tris: Vec::with_capacity(limits::MAX_TRIS),
+            tris: Vec::with_capacity(limits::MAX_TRIS), // TODO: DON'T let these be reallocated lmao
             transformed_tris: Vec::with_capacity(limits::MAX_TRIS),
             // lines:  Vec::with_capacity(limits::MAX_LINES), // TODO: transform lines
             domain: Domain::new(),
             rotation: Rotation::new(),
+            n_tris: test::TEST_N,
             scale: 1.0
+        }
+    }
+
+    pub fn generate_mesh(&mut self, n_change: isize) {
+        let mut n_i = self.n_tris as isize;
+        n_i += n_change;
+        if n_i < 1 { n_i = 1}
+        self.n_tris = n_i as usize;
+
+        self.tris.clear();
+        for i in 0..self.n_tris {
+            self.tris.push(
+                Triangle3([
+                    random_point(), random_point(), random_point()
+                ])
+            );
         }
     }
 

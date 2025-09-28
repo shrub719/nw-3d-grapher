@@ -13,6 +13,7 @@ pub struct InputHandler {
     pub upd: Updates,
     pub keyboard_state: KeyboardState,
     pub rotation_direction: Vector3,
+    pub n_change: isize,
     pub scale_change: f32
 }
 impl InputHandler {
@@ -27,6 +28,7 @@ impl InputHandler {
             },
             keyboard_state: KeyboardState::scan(),
             rotation_direction: Vector3::new(0.0, 0.0, 0.0),
+            n_change: 0,
             scale_change: 0.0
         }
     }
@@ -69,6 +71,15 @@ impl InputHandler {
         else if self.keyboard_state.key_down(Key::Minus) {
             self.upd.scale = true;
             self.scale_change = -1.0;
+        }
+
+        if self.keyboard_state.key_down(Key::Multiplication) {
+            self.upd.domain = true;
+            self.n_change = 1;
+        }
+        else if self.keyboard_state.key_down(Key::Division) {
+            self.upd.domain = true;
+            self.n_change = -1;
         }
         
         if self.keyboard_state.key_down(Key::Home) {
