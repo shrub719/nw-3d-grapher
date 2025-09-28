@@ -88,17 +88,19 @@ impl Mul<Matrix4> for Vector3 {
 
     fn mul(self, matrix: Matrix4) -> Vector3 {
         let self_4 = [self.x, self.y, self.z, 1.0];
-        let mut result = Vector3::new(0.0, 0.0, 0.0);
+        let mut result = [0.0; 4];
         for i in 0..4 {
             let mut sum: f32 = 0.0;
             for j in 0..4 {
                 sum += matrix.0[i][j] * self_4[j];
             }
-            if i != 3 {
-                result[i] = sum;
-            }
+            result[i] = sum;
         }
-        result
+        Vector3 {
+            x: result[0],
+            y: result[1],
+            z: result[2]
+        }
     }
 }
 

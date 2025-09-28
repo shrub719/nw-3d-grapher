@@ -120,7 +120,6 @@ impl Mesh {
     }
 
     pub fn update_rotation(&mut self, rotation_direction: Vector3, delta_time: f32) {
-        // TODO: update for quaternions
         let rotation_speed = settings::ROTATION_SPEED * delta_time;
         let x = rotation_direction.x * rotation_speed / 2.0;
         let y = rotation_direction.y * rotation_speed / 2.0;
