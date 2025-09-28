@@ -128,10 +128,11 @@ impl Mesh {
         self.domain.update_matrix();
     }
 
-    pub fn update_rotation(&mut self, rotation_direction: Vector3) {
-        self.rotation.x += rotation_direction.x * settings::ROTATION_SPEED;
-        self.rotation.y += rotation_direction.y * settings::ROTATION_SPEED;
-        self.rotation.z += rotation_direction.z * settings::ROTATION_SPEED;
+    pub fn update_rotation(&mut self, rotation_direction: Vector3, delta_time: f32) {
+        let rotation_speed = settings::ROTATION_SPEED * delta_time;
+        self.rotation.x += rotation_direction.x * rotation_speed;
+        self.rotation.y += rotation_direction.y * rotation_speed;
+        self.rotation.z += rotation_direction.z * rotation_speed;
     }
 
     pub fn transform(&mut self) {

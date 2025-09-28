@@ -67,16 +67,17 @@ impl Grapher {
         while !self.input.upd.quit {
             if self.input.upd.domain {
                 self.mesh.update_domain();
-                info(&format!("{} fps // {} tris", self.timer.get_fps(), self.mesh.tris.len()));
             }
             if self.input.upd.rotation {
-                self.mesh.update_rotation(self.input.rotation_direction);
+                self.mesh.update_rotation(self.input.rotation_direction, self.timer.delta_time);
             }
 
             self.mesh.transform();
             self.renderer.draw_screen(&self.mesh);
 
+            info(&format!("fps: {:.1} tris: {}", self.timer.get_fps(), self.mesh.tris.len()));
             self.input.update();
+            self.timer.update()
         }
     }
 }
