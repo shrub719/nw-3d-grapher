@@ -1,7 +1,7 @@
 use crate::{
     renderer::*,
-    mesh::{ *, Triangle },
-    mat::Vector3,
+    mesh::Mesh,
+    mat::{ Vector3, Triangle3 },
     input::*,
     config::*
 };
@@ -23,32 +23,38 @@ impl Grapher {
     }
 
     pub fn main_loop(&mut self) {
-        self.mesh.indices = vec![
-            Vector3::new(-3.0, -3.0, 10.0),
-            Vector3::new(-3.0, 3.0, 10.0),
-            Vector3::new(3.0, -3.0, 10.0),
-            Vector3::new(3.0, 3.0, 10.0),
-            Vector3::new(-3.0, -3.0, -10.0),
-            Vector3::new(-3.0, 3.0, -10.0),
-            Vector3::new(3.0, -3.0, -10.0),
-            Vector3::new(3.0, 3.0, -10.0),
-        ];
         self.mesh.tris = [
             // square1
-            [Triangle ([0, 1, 3]); test::TEST_N], 
-            [Triangle ([0, 2, 3]); test::TEST_N],
+            [Triangle3 ([
+                Vector3::new(-3.0, -3.0, 10.0), Vector3::new(-3.0, 3.0, 10.0), Vector3::new(3.0, 3.0, 10.0)
+            ]); test::TEST_N], 
+            [Triangle3 ([
+                Vector3::new(-3.0, -3.0, 10.0), Vector3::new(3.0, -3.0, 10.0), Vector3::new(3.0, 3.0, 10.0)
+            ]); test::TEST_N],
 
             // square2
-            [Triangle ([4, 5, 7]); test::TEST_N], 
-            [Triangle ([4, 6, 7]); test::TEST_N],
+            [Triangle3 ([
+                Vector3::new(-3.0, -3.0, -10.0), Vector3::new(-3.0, 3.0, -10.0), Vector3::new(3.0, 3.0, -10.0)
+            ]); test::TEST_N], 
+            [Triangle3 ([
+                Vector3::new(-3.0, -3.0, -10.0), Vector3::new(3.0, -3.0, -10.0), Vector3::new(3.0, 3.0, -10.0)
+            ]); test::TEST_N],
 
             // side1
-            [Triangle ([0, 1, 4]); test::TEST_N], 
-            [Triangle ([1, 4, 5]); test::TEST_N],
+            [Triangle3 ([
+                Vector3::new(-3.0, -3.0, 10.0), Vector3::new(-3.0, 3.0, 10.0), Vector3::new(-3.0, -3.0, -10.0)
+            ]); test::TEST_N], 
+            [Triangle3 ([
+                Vector3::new(-3.0, 3.0, 10.0), Vector3::new(-3.0, -3.0, -10.0), Vector3::new(-3.0, 3.0, -10.0)
+            ]); test::TEST_N],
 
             // side2
-            [Triangle ([0, 2, 4]); test::TEST_N], 
-            [Triangle ([2, 4, 6]); test::TEST_N],
+            [Triangle3 ([
+                Vector3::new(-3.0, -3.0, 10.0), Vector3::new(3.0, -3.0, 10.0), Vector3::new(-3.0, -3.0, -10.0)
+            ]); test::TEST_N], 
+            [Triangle3 ([
+                Vector3::new(3.0, -3.0, 10.0), Vector3::new(-3.0, -3.0, -10.0), Vector3::new(3.0, -3.0, -10.0)
+            ]); test::TEST_N],
         ].concat().to_vec();
 
         // main loop - runs every frame
