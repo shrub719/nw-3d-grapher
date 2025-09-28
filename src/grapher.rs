@@ -4,13 +4,22 @@ use crate::{
     mat::{ Vector3, Triangle3 },
     input::*,
     timer::*,
-    config::*
+    config::*,
+    eadk::random
 };
 #[cfg(target_os = "none")]
 use alloc::vec;
 #[cfg(target_os = "none")]
 use alloc::format;
 use crate::eadk::info;
+
+fn random_coord() -> f32 {
+    (random() as u16 as f32) / (u16::MAX as f32) * 20.0 - 10.0
+}
+
+fn random_point() -> Vector3 {
+    Vector3::new(random_coord(), random_coord(), random_coord())
+}
 
 pub struct Grapher {
     renderer: Renderer,
@@ -29,39 +38,13 @@ impl Grapher {
     }
 
     pub fn main_loop(&mut self) {
-        self.mesh.tris = [
-            // square1
-            [Triangle3 ([
-                Vector3::new(-3.0, -3.0, 10.0), Vector3::new(-3.0, 3.0, 10.0), Vector3::new(3.0, 3.0, 10.0)
-            ]); test::TEST_N], 
-            [Triangle3 ([
-                Vector3::new(-3.0, -3.0, 10.0), Vector3::new(3.0, -3.0, 10.0), Vector3::new(3.0, 3.0, 10.0)
-            ]); test::TEST_N],
-
-            // square2
-            [Triangle3 ([
-                Vector3::new(-3.0, -3.0, -10.0), Vector3::new(-3.0, 3.0, -10.0), Vector3::new(3.0, 3.0, -10.0)
-            ]); test::TEST_N], 
-            [Triangle3 ([
-                Vector3::new(-3.0, -3.0, -10.0), Vector3::new(3.0, -3.0, -10.0), Vector3::new(3.0, 3.0, -10.0)
-            ]); test::TEST_N],
-
-            // side1
-            [Triangle3 ([
-                Vector3::new(-3.0, -3.0, 10.0), Vector3::new(-3.0, 3.0, 10.0), Vector3::new(-3.0, -3.0, -10.0)
-            ]); test::TEST_N], 
-            [Triangle3 ([
-                Vector3::new(-3.0, 3.0, 10.0), Vector3::new(-3.0, -3.0, -10.0), Vector3::new(-3.0, 3.0, -10.0)
-            ]); test::TEST_N],
-
-            // side2
-            [Triangle3 ([
-                Vector3::new(-3.0, -3.0, 10.0), Vector3::new(3.0, -3.0, 10.0), Vector3::new(-3.0, -3.0, -10.0)
-            ]); test::TEST_N], 
-            [Triangle3 ([
-                Vector3::new(3.0, -3.0, 10.0), Vector3::new(-3.0, -3.0, -10.0), Vector3::new(3.0, -3.0, -10.0)
-            ]); test::TEST_N],
-        ].concat().to_vec();
+        for i in 0..test::TEST_N {
+            self.mesh.tris.push(
+                Triangle3([
+                    random_point(), random_point(), random_point()
+                ])
+            );
+        }
 
         // main loop - runs every frame
         while !self.input.upd.quit {
