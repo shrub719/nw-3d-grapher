@@ -9,3 +9,6 @@
 - [ ] Generate domain space mesh from implicit function with marching cubes
     - [ ] March those cubes (create cube loop that minimises redundant calculation)
     - [ ] Create tris by linearly interpolating vertex tests
+- [ ] UI
+    - [ ] Settings menu (vsync, delta time)
+- [ ] Pompeiu
