@@ -1,9 +1,6 @@
 use crate::trig::*;
 use crate::mat::*;
-use crate::eadk::info;
 use crate::eadk::random;
-#[cfg(target_os = "none")]
-use alloc::vec;
 #[cfg(target_os = "none")]
 use alloc::vec::Vec;
 use crate::config::*;
@@ -105,7 +102,7 @@ impl Mesh {
         self.n_tris = n_i as usize;
 
         self.tris.clear();
-        for i in 0..self.n_tris {
+        for _ in 0..self.n_tris {
             self.tris.push(
                 Triangle3([
                     random_point(), random_point(), random_point()
@@ -115,7 +112,6 @@ impl Mesh {
     }
 
     pub fn update_domain(&mut self) {
-        // DEBUG
         self.domain.update_matrix();
     }
 
@@ -139,7 +135,7 @@ impl Mesh {
     }
 
     pub fn update_scale(&mut self, scale_change: f32, delta_time: f32) {
-        self.scale += scale_change * delta_time;
+        self.scale += settings::SCALE_SPEED * scale_change * delta_time;
         if self.scale < 0.0 { self.scale = 0.0 }
     }
 

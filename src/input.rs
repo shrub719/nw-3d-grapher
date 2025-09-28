@@ -1,4 +1,4 @@
-use crate::{mat::*, eadk::input::*};
+use crate::{ mat::*, eadk::input::* };
 
 #[derive(Default)]
 pub struct Updates {

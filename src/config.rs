@@ -5,7 +5,6 @@ pub mod settings {
 
 pub mod test {
     pub const TEST_N: usize = 50;
-    pub const TEST_SCALE: f32 = 2.0;
 }
 
 pub mod graphics {

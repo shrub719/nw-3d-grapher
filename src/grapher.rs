@@ -1,14 +1,9 @@
 use crate::{
     renderer::*,
     mesh::Mesh,
-    mat::{ Vector3, Triangle3 },
     input::*,
     timer::*,
-    config::*,
-    eadk::random
 };
-#[cfg(target_os = "none")]
-use alloc::vec;
 #[cfg(target_os = "none")]
 use alloc::format;
 use crate::eadk::info;
