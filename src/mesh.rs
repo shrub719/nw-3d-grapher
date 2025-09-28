@@ -108,20 +108,18 @@ impl Rotation {
 }
 
 pub struct Mesh {
-    pub tris: Vec<Triangle>,
-    pub lines: Vec<Line>,
-    pub indices: Vec<Vector3>,
-    pub transformed_indices: Vec<RVector3>,
+    pub tris: Vec<Triangle3>,
+    pub transformed_tris: Vec<RTriangle3>,
+    // pub lines: Vec<Line>,
     domain: Domain,
     rotation: Rotation
 }
 impl Mesh {
     pub fn new() -> Self {
         Self {
-            indices: Vec::with_capacity(limits::MAX_POINTS),
             tris: Vec::with_capacity(limits::MAX_TRIS),
-            transformed_indices: Vec::with_capacity(limits::MAX_POINTS),
-            lines:  Vec::with_capacity(limits::MAX_LINES),
+            transformed_tris: Vec::with_capacity(limits::MAX_TRIS),
+            // lines:  Vec::with_capacity(limits::MAX_LINES), // TODO: transform lines
             domain: Domain::new(),
             rotation: Rotation::new(),
         }
@@ -150,10 +148,3 @@ impl Mesh {
         }
     }
 }
-
-// TODO: add normals to triangle struct? for lighting
-#[derive(Clone, Copy)]
-pub struct Triangle(pub [usize; 3]);
-
-#[derive(Clone, Copy)]
-pub struct Line(pub [usize; 2]);

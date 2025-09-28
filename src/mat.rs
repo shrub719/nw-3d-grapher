@@ -167,3 +167,10 @@ impl MulAssign for Matrix4 {
 //         }
 //     }
 // }
+
+// TODO: add normals to triangle struct? for lighting
+#[derive(Clone, Copy)]
+pub struct Triangle3(pub [Vector3; 3]);
+
+#[derive(Clone, Copy)]
+pub struct RTriangle3(pub [RVector3; 3]);
