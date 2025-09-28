@@ -22,6 +22,6 @@ pub mod graphics {
 }
 
 pub mod limits {
-    pub const MAX_TRIS: usize = 500;
+    pub const MAX_TRIS: usize = 2000;
     pub const MAX_LINES: usize = 20;
 }
