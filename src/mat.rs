@@ -224,12 +224,16 @@ impl Quaternion {
         ])
     }
 }
-impl MulAssign for Quaternion {
-    fn mul_assign(&mut self, o: Quaternion) {
-        let s = *self;
-        self.w = s.w * o.w - s.x * o.x - s.y * o.y - s.z * o.z;
-        self.x = s.w * o.x + s.x * o.w + s.y * o.z - s.z * o.y;
-        self.y = s.w * o.y - s.x * o.z + s.y * o.w + s.z * o.x;
-        self.z = s.w * o.z + s.x * o.y - s.y * o.x + s.z * o.w;
+impl Mul<Quaternion> for Quaternion {
+    type Output = Quaternion;
+
+    fn mul(self, o: Quaternion) -> Quaternion {
+        let s = self;
+        Quaternion {
+            w: s.w * o.w - s.x * o.x - s.y * o.y - s.z * o.z,
+            x: s.w * o.x + s.x * o.w + s.y * o.z - s.z * o.y,
+            y: s.w * o.y - s.x * o.z + s.y * o.w + s.z * o.x,
+            z: s.w * o.z + s.x * o.y - s.y * o.x + s.z * o.w
+        }
     }
 }

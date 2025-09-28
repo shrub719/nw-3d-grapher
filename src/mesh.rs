@@ -136,7 +136,7 @@ impl Mesh {
             cx*sy*cz + sx*cy*sz, 
             cx*cy*sz + sx*sy*cz
         );
-        self.rotation *= q;
+        self.rotation = q * self.rotation;
     }
 
     pub fn update_scale(&mut self, scale_change: f32, delta_time: f32) {

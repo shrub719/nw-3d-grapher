@@ -55,11 +55,11 @@ impl InputHandler {
             self.upd.rotation = true;
             self.rotation_direction.y = -1.0;
         }
-        if self.keyboard_state.key_down(Key::Shift) {
+        if self.keyboard_state.key_down(Key::Alpha) {
             self.upd.rotation = true;
             self.rotation_direction.z = 1.0;
         }
-        else if self.keyboard_state.key_down(Key::Alpha) {
+        else if self.keyboard_state.key_down(Key::Shift) {
             self.upd.rotation = true;
             self.rotation_direction.z = -1.0;
         }
