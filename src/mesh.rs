@@ -117,21 +117,11 @@ impl Mesh {
 
     pub fn update_rotation(&mut self, rotation_direction: Vector3, delta_time: f32) {
         let rotation_speed = settings::ROTATION_SPEED * delta_time;
-        let x = rotation_direction.x * rotation_speed / 2.0;
-        let y = rotation_direction.y * rotation_speed / 2.0;
-        let z = rotation_direction.z * rotation_speed / 2.0;
-
-        let (cx, sx) = (cos(x), sin(x));
-        let (cy, sy) = (cos(y), sin(y));
-        let (cz, sz) = (cos(z), sin(z));
-
-        let q = Quaternion::new(
-            cx*cy*cz + sx*sy*sz, 
-            sx*cy*cz + cx*sy*sz, 
-            cx*sy*cz + sx*cy*sz, 
-            cx*cy*sz + sx*sy*cz
-        );
-        self.rotation = q * self.rotation;
+        let x = rotation_direction.x * rotation_speed;
+        let y = rotation_direction.y * rotation_speed;
+        let z = rotation_direction.z * rotation_speed;
+        
+        self.rotation = Quaternion::from_angles(x, y, z) * self.rotation;
     }
 
     pub fn update_scale(&mut self, scale_change: f32, delta_time: f32) {

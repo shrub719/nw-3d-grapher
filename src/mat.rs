@@ -213,6 +213,19 @@ impl Quaternion {
         Quaternion { w, x, y, z }
     }
 
+    pub fn from_angles(x: f32, y: f32, z: f32) -> Self {
+        let (cx, sx) = (cos(x/2.0), sin(x/2.0));
+        let (cy, sy) = (cos(y/2.0), sin(y/2.0));
+        let (cz, sz) = (cos(z/2.0), sin(z/2.0));
+
+        Quaternion::new(
+            cx*cy*cz + sx*sy*sz, 
+            sx*cy*cz + cx*sy*sz, 
+            cx*sy*cz + sx*cy*sz, 
+            cx*cy*sz + sx*sy*cz
+        )
+    }
+
     pub fn get_rotation_matrix(&self) -> Matrix4 {
         let (w, x, y, z) = (self.w, self.x, self.y, self.z);
         let x2 = self.x * self.x;
