@@ -4,6 +4,7 @@ use crate::{mat::*, eadk::input::*};
 pub struct Updates {
     pub domain: bool,
     pub rotation: bool,
+    pub redraw: bool,
     pub quit: bool
 }
 
@@ -18,6 +19,7 @@ impl InputHandler {
             upd: Updates {
                 domain: true,
                 rotation: true,
+                redraw: true,
                 quit: false
             },
             keyboard_state: KeyboardState::scan(),
@@ -59,6 +61,8 @@ impl InputHandler {
         if self.keyboard_state.key_down(Key::Home) {
             self.upd.quit = true;
         }
+
+        self.upd.redraw = self.upd.rotation || self.upd.domain;
     }
 }
 
