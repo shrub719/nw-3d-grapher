@@ -4,7 +4,7 @@
         - [x] Use vertices instead of indices
         - [ ] Store + tranform normals
     - [ ] Use proper (configurable) projection matrix
-    - [ ] Use delta time in manipulation calculations
+    - [x] Use delta time in manipulation calculations
 - [ ] Generate domain space mesh from explicit function
 - [ ] Generate domain space mesh from implicit function with marching cubes
     - [ ] March those cubes (create cube loop that minimises redundant calculation)
