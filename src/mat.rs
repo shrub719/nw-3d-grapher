@@ -1,4 +1,4 @@
-use core::ops::{ AddAssign, SubAssign, Mul, MulAssign, Index, IndexMut };
+use core::ops::{ SubAssign, Mul, MulAssign };
 use crate::trig::*;
 
 #[derive(Clone, Copy, Debug)]
@@ -20,13 +20,13 @@ impl RVector3 {
         }
     }
 }
-impl AddAssign for RVector3 {
-    fn add_assign(&mut self, other: Self) {
-        self.x += other.x;
-        self.y += other.y;
-        self.z += other.z;
-    }
-}
+// impl AddAssign for RVector3 {
+//     fn add_assign(&mut self, other: Self) {
+//         self.x += other.x;
+//         self.y += other.y;
+//         self.z += other.z;
+//     }
+// }
 impl SubAssign for RVector3 {
     fn sub_assign(&mut self, other: Self) {
         self.x -= other.x;
@@ -46,27 +46,27 @@ impl Vector3 {
         Self { x, y, z }
     }
 }
-impl Index<usize> for Vector3 {
-    type Output = f32;
-    fn index(&self, i: usize) -> &f32 {
-        match i {
-            0 => &self.x,
-            1 => &self.y,
-            2 => &self.z,
-            _ => panic!("Index out of range for Vector3"),
-        }
-    }
-}
-impl IndexMut<usize> for Vector3 {
-    fn index_mut(&mut self, i: usize) -> &mut f32 {
-        match i {
-            0 => &mut self.x,
-            1 => &mut self.y,
-            2 => &mut self.z,
-            _ => panic!("Index out of range for Vector3"),
-        }
-    }
-}
+// impl Index<usize> for Vector3 {
+//     type Output = f32;
+//     fn index(&self, i: usize) -> &f32 {
+//         match i {
+//             0 => &self.x,
+//             1 => &self.y,
+//             2 => &self.z,
+//             _ => panic!("Index out of range for Vector3"),
+//         }
+//     }
+// }
+// impl IndexMut<usize> for Vector3 {
+//     fn index_mut(&mut self, i: usize) -> &mut f32 {
+//         match i {
+//             0 => &mut self.x,
+//             1 => &mut self.y,
+//             2 => &mut self.z,
+//             _ => panic!("Index out of range for Vector3"),
+//         }
+//     }
+// }
 // technically the wrong order but idc
 // impl Mul<&Matrix3> for &Vector3 {
 //     type Output = Vector3;
@@ -235,7 +235,7 @@ impl Quaternion {
             [1.0 - 2.0*y2 - 2.0*z2, 2.0*x*y - 2.0*w*z    , 2.0*x*z + 2.0*w*y    , 0.0],
             [2.0*x*y + 2.0*w*z    , 1.0 - 2.0*x2 - 2.0*z2, 2.0*y*z - 2.0*w*x    , 0.0],
             [2.0*x*z - 2.0*w*y    , 2.0*y*z + 2.0*w*x    , 1.0 - 2.0*x2 - 2.0*y2, 0.0],
-            [0.0            , 0.0            , 0.0            , 1.0]
+            [0.0                  , 0.0                  , 0.0                  , 1.0]
         ])
     }
 }

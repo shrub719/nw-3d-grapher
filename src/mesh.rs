@@ -1,4 +1,3 @@
-use crate::trig::*;
 use crate::mat::*;
 use crate::eadk::random;
 #[cfg(target_os = "none")]
