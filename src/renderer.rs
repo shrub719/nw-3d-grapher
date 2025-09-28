@@ -54,7 +54,7 @@ impl Renderer {
                 );
             }
         }
-        display::wait_for_vblank();
+        // display::wait_for_vblank();
     }
 
     fn fill_triangle(&mut self, mut v0: RVector3, mut v1: RVector3, mut v2: RVector3, offset_vector: RVector3, color: Color) {
