@@ -54,6 +54,9 @@ impl Grapher {
             if self.input.upd.rotation {
                 self.mesh.update_rotation(self.input.rotation_direction, self.timer.delta_time);
             }
+            if self.input.upd.scale {
+                self.mesh.update_scale(self.input.scale_change, self.timer.delta_time);
+            }
 
             if self.input.upd.redraw {
                 info(&format!("tris: {} // fps: {:.1}", self.mesh.tris.len(), self.timer.get_fps()));

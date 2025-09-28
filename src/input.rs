@@ -4,6 +4,7 @@ use crate::{mat::*, eadk::input::*};
 pub struct Updates {
     pub domain: bool,
     pub rotation: bool,
+    pub scale: bool,
     pub redraw: bool,
     pub quit: bool
 }
@@ -11,7 +12,8 @@ pub struct Updates {
 pub struct InputHandler {
     pub upd: Updates,
     pub keyboard_state: KeyboardState,
-    pub rotation_direction: Vector3
+    pub rotation_direction: Vector3,
+    pub scale_change: f32
 }
 impl InputHandler {
     pub fn new() -> Self {
@@ -19,11 +21,13 @@ impl InputHandler {
             upd: Updates {
                 domain: true,
                 rotation: true,
+                scale: true,
                 redraw: true,
                 quit: false
             },
             keyboard_state: KeyboardState::scan(),
-            rotation_direction: Vector3::new(0.0, 0.0, 0.0)
+            rotation_direction: Vector3::new(0.0, 0.0, 0.0),
+            scale_change: 0.0
         }
     }
 
@@ -57,12 +61,21 @@ impl InputHandler {
             self.upd.rotation = true;
             self.rotation_direction.z = -1.0;
         }
+
+        if self.keyboard_state.key_down(Key::Plus) {
+            self.upd.scale = true;
+            self.scale_change = 1.0;
+        }
+        else if self.keyboard_state.key_down(Key::Minus) {
+            self.upd.scale = true;
+            self.scale_change = -1.0;
+        }
         
         if self.keyboard_state.key_down(Key::Home) {
             self.upd.quit = true;
         }
 
-        self.upd.redraw = self.upd.rotation || self.upd.domain;
+        self.upd.redraw = self.upd.rotation || self.upd.domain || self.upd.scale;
     }
 }
 

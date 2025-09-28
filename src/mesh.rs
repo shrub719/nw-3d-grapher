@@ -14,6 +14,15 @@ const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
     [0.0, 0.0, 0.0, 1.0]
 ] );
 
+fn get_scale_matrix(scale: f32) -> Matrix4 {
+    Matrix4 ([
+        [scale, 0.0  , 0.0  , 0.0],
+        [0.0  , scale, 0.0  , 0.0],
+        [0.0  , 0.0  , scale, 0.0],
+        [0.0  , 0.0  , 0.0  , 1.0]
+    ])
+}
+
 struct Domain {
     pub x0: f32,
     pub y0: f32,
@@ -110,7 +119,8 @@ pub struct Mesh {
     pub transformed_tris: Vec<RTriangle3>,
     // pub lines: Vec<Line>,
     domain: Domain,
-    rotation: Rotation
+    rotation: Rotation,
+    scale: f32
 }
 impl Mesh {
     pub fn new() -> Self {
@@ -120,6 +130,7 @@ impl Mesh {
             // lines:  Vec::with_capacity(limits::MAX_LINES), // TODO: transform lines
             domain: Domain::new(),
             rotation: Rotation::new(),
+            scale: 1.0
         }
     }
 
@@ -135,10 +146,16 @@ impl Mesh {
         self.rotation.z += rotation_direction.z * rotation_speed;
     }
 
+    pub fn update_scale(&mut self, scale_change: f32, delta_time: f32) {
+        self.scale += scale_change * delta_time;
+        if self.scale < 0.0 { self.scale = 0.0 }
+    }
+
     pub fn transform(&mut self) {
         let mut matrix = PROJECTION_MATRIX;
         matrix *= self.rotation.get_rotation_matrix();
         matrix *= self.domain.matrix;
+        matrix *= get_scale_matrix(self.scale);
 
         self.transformed_tris.clear();
         for tri in &self.tris {
