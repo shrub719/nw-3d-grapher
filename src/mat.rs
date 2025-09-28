@@ -179,6 +179,7 @@ impl Mul<Matrix4> for Triangle3 {
         let mut index: usize = 0;
         for vertex in self.0 {
             result.0[index] = RVector3::from_vector3(vertex * matrix);
+            index += 1;
         }
         result
     }
