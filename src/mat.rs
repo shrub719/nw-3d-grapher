@@ -1,4 +1,5 @@
 use core::ops::{ AddAssign, SubAssign, Mul, MulAssign, Index, IndexMut };
+use crate::trig::*;
 
 #[derive(Clone, Copy, Debug)]
 pub struct RVector3 {
@@ -187,3 +188,37 @@ impl Mul<Matrix4> for Triangle3 {
 
 #[derive(Clone, Copy)]
 pub struct RTriangle3(pub [RVector3; 3]);
+
+#[derive(Clone, Copy)]
+pub struct Quaternion {
+    pub w: f32,
+    pub x: f32,
+    pub y: f32,
+    pub z: f32
+}
+impl Default for Quaternion {
+    fn default() -> Self {
+        Quaternion {
+            w: 1.0,
+            x: 0.0,
+            y: 0.0,
+            z: 0.0
+        }
+    }
+}
+impl Quaternion {
+    pub fn new(w: f32, x: f32, y: f32, z: f32) -> Self {
+        Quaternion { w, x, y, z }
+    }
+
+    
+}
+impl MulAssign for Quaternion {
+    fn mul_assign(&mut self, o: Quaternion) {
+        let s = *self;
+        self.w = s.w * o.w - s.x * o.x - s.y * o.y - s.z * o.z;
+        self.x = s.w * o.x + s.x * o.w + s.y * o.z - s.z * o.y;
+        self.y = s.w * o.y - s.x * o.z + s.y * o.w + s.z * o.x;
+        self.z = s.w * o.z + s.x * o.y - s.y * o.x + s.z * o.w;
+    }
+}

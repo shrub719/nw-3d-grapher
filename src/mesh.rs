@@ -1,5 +1,4 @@
 use crate::mat::*;
-use crate::trig::*;
 use crate::eadk::info;
 use crate::eadk::random;
 #[cfg(target_os = "none")]
@@ -76,59 +75,12 @@ impl Domain {
     }
 }
 
-struct Rotation {
-    pub x: f32,
-    pub y: f32,
-    pub z: f32
-}
-impl Rotation {
-    pub fn new() -> Self {
-        Rotation {
-            x: 0.0,
-            y: 0.0,
-            z: 0.0
-        }
-    }
-
-    pub fn get_rotation_matrix(&self) -> Matrix4 {
-        let mut matrix = Matrix4::new();
-
-        let sin_x = sin(self.x);
-        let cos_x = cos(self.x);
-        let sin_y = sin(self.y);
-        let cos_y = cos(self.y);
-        let sin_z = sin(self.z);
-        let cos_z = cos(self.z);
-
-        matrix *= Matrix4 ( [
-            [1.0   , 0.0   , 0.0   , 0.0],
-            [0.0   , cos_x , -sin_x, 0.0],
-            [0.0   , sin_x , cos_x , 0.0],
-            [0.0   , 0.0   , 0.0   , 1.0]
-        ] );
-        matrix *= Matrix4 ( [
-            [cos_y , 0.0   , sin_y , 0.0],
-            [0.0   , 1.0   , 0.0   , 0.0],
-            [-sin_y, 0.0   , cos_y , 0.0],
-            [0.0   , 0.0   , 0.0   , 1.0]
-        ] );
-        matrix *= Matrix4 ( [
-            [cos_z , -sin_z, 0.0   , 0.0],
-            [sin_z , cos_z , 0.0   , 0.0],
-            [0.0   , 0.0   , 1.0   , 0.0],
-            [0.0   , 0.0   , 0.0   , 1.0]
-        ] );
-
-        matrix
-    }
-}
-
 pub struct Mesh {
     pub tris: Vec<Triangle3>,
     pub transformed_tris: Vec<RTriangle3>,
     // pub lines: Vec<Line>,
     domain: Domain,
-    rotation: Rotation,
+    rotation: Quaternion,
     n_tris: usize,
     scale: f32
 }
@@ -139,7 +91,7 @@ impl Mesh {
             transformed_tris: Vec::with_capacity(limits::MAX_TRIS),
             // lines:  Vec::with_capacity(limits::MAX_LINES), // TODO: transform lines
             domain: Domain::new(),
-            rotation: Rotation::new(),
+            rotation: Quaternion::default(),
             n_tris: test::TEST_N,
             scale: 1.0
         }
@@ -167,10 +119,12 @@ impl Mesh {
     }
 
     pub fn update_rotation(&mut self, rotation_direction: Vector3, delta_time: f32) {
+        // TODO: update for quaternions
         let rotation_speed = settings::ROTATION_SPEED * delta_time;
-        self.rotation.x += rotation_direction.x * rotation_speed;
-        self.rotation.y += rotation_direction.y * rotation_speed;
-        self.rotation.z += rotation_direction.z * rotation_speed;
+        let x = rotation_direction.x * rotation_speed;
+        let y = rotation_direction.y * rotation_speed;
+        let z = rotation_direction.z * rotation_speed;
+        let q = Quaternion::new(1.0, x, y, z);
     }
 
     pub fn update_scale(&mut self, scale_change: f32, delta_time: f32) {
