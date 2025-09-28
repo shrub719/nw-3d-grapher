@@ -32,12 +32,12 @@ impl Renderer {
                 );
                 let mut value: u16 = 0;
                 let inc = (255 / &mesh.tris.len()) as u16;
-                for tri in &mesh.tris {
+                for tri in &mesh.transformed_tris {
                     let color = Color::from_rgb(value, value, 255);
                     self.fill_triangle(
-                        mesh.transformed_indices[tri.0[0]],
-                        mesh.transformed_indices[tri.0[1]],
-                        mesh.transformed_indices[tri.0[2]],
+                        tri.0[0],
+                        tri.0[1],
+                        tri.0[2],
                         offset_vector,
                         color
                     );

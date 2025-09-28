@@ -171,6 +171,23 @@ impl MulAssign for Matrix4 {
 // TODO: add normals to triangle struct? for lighting
 #[derive(Clone, Copy)]
 pub struct Triangle3(pub [Vector3; 3]);
+impl Triangle3 {
+    fn new(v0: Vector3, v1: Vector3, v2: Vector3) -> Self {
+        Triangle3 ( [v0, v1, v2] )
+    }
+}
+impl Mul<Matrix4> for Triangle3 {
+    type Output = RTriangle3;
+
+    fn mul(self, matrix: Matrix4) -> RTriangle3 {
+        let mut result = RTriangle3 ( [RVector3::new(0, 0, 0.0); 3] );
+        let mut index: usize = 0;
+        for vertex in self.0 {
+            result.0[index] = RVector3::from_vector3(vertex * matrix);
+        }
+        result
+    }
+}
 
 #[derive(Clone, Copy)]
 pub struct RTriangle3(pub [RVector3; 3]);

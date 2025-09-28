@@ -127,7 +127,7 @@ impl Mesh {
 
     pub fn update_domain(&mut self) {
         // DEBUG
-        info(&format!("{} tris {} vx", self.tris.len(), self.indices.len()));
+        info(&format!("{} tris", self.tris.len()));
         self.domain.update_matrix();
     }
 
@@ -142,9 +142,9 @@ impl Mesh {
         matrix *= self.rotation.get_rotation_matrix();
         matrix *= self.domain.matrix;
 
-        self.transformed_indices.clear();
-        for vertex in &self.indices {
-            self.transformed_indices.push(RVector3::from_vector3(*vertex * matrix));
+        self.transformed_tris.clear();
+        for tri in &self.tris {
+            self.transformed_tris.push(*tri * matrix);
         }
     }
 }
