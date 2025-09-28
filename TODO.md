@@ -5,7 +5,7 @@
         - [ ] Store + tranform normals
     - [ ] Use proper (configurable) projection matrix
     - [x] Use delta time in manipulation calculations
-    - [ ] Use quaternions in rotation
+    - [x] Use quaternions in rotation
 - [ ] Generate domain space mesh from explicit function
 - [ ] Generate domain space mesh from implicit function with marching cubes
     - [ ] March those cubes (create cube loop that minimises redundant calculation)
