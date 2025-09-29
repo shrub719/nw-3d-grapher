@@ -2,7 +2,7 @@ use crate::{ eadk::*, config::graphics::*, mat::RVector3, mesh::Mesh };
 
 pub struct Renderer {
     buffer: [Color; FB_WIDTH * FB_HEIGHT],
-    depth_buffer: [f16; FB_WIDTH * FB_HEIGHT],
+    depth_buffer: [f16; FB_WIDTH * FB_HEIGHT],  // TODO: at least TRY f32.
 }
 impl Renderer {
     pub fn new() -> Self {

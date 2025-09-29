@@ -100,13 +100,21 @@ impl Mesh {
         if n_i < 1 { n_i = 1}
         self.n_tris = n_i as usize;
 
-        self.tris.clear();
-        for _ in 0..self.n_tris {
+        if n_change > 0 {
             self.tris.push(
                 Triangle3([
                     random_point(), random_point(), random_point()
                 ])
             );
+        } else {
+            self.tris.clear();
+            for _ in 0..self.n_tris {
+                self.tris.push(
+                    Triangle3([
+                        random_point(), random_point(), random_point()
+                    ])
+                );
+            }
         }
     }
 

@@ -19,6 +19,6 @@ impl Timer {
     }
 
     pub fn get_fps(&self) -> f32 {
-        1. / self.delta_time
+        1.0 / self.delta_time
     }
 }
