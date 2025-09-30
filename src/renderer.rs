@@ -14,7 +14,7 @@ impl Renderer {
 
     pub fn clear(&mut self) {
         for px in self.buffer.iter_mut() {
-            *px = Color { rgb565: 0x000 };
+            *px = BG;
         }
         for d in self.depth_buffer.iter_mut() {
             *d = 10000.0; // TODO: stop with this nonsense
@@ -33,7 +33,7 @@ impl Renderer {
                 let mut value: u16 = 0;
                 let inc = (255 / &mesh.tris.len()) as u16;
                 for tri in &mesh.transformed_tris {
-                    let color = Color::from_rgb(value, value, 255);
+                    let color = Color::from_rgb(0, value, 255);
                     self.fill_triangle(
                         tri.0[0],
                         tri.0[1],

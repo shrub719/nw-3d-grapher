@@ -19,6 +19,9 @@ pub mod graphics {
 
     pub const FB_WIDTH: usize = (SCREEN_WIDTH - 2 * MARGIN_SIDE) / FB_TILE;
     pub const FB_HEIGHT: usize = (SCREEN_HEIGHT - (MARGIN_TOP + MARGIN_BOTTOM)) / FB_TILE;
+
+    use crate::eadk;
+    pub const BG: eadk::Color = eadk::Color::from_rgb(255, 255, 255);
 }
 
 pub mod limits {

@@ -39,7 +39,7 @@ impl Grapher {
             }
 
             if self.input.upd.redraw {
-                info(&format!("tris: {} // fps: {:.1}", self.mesh.tris.len(), self.timer.get_fps()));
+                info(&format!("tris: {} // fps: {:.1}                   ", self.mesh.tris.len(), self.timer.get_fps()));
                 self.mesh.transform();
                 self.renderer.draw_screen(&self.mesh);
             }
