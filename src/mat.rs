@@ -97,9 +97,9 @@ impl Mul<Matrix4> for Vector3 {
             result[i] = sum;
         }
         Vector3 {
-            x: result[0],
-            y: result[1],
-            z: result[2]
+            x: result[0] / result[3],
+            y: result[1] / result[3],
+            z: result[2] / result[3]
         }
     }
 }
