@@ -78,7 +78,6 @@ pub struct Mesh {
     // pub lines: Vec<Line>,
     domain: Domain,
     rotation: Quaternion,
-    n_tris: usize,
     scale: f32
 }
 impl Mesh {
@@ -89,32 +88,28 @@ impl Mesh {
             // lines:  Vec::with_capacity(limits::MAX_LINES), // TODO: transform lines
             domain: Domain::new(),
             rotation: Quaternion::default(),
-            n_tris: test::TEST_N,
             scale: 1.0
         }
     }
 
     pub fn generate_mesh(&mut self, n_change: isize) {
-        let mut n_i = self.n_tris as isize;
-        n_i += n_change;
-        if n_i < 1 { n_i = 1}
-        self.n_tris = n_i as usize;
-
-        if n_change > 0 {
-            self.tris.push(
-                Triangle3([
-                    random_point(), random_point(), random_point()
-                ])
-            );
-        } else {
-            self.tris.clear();
-            for _ in 0..self.n_tris {
+        if n_change == 0 {
+            for _ in 0..test::TEST_N {
                 self.tris.push(
                     Triangle3([
                         random_point(), random_point(), random_point()
                     ])
                 );
             }
+        }
+        else if n_change > 0 {
+            self.tris.push(
+                Triangle3([
+                    random_point(), random_point(), random_point()
+                ])
+            );
+        } else if n_change < 0 && self.tris.len() > 1 {
+            self.tris.pop();
         }
     }
 
