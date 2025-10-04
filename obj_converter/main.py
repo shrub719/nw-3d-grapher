@@ -47,7 +47,9 @@ for face in indices:
     v0 = vertices[face[0] - 1]
     v1 = vertices[face[1] - 1]
     v2 = vertices[face[2] - 1]
-    tris.append([v0, v1, v2])
+    tri = [v0, v1, v2]
+    print(tri)
+    tris.append(tri)
 
 print("assembled tris")
 
@@ -59,3 +61,4 @@ with open("mesh.pbj", "wb") as f:
         f.write(struct.pack("<9f", *flat))
 
 print("done")
+print(len(tris))
