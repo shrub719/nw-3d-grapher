@@ -38,7 +38,7 @@ jobs:
         uses: extractions/setup-just@v3
       
       - name: Create dummy object file
-        run: echo "v 0.0 0.0 0.0\nf 1/1/1 1/1/1 1/1/1" >> obj/mesh.obj
+        run: printf "v 0.0 0.0 0.0\nf 1/1/1 1/1/1 1/1/1" >> obj/mesh.obj
 
       - name: Build app
         run: just build obj/mesh.obj
