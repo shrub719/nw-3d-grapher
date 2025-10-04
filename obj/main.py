@@ -80,7 +80,7 @@ def obj_to_tris(vertices, faces):
 
 
 def pack_tris(tris):
-    with open("mesh.pbj", "wb") as f:
+    with open("target/mesh.pbj", "wb") as f:
         for tri in tris:
             flat = [coord for vertex in tri for coord in vertex]
             f.write(struct.pack("<9f", *flat))
