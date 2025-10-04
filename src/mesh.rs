@@ -119,9 +119,9 @@ impl Mesh {
 
     pub fn load_mesh_from_file(&mut self) {
         self.tris.clear();
-        for tri in load_tris().iter() {
-            self.tris.push(*tri);
-        } 
+        for tri in load_tris() {
+            self.tris.push(tri);
+        }
     }
 
     pub fn update_domain(&mut self) {
