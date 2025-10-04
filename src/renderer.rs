@@ -30,10 +30,10 @@ impl Renderer {
                     (MARGIN_TOP + row * FB_HEIGHT) as isize, 
                     0.0
                 );
-                let mut value: u16 = 0;
-                let inc = (255 / &mesh.tris.len()) as u16;
+                let mut value: f32 = 0.0;
+                let inc = 255.0 / mesh.tris.len() as f32;
                 for tri in &mesh.transformed_tris {
-                    let color = Color::from_rgb(0, value, 255);
+                    let color = Color::from_rgb(0, value as u16, 255);
                     self.fill_triangle(
                         tri.0[0],
                         tri.0[1],
