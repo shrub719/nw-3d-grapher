@@ -18,6 +18,11 @@ load file:
     just obj {{file}}
     cargo run --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf -- -d target/mesh.pbj
 
+dev-load:
+    mkdir -p target
+    just obj obj/mesh.obj
+    cargo run --bin nw_3d_grapher --target=thumbv7em-none-eabihf -- -d target/mesh.pbj
+
 # forget about sim for now
 sim:
     cargo build --release --lib --target={{current_target}}
