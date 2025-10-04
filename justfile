@@ -11,7 +11,7 @@ dev:
     just obj obj/mesh.obj
     cargo build --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
-load:
+load file:
     just obj {{file}}
     cargo run --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf -- -d target/mesh.pbj
 
