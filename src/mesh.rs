@@ -117,7 +117,8 @@ impl Mesh {
     }
 
     pub fn load_mesh_from_file(&mut self) {
-        // TODO
+        self.tris.clear()
+        
     }
 
     pub fn update_domain(&mut self) {
