@@ -48,7 +48,7 @@ pub fn draw_hud(mode: Mode, mode_update: bool, scale: f32, n: usize) {
     let length = text.len() as u16;
     display::draw_string(
         text,
-        Point { x: SCREEN_WIDTH as u16 - 8 * length, y: SCREEN_HEIGHT as u16 - 15},
+        Point { x: SCREEN_WIDTH as u16 - 5 - 7 * length, y: SCREEN_HEIGHT as u16 - 15},
         false,
         WHITE,
         bg_color
