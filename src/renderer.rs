@@ -8,7 +8,7 @@ impl Renderer {
     pub fn new() -> Self {
         Renderer {
             buffer: [Color{ rgb565: 0x000 }; FB_WIDTH * FB_HEIGHT],
-            depth_buffer: [10000.0; FB_WIDTH * FB_HEIGHT]
+            depth_buffer: [5.0; FB_WIDTH * FB_HEIGHT]
         }
     }
 
@@ -17,7 +17,7 @@ impl Renderer {
             *px = BG;
         }
         for d in self.depth_buffer.iter_mut() {
-            *d = 10000.0; // TODO: stop with this nonsense
+            *d = 5.0; // TODO: stop with this nonsense
         }
     }
 
