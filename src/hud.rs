@@ -12,25 +12,28 @@ fn draw_hud_string(text: &str, bg_color: Color) {
     );
 }
 
-pub fn draw_hud(mode: Mode, scale: f32, n: usize) {
+pub fn draw_hud(mode: Mode, mode_update: bool, scale: f32, n: usize) {
     let bg_color = match mode {
         Mode::Rotate => Color::from_rgb(0, 0, 255),
         Mode::Translate => Color::from_rgb(255, 0, 0)
     };
-    display::push_rect_uniform(
-        Rect {
-            x: 0,
-            y: (SCREEN_HEIGHT - HUD_HEIGHT) as u16,
-            width: SCREEN_WIDTH as u16,
-            height: HUD_HEIGHT as u16
-        },
-        bg_color
-    );
+    
+    if mode_update {
+        display::push_rect_uniform(
+            Rect {
+                x: 0,
+                y: (SCREEN_HEIGHT - HUD_HEIGHT) as u16,
+                width: SCREEN_WIDTH as u16,
+                height: HUD_HEIGHT as u16
+            },
+            bg_color
+        );
+    }
 
     draw_hud_string(
         &(match mode {
-            Mode::Rotate => format!("scale: {:.2}", scale),
-            Mode::Translate => format!("tris: {}", n)
+            Mode::Rotate => format!("scale: {:.2}     ", scale),
+            Mode::Translate => format!("tris: {}      ", n)
         }),
         bg_color
     );

@@ -15,7 +15,7 @@ pub mod graphics {
 
     pub const MARGIN_TOP: usize = 18;
     pub const MARGIN_BOTTOM: usize = HUD_HEIGHT;
-    pub const MARGIN_SIDE: usize = 0;
+    pub const MARGIN_SIDE: usize = 30;
 
     // 2 is possible with margins and very few triangles... i kinda wanna try stretch it further
     pub const FB_TILE: usize = 3;

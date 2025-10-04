@@ -3,7 +3,9 @@ use crate::{
     mesh::Mesh,
     input::*,
     hud::*,
-    timer::*
+    timer::*,
+    eadk::*,
+    config::graphics::*
 };
 #[cfg(target_os = "none")]
 use alloc::format;
@@ -26,6 +28,16 @@ impl Grapher {
     }
 
     pub fn main_loop(&mut self) {
+        display::push_rect_uniform(
+            Rect {
+                x: 0,
+                y: MARGIN_TOP as u16,
+                width: SCREEN_WIDTH as u16,
+                height: (SCREEN_HEIGHT - MARGIN_TOP) as u16
+            },
+            Color::from_rgb(255, 255, 255)
+        );
+
         // main loop - runs every frame
         while !self.input.upd.quit {
             if self.input.upd.domain {
@@ -39,14 +51,14 @@ impl Grapher {
                 self.mesh.update_scale(self.input.scale_change, self.timer.delta_time);
             }
 
+            if self.input.upd.hud {
+                draw_hud(self.input.mode, self.input.upd.mode, self.mesh.scale, self.mesh.tris.len());
+            }
+
             if self.input.upd.redraw {
                 info(&format!("fps: {:.1}                   ", self.timer.get_fps()));
                 self.mesh.transform();
                 self.renderer.draw_screen(&self.mesh);
-            }
-
-            if self.input.upd.hud {
-                draw_hud(self.input.mode, self.mesh.scale, self.mesh.tris.len());
             }
 
             self.input.update();
