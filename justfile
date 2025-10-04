@@ -1,20 +1,22 @@
 current_target := "x86_64-unknown-linux-gnu" # TODO: get target
 
+obj:
+    cd obj && python3 main.py mesh.obj
+
 build:
+    just obj
     cargo build --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
-send:
-    cargo run --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf
-
 dev:
+    just obj
     cargo build --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
-build_sim:
-    cargo build --release --lib --target={{current_target}}
+load:
+    just obj
+    cargo run --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf -- -d obj/mesh.pbj
 
 sim:
-    just build_sim
-    just run_nwb
+    cargo build --release --lib --target={{current_target}}
 
 [macos]
 run_nwb:
