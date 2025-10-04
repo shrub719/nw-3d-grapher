@@ -57,6 +57,7 @@ def normalise(vertices):
     for vertex in vertices:
         length += vertex[0]**2 + vertex[1]**2 + vertex[2]**2
     length = (length/n)**0.5
+    if length == 0: length = 1
 
     for i, vertex in enumerate(vertices):
         vertices[i] = (
