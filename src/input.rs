@@ -14,8 +14,8 @@ fn bind_keys(keyboard_state: &KeyboardState, pos_key: Key, neg_key: Key, update:
 #[derive(Clone, Copy, Eq, PartialEq)]
 pub enum Mode {
     Rotate,
-    Translate,
-    Green
+    Green,
+    Translate
 }
 
 #[derive(Default)]
@@ -78,14 +78,14 @@ impl InputHandler {
         }
         
         if self.keyboard_state.key_down(Key::Seven) { 
+            self.upd.mode = self.mode != Mode::Rotate;
             self.mode = Mode::Rotate; 
-            self.upd.mode = true;
         } else if self.keyboard_state.key_down(Key::Eight) { 
-            self.mode = Mode::Translate;
-            self.upd.mode = true;
-        } else if self.keyboard_state.key_down(Key::Nine) { 
+            self.upd.mode = self.mode != Mode::Green;
             self.mode = Mode::Green;
-            self.upd.mode = true;
+        } else if self.keyboard_state.key_down(Key::Nine) { 
+            self.upd.mode = self.mode != Mode::Translate;
+            self.mode = Mode::Translate;
         }
 
         if self.keyboard_state.key_down(Key::Home) {

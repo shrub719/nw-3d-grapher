@@ -15,8 +15,8 @@ fn draw_hud_string(text: &str, bg_color: Color) {
 pub fn draw_hud(mode: Mode, mode_update: bool, scale: f32, n: usize) {
     let bg_color = match mode {
         Mode::Rotate => RED,
-        Mode::Translate => BLUE,
-        Mode::Green => GREEN
+        Mode::Green => GREEN,
+        Mode::Translate => BLUE
     };
     
     if mode_update {
@@ -37,6 +37,20 @@ pub fn draw_hud(mode: Mode, mode_update: bool, scale: f32, n: usize) {
             Mode::Translate => format!("tris: {}      ", n),
             Mode::Green => format!("green")
         }),
+        bg_color
+    );
+    
+    let text = match mode {
+        Mode::Rotate => "VIEW",
+        Mode::Green => "TRACE",
+        Mode::Translate => "DOMAIN"
+    };
+    let length = text.len() as u16;
+    display::draw_string(
+        text,
+        Point { x: SCREEN_WIDTH as u16 - 8 * length, y: SCREEN_HEIGHT as u16 - 15},
+        false,
+        WHITE,
         bg_color
     );
 }
