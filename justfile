@@ -1,7 +1,5 @@
 current_target := "x86_64-unknown-linux-gnu" # TODO: get target
 
-default: build
-
 obj file:
     python3 obj/main.py {{file}}
 
