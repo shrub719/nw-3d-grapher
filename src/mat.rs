@@ -35,6 +35,7 @@ impl SubAssign for RVector3 {
     }
 }
 
+#[repr(C)]
 #[derive(Clone, Copy, Debug)]
 pub struct Vector3 {
     pub x: f32,
@@ -188,6 +189,7 @@ impl Mul<Matrix4> for Triangle3 {
     }
 }
 
+#[repr(C)]
 #[derive(Clone, Copy)]
 pub struct RTriangle3(pub [RVector3; 3]);
 

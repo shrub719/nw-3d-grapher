@@ -34,6 +34,7 @@ pub static EADK_APP_API_LEVEL: u32 = 0;
 pub static EADK_APP_ICON: [u8; 2769] = *include_bytes!("../target/icon.nwi");
 
 pub mod eadk;
+pub mod external;
 mod config;
 mod trig;
 mod mat;

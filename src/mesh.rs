@@ -3,6 +3,7 @@ use crate::eadk::random;
 #[cfg(target_os = "none")]
 use alloc::vec::Vec;
 use crate::config::*;
+use crate::external::load_tris;
 
 const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
     [120.0, 0.0, 0.0, 160.0],
@@ -117,8 +118,10 @@ impl Mesh {
     }
 
     pub fn load_mesh_from_file(&mut self) {
-        self.tris.clear()
-        
+        self.tris.clear();
+        for tri in load_tris().iter() {
+            self.tris.push(*tri);
+        } 
     }
 
     pub fn update_domain(&mut self) {
