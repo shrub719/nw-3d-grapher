@@ -484,7 +484,7 @@ pub fn info(text: &str) {
     // ) 
     display::draw_string(
         text,
-        Point { x: 5, y: 2 },
+        Point { x: 5, y: 3 },
         false,
         Color::from_rgb(255, 255, 255),
         Color::from_rgb(255, 183, 52)

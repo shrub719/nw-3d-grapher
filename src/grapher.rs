@@ -38,6 +38,23 @@ impl Grapher {
             Color::from_rgb(255, 255, 255)
         );
 
+        display::push_rect_uniform(
+            Rect {
+                x: 0,
+                y: 0,
+                width: SCREEN_WIDTH as u16,
+                height: MARGIN_TOP as u16
+            },
+            Color::from_rgb(255, 183, 52)
+        );
+        display::draw_string(
+            "3D GRAPHER",
+            Point { x: 122, y: 3 },
+            false,
+            Color::from_rgb(255, 255, 255),
+            Color::from_rgb(255, 183, 52)
+        );
+
         // main loop - runs every frame
         while !self.input.upd.quit {
             if self.input.upd.domain {
@@ -56,7 +73,7 @@ impl Grapher {
             }
 
             if self.input.upd.redraw {
-                info(&format!("fps: {:.1}                   ", self.timer.get_fps()));
+                info(&format!("fps: {:.1}  ", self.timer.get_fps()));
                 self.mesh.transform();
                 self.renderer.draw_screen(&self.mesh);
             }

@@ -14,8 +14,8 @@ fn draw_hud_string(text: &str, bg_color: Color) {
 
 pub fn draw_hud(mode: Mode, mode_update: bool, scale: f32, n: usize) {
     let bg_color = match mode {
-        Mode::Rotate => Color::from_rgb(0, 0, 255),
-        Mode::Translate => Color::from_rgb(255, 0, 0)
+        Mode::Rotate => Color::from_rgb(75, 90, 255),
+        Mode::Translate => Color::from_rgb(255, 90, 75)
     };
     
     if mode_update {
