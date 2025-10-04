@@ -2,8 +2,6 @@ use crate::mat::*;
 use crate::eadk::random;
 #[cfg(target_os = "none")]
 use alloc::vec::Vec;
-#[cfg(target_os = "none")]
-use alloc::vec;
 use crate::config::*;
 
 const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
@@ -98,9 +96,14 @@ impl Mesh {
 
     pub fn generate_mesh(&mut self, n_change: isize) {
         if n_change == 0 {
-            self.tris = vec![
-                // TODO: add object from file!
-            ];
+            self.tris.clear();
+            for _ in 0..test::TEST_N {
+                self.tris.push(
+                    Triangle3([
+                        random_point(), random_point(), random_point()
+                    ])
+                );
+            }
         }
         else if n_change > 0 {
             self.tris.push(
@@ -111,6 +114,10 @@ impl Mesh {
         } else if n_change < 0 && self.tris.len() > 1 {
             self.tris.pop();
         }
+    }
+
+    pub fn load_mesh_from_file(&mut self) {
+        // TODO
     }
 
     pub fn update_domain(&mut self) {

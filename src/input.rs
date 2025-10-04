@@ -26,6 +26,7 @@ pub struct Updates {
     pub redraw: bool,
     pub mode: bool,
     pub hud: bool,
+    pub secret: bool,
     pub quit: bool
 }
 
@@ -47,6 +48,7 @@ impl InputHandler {
                 redraw: true,
                 mode: true,
                 hud: true,
+                secret: false,
                 quit: false
             },
             keyboard_state: KeyboardState::scan(),
@@ -75,6 +77,9 @@ impl InputHandler {
             if self.keyboard_state.key_down(Key::Up) {
                 self.upd.domain = true;
             }
+            if self.keyboard_state.key_down(Key::Three) {
+                self.upd.secret = true;
+            }
         }
         
         if self.keyboard_state.key_down(Key::Seven) { 
@@ -92,7 +97,7 @@ impl InputHandler {
             self.upd.quit = true;
         }
 
-        self.upd.redraw = self.upd.rotation || self.upd.domain || self.upd.scale;
+        self.upd.redraw = self.upd.rotation || self.upd.domain || self.upd.scale || self.upd.secret;
         self.upd.hud = self.upd.mode || self.upd.redraw;
     }
 }

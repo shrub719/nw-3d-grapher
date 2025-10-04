@@ -494,6 +494,8 @@ pub fn info(text: &str) {
 unsafe extern "C" {
     pub static mut _heap_start: u8;
     pub static mut _heap_end: u8;
+    pub static _eadk_external_data_start: u8;
+    pub static _eadk_external_data_size: u8;
 }
 
 pub static mut HEAP_START: *mut u8 = core::ptr::addr_of_mut!(_heap_start);
