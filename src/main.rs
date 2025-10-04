@@ -40,6 +40,7 @@ mod mat;
 mod renderer;
 mod mesh;
 mod input;
+mod hud;
 mod timer;
 mod grapher;
 use grapher::Grapher;

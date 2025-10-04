@@ -23,6 +23,7 @@ pub struct Updates {
     pub rotation: bool,
     pub scale: bool,
     pub redraw: bool,
+    pub hud: bool,
     pub quit: bool
 }
 
@@ -42,6 +43,7 @@ impl InputHandler {
                 rotation: true,
                 scale: true,
                 redraw: true,
+                hud: true,
                 quit: false
             },
             keyboard_state: KeyboardState::scan(),
@@ -67,8 +69,14 @@ impl InputHandler {
             bind_keys(&self.keyboard_state, Key::Plus, Key::Minus, &mut self.upd.domain, &mut self.n_change);
         }
         
-        if self.keyboard_state.key_down(Key::Seven) { self.mode = Mode::Rotate; } 
-        else if self.keyboard_state.key_down(Key::Eight) { self.mode = Mode::Translate }
+        if self.keyboard_state.key_down(Key::Seven) { 
+            self.mode = Mode::Rotate; 
+            self.upd.hud = true;
+        } 
+        else if self.keyboard_state.key_down(Key::Eight) { 
+            self.mode = Mode::Translate;
+            self.upd.hud = true;
+        }
 
         if self.keyboard_state.key_down(Key::Home) {
             self.upd.quit = true;

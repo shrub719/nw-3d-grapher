@@ -11,10 +11,10 @@ pub mod graphics {
     pub const SCREEN_WIDTH: usize = 320;
     pub const SCREEN_HEIGHT: usize = 240;
 
-    pub const HUD_SIZE: usize = 36;
+    pub const HUD_HEIGHT: usize = 36;
 
     pub const MARGIN_TOP: usize = 18;
-    pub const MARGIN_BOTTOM: usize = HUD_SIZE;
+    pub const MARGIN_BOTTOM: usize = HUD_HEIGHT;
     pub const MARGIN_SIDE: usize = 0;
 
     // 2 is possible with margins and very few triangles... i kinda wanna try stretch it further

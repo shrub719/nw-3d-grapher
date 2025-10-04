@@ -2,6 +2,7 @@ use crate::{
     renderer::*,
     mesh::Mesh,
     input::*,
+    hud::*,
     timer::*
 };
 #[cfg(target_os = "none")]
@@ -42,6 +43,10 @@ impl Grapher {
                 info(&format!("tris: {} // fps: {:.1}                   ", self.mesh.tris.len(), self.timer.get_fps()));
                 self.mesh.transform();
                 self.renderer.draw_screen(&self.mesh);
+            }
+
+            if self.input.upd.hud {
+                draw_hud(self.input.mode);
             }
 
             self.input.update();
