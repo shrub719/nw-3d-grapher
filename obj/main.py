@@ -1,8 +1,10 @@
 import struct, sys
 
+
 def v_to_vertex(line):
     vertex = line[2:].split()
     return tuple(float(coord) for coord in vertex)
+
 
 def f_to_face(line):
     face = line[2:].split()
@@ -15,6 +17,7 @@ def f_to_face(line):
         tuple(int(indices[i]) for i in [0, 1, 2]),
         tuple(int(indices[i]) for i in [0, 2, 3])
     ]
+
 
 def extract_obj(filename):
     vertices, faces = [], []
@@ -30,6 +33,42 @@ def extract_obj(filename):
     print("extracted obj file")
     return vertices, faces
 
+
+def normalise(vertices):
+    n = len(vertices)
+
+    x, y, z = 0, 0, 0
+    for vertex in vertices:
+        x += vertex[0]
+        y += vertex[1]
+        z += vertex[2]
+    x /= n
+    y /= n
+    z /= n
+
+    for i, vertex in enumerate(vertices):
+        vertices[i] = (
+            vertex[0] - x,
+            vertex[1] - y,
+            vertex[2] - z
+        )
+
+    length = 0
+    for vertex in vertices:
+        length += vertex[0]**2 + vertex[1]**2 + vertex[2]**2
+    length = (length/n)**0.5
+
+    for i, vertex in enumerate(vertices):
+        vertices[i] = (
+            vertex[0] / length * 10,
+            vertex[1] / length * 10,
+            vertex[2] / length * 10
+        )
+
+    print("normalised vertices")
+    return vertices
+
+
 def obj_to_tris(vertices, faces):
     tris = []
     for face in faces:
@@ -39,6 +78,7 @@ def obj_to_tris(vertices, faces):
     print("converted object to tris")
     return tris
 
+
 def pack_tris(tris):
     with open("mesh.pbj", "wb") as f:
         for tri in tris:
@@ -47,7 +87,13 @@ def pack_tris(tris):
 
     print("packed tris to mesh.pbj")
 
+
 vertices, faces = extract_obj(sys.argv[1])
+
+vertices = normalise(vertices)
+
 tris = obj_to_tris(vertices, faces)
+
 pack_tris(tris)
+
 print(f"{len(tris)} tris")
