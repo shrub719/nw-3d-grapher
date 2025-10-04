@@ -29,7 +29,7 @@ impl Grapher {
         while !self.input.upd.quit {
             if self.input.upd.domain {
                 self.mesh.update_domain();
-                self.mesh.generate_mesh(self.input.n_change);
+                self.mesh.generate_mesh(self.input.n_change as isize);
             }
             if self.input.upd.rotation {
                 self.mesh.update_rotation(self.input.rotation_direction, self.timer.delta_time);
