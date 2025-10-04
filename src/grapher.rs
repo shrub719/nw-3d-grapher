@@ -2,7 +2,7 @@ use crate::{
     renderer::*,
     mesh::Mesh,
     input::*,
-    timer::*,
+    timer::*
 };
 #[cfg(target_os = "none")]
 use alloc::format;
