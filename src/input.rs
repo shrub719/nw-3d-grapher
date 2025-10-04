@@ -57,6 +57,8 @@ impl InputHandler {
     pub fn update(&mut self) {
         self.keyboard_state = KeyboardState::scan();
         self.rotation_direction = Vector3::new(0.0, 0.0, 0.0);
+        self.n_change = 0.0;
+        self.scale_change = 0.0;
         self.upd = Updates::default();
 
         if self.mode == Mode::Rotate {
@@ -67,6 +69,9 @@ impl InputHandler {
             bind_keys(&self.keyboard_state, Key::Plus, Key::Minus, &mut self.upd.scale, &mut self.scale_change);
         } else if self.mode == Mode::Translate {
             bind_keys(&self.keyboard_state, Key::Plus, Key::Minus, &mut self.upd.domain, &mut self.n_change);
+            if self.keyboard_state.key_down(Key::Up) {
+                self.upd.domain = true;
+            }
         }
         
         if self.keyboard_state.key_down(Key::Seven) { 

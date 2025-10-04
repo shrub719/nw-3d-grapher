@@ -84,16 +84,19 @@ impl Mesh {
     pub fn new() -> Self {
         Self {
             tris: Vec::with_capacity(limits::MAX_TRIS), // TODO: DON'T let these be reallocated lmao
+            // TODO: maybe use arrays instead cause these don't seem to be properly initialised
+            // (attempt to subtract with overflow errors in random places when n > ~824)
             transformed_tris: Vec::with_capacity(limits::MAX_TRIS),
             // lines:  Vec::with_capacity(limits::MAX_LINES), // TODO: transform lines
             domain: Domain::new(),
             rotation: Quaternion::default(),
-            scale: 1.0
+            scale: 0.5
         }
     }
 
     pub fn generate_mesh(&mut self, n_change: isize) {
         if n_change == 0 {
+            self.tris.clear();
             for _ in 0..test::TEST_N {
                 self.tris.push(
                     Triangle3([
