@@ -5,7 +5,7 @@ use crate::{
     hud::*,
     timer::*,
     eadk::*,
-    config::graphics::*
+    config::{ graphics::*, palette::* }
 };
 #[cfg(target_os = "none")]
 use alloc::format;
@@ -35,24 +35,24 @@ impl Grapher {
                 width: SCREEN_WIDTH as u16,
                 height: (SCREEN_HEIGHT - MARGIN_TOP) as u16
             },
-            Color::from_rgb(255, 255, 255)
+            WHITE
         );
 
         display::push_rect_uniform(
             Rect {
                 x: 0,
                 y: 0,
-                width: SCREEN_WIDTH as u16,
+                width: SCREEN_WIDTH as u16 - 20,
                 height: MARGIN_TOP as u16
             },
-            Color::from_rgb(255, 183, 52)
+            ORANGE
         );
         display::draw_string(
             "3D GRAPHER",
             Point { x: 122, y: 3 },
             false,
-            Color::from_rgb(255, 255, 255),
-            Color::from_rgb(255, 183, 52)
+            WHITE,
+            ORANGE
         );
 
         // main loop - runs every frame

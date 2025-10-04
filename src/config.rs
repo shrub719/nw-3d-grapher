@@ -7,6 +7,17 @@ pub mod test {
     pub const TEST_N: usize = 50;
 }
 
+pub mod palette {
+    use crate::eadk::Color;
+    
+    pub const ORANGE: Color = Color::from_rgb(255, 183, 52);
+    pub const WHITE: Color = Color::from_rgb(255, 255, 255);
+
+    pub const RED: Color = Color::from_rgb(255, 90, 75);
+    pub const GREEN: Color = Color::from_rgb(75, 200, 90);
+    pub const BLUE: Color = Color::from_rgb(75, 90, 255);
+}
+
 pub mod graphics {
     pub const SCREEN_WIDTH: usize = 320;
     pub const SCREEN_HEIGHT: usize = 240;

@@ -1,4 +1,4 @@
-use crate::{ eadk::*, input::Mode, config::graphics::* };
+use crate::{ eadk::*, input::Mode, config::{ graphics::*, palette::* } };
 #[cfg(target_os = "none")]
 use alloc::format;
 
@@ -7,15 +7,16 @@ fn draw_hud_string(text: &str, bg_color: Color) {
         text,
         Point { x: 10, y: (SCREEN_HEIGHT - HUD_HEIGHT + 10) as u16 },
         true,
-        Color::from_rgb(255, 255, 255),
+        WHITE,
         bg_color
     );
 }
 
 pub fn draw_hud(mode: Mode, mode_update: bool, scale: f32, n: usize) {
     let bg_color = match mode {
-        Mode::Rotate => Color::from_rgb(75, 90, 255),
-        Mode::Translate => Color::from_rgb(255, 90, 75)
+        Mode::Rotate => RED,
+        Mode::Translate => BLUE,
+        Mode::Green => GREEN
     };
     
     if mode_update {
@@ -33,7 +34,8 @@ pub fn draw_hud(mode: Mode, mode_update: bool, scale: f32, n: usize) {
     draw_hud_string(
         &(match mode {
             Mode::Rotate => format!("scale: {:.2}     ", scale),
-            Mode::Translate => format!("tris: {}      ", n)
+            Mode::Translate => format!("tris: {}      ", n),
+            Mode::Green => format!("green")
         }),
         bg_color
     );
