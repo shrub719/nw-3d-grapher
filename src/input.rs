@@ -83,6 +83,7 @@ impl InputHandler {
         }
 
         self.upd.redraw = self.upd.rotation || self.upd.domain || self.upd.scale;
+        self.upd.hud |= self.upd.redraw;
     }
 }
 

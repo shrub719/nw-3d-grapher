@@ -78,7 +78,7 @@ pub struct Mesh {
     // pub lines: Vec<Line>,
     domain: Domain,
     rotation: Quaternion,
-    scale: f32
+    pub scale: f32
 }
 impl Mesh {
     pub fn new() -> Self {

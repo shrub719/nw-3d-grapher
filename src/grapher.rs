@@ -40,13 +40,13 @@ impl Grapher {
             }
 
             if self.input.upd.redraw {
-                info(&format!("tris: {} // fps: {:.1}                   ", self.mesh.tris.len(), self.timer.get_fps()));
+                info(&format!("fps: {:.1}                   ", self.timer.get_fps()));
                 self.mesh.transform();
                 self.renderer.draw_screen(&self.mesh);
             }
 
             if self.input.upd.hud {
-                draw_hud(self.input.mode);
+                draw_hud(self.input.mode, self.mesh.scale, self.mesh.tris.len());
             }
 
             self.input.update();
