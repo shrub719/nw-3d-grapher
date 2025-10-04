@@ -1,5 +1,7 @@
 # EXTREMELY sloppy way to convert obj file into rust code
 
+import struct
+
 vertices = []
 indices = []
 
@@ -39,16 +41,21 @@ with open("mesh.obj", "r") as o:
 
 print("read tris")
 
-with open("mesh.txt", "w") as f:
-    for face in indices:
-        print(face)
-        v0 = vertices[face[0] - 1]
-        v1 = vertices[face[1] - 1]
-        v2 = vertices[face[2] - 1]
-        f.write(f"""Triangle3([
-    Vector3::new({v0[0]}, {v0[1]}, {v0[2]}),
-    Vector3::new({v1[0]}, {v1[1]}, {v1[2]}),
-    Vector3::new({v2[0]}, {v2[1]}, {v2[2]}),
-]),\n""")
+tris = []
+for face in indices:
+    print(face)
+    v0 = vertices[face[0] - 1]
+    v1 = vertices[face[1] - 1]
+    v2 = vertices[face[2] - 1]
+    tris.append([v0, v1, v2])
+
+print("assembled tris")
+
+with open("mesh.pbj", "wb") as f:
+    for tri in tris:
+        # Flatten the triangle’s coordinates
+        flat = [coord for vertex in tri for coord in vertex]
+        # Pack as 9 floats, little endian
+        f.write(struct.pack("<9f", *flat))
 
 print("done")
