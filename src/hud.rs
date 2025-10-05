@@ -61,9 +61,9 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_update: bool, scale: f32, n:
     if help_update {
         display::push_rect_uniform(
             Rect {
-                x: (SCREEN_WIDTH - MARGIN_RIGHT_HELP) as u16,
+                x: (SCREEN_WIDTH - FB_WIDTH) as u16 - 2,
                 y: MARGIN_TOP as u16,
-                width: MARGIN_RIGHT_HELP as u16,
+                width: FB_WIDTH as u16,
                 height: (SCREEN_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM) as u16
             },
             GREY

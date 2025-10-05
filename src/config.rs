@@ -28,13 +28,11 @@ pub mod graphics {
 
     pub const MARGIN_TOP: usize = 18;
     pub const MARGIN_BOTTOM: usize = HUD_HEIGHT;
-    pub const MARGIN_RIGHT_HELP: usize = 100;
 
     // 2 is possible with margins and very few triangles... i kinda wanna try stretch it further
     pub const FB_TILE: usize = 3;
 
     pub const FB_WIDTH: usize = SCREEN_WIDTH / FB_TILE;
-    pub const FB_WIDTH_HELP: usize = (SCREEN_WIDTH - MARGIN_RIGHT_HELP) / FB_TILE;
     pub const FB_HEIGHT: usize = (SCREEN_HEIGHT - (MARGIN_TOP + MARGIN_BOTTOM)) / FB_TILE;
 
     use crate::eadk;

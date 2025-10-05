@@ -24,11 +24,9 @@ impl Renderer {
     pub fn draw_screen(&mut self, mesh: &Mesh, help: bool) {
         for column in 0..FB_TILE {
             for row in 0..FB_TILE {
-                let width = if help { FB_WIDTH_HELP } else { FB_WIDTH };
-
                 self.clear();
                 let offset_vector = RVector3::new(
-                    (column * width) as isize, 
+                    (column * FB_WIDTH) as isize, 
                     (MARGIN_TOP + row * FB_HEIGHT) as isize, 
                     0.0
                 );
@@ -45,15 +43,17 @@ impl Renderer {
                     );
                     value += inc;
                 }
-                display::push_rect(
-                    Rect { 
-                        x: offset_vector.x as u16,
-                        y: offset_vector.y as u16,
-                        width: (FB_WIDTH) as u16,
-                        height: (FB_HEIGHT) as u16
-                    },
-                    &self.buffer
-                );
+                if !help || column < FB_TILE - 1 {
+                    display::push_rect(
+                        Rect { 
+                            x: offset_vector.x as u16,
+                            y: offset_vector.y as u16,
+                            width: (FB_WIDTH) as u16,
+                            height: (FB_HEIGHT) as u16
+                        },
+                        &self.buffer
+                    );
+                }
             }
         }
         // display::wait_for_vblank();
