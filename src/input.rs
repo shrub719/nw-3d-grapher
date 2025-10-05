@@ -26,7 +26,7 @@ pub struct Updates {
     pub redraw: bool,
     pub mode: bool,
     pub hud: bool,
-    pub help: bool,
+    pub help_on: bool,
     pub help_off: bool,
     pub secret: bool,
     pub quit: bool
@@ -51,7 +51,7 @@ impl InputHandler {
                 redraw: true,
                 mode: true,
                 hud: true,
-                help: false,
+                help_on: false,
                 help_off: false,
                 secret: false,
                 quit: false
@@ -100,7 +100,7 @@ impl InputHandler {
         }
 
         if self.keyboard_state.key_down(Key::Toolbox) {
-            self.upd.help = self.help != true;
+            self.upd.help_on = self.help != true || self.upd.mode;
             self.help = true;
         } else {
             self.upd.help_off = self.help != false;
@@ -112,7 +112,7 @@ impl InputHandler {
         }
 
         self.upd.redraw = self.upd.rotation || self.upd.domain || self.upd.scale || self.upd.secret || self.upd.help_off;
-        self.upd.hud = self.upd.mode || self.upd.redraw || self.upd.help;
+        self.upd.hud = self.upd.mode || self.upd.redraw || self.upd.help_on;
     }
 }
 
