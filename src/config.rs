@@ -50,9 +50,22 @@ pub mod limits {
 pub mod strings {
     pub const ROTATE_NAME: &str = "VIEW";
     pub const GREEN_NAME: &str = "TRACE";
-    pub const TRANSLATE_NAME: &str = "DOMAIN";
+    pub const TRANS_NAME: &str = "DOMAIN";
 
-    pub const ROTATE_HELP: &str = "rotation help !";
-    pub const GREEN_HELP: &str = "greengreengreengreengreengreen";
-    pub const TRANSLATE_HELP: &str = "help menu :)";
+    type Help<'a> = [&'a str; 3];
+    pub const ROTATE_HELP: Help = [
+        "D-pad: Rotate",  // max line length
+        "+/-: Scale",
+        ""
+    ];
+    pub const GREEN_HELP: Help = [
+        "Green :)",
+        "Does nothing",
+        ""
+    ];
+    pub const TRANS_HELP: Help = [
+        "Up: Randomise",
+        "+/-: Change n",
+        "3: Secret"
+    ];
 }

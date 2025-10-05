@@ -12,12 +12,12 @@ fn draw_hud_string(text: &str, bg_color: Color) {
     );
 }
 
-fn draw_help_string(text: &str) {
+fn draw_help_string(text: &str, offset: u16) {
     display::draw_string(
         text,
         Point {
             x: SCREEN_WIDTH - FB_WIDTH - 2 + 10,
-            y: MARGIN_TOP + 10
+            y: MARGIN_TOP + 10 + 15 * offset
         },
         false,
         DARK_GREY,
@@ -56,7 +56,7 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_update: bool, scale: f32, n:
     let text = match mode {
         Mode::Rotate => ROTATE_NAME,
         Mode::Green => GREEN_NAME,
-        Mode::Translate => TRANSLATE_NAME
+        Mode::Translate => TRANS_NAME
     };
     let length = text.len() as u16;
     display::draw_string(
@@ -67,6 +67,11 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_update: bool, scale: f32, n:
         bg_color
     );
 
+    let help_lines = match mode {
+        Mode::Rotate => ROTATE_HELP,
+        Mode::Green => GREEN_HELP,
+        Mode::Translate => TRANS_HELP
+    };
     if help_update {
         display::push_rect_uniform(
             Rect {
@@ -77,12 +82,10 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_update: bool, scale: f32, n:
             },
             GREY
         );
-        draw_help_string(
-            match mode {
-                Mode::Rotate => ROTATE_HELP,
-                Mode::Green => GREEN_HELP,
-                Mode::Translate => TRANSLATE_HELP
-            }
-        );
+        let mut i: u16 = 0;
+        for text in help_lines {
+            draw_help_string(text, i);
+            i += 1;
+        }
     }
 }
