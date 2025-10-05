@@ -6,6 +6,7 @@
 #[cfg(target_os = "none")]
 use cortex_m;
 
+#[cfg(target_os = "none")]
 use eadk::heap_size;
 
 #[cfg(target_os = "none")]

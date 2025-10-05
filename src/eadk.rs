@@ -491,6 +491,7 @@ pub fn info(text: &str) {
     );
 }
 
+#[cfg(debug_assertions)]
 pub fn get_data() -> &'static [u8] {
     unsafe {
         // SAFETY: The underlying pointer is provided by EADK. It is assumed to be
@@ -500,6 +501,7 @@ pub fn get_data() -> &'static [u8] {
     }
 }
 
+#[cfg(debug_assertions)]
 // Interface with the raw `eadk` C api.
 //
 // If you don't know what you are doing, use the safe rust implementations.

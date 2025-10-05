@@ -3,9 +3,7 @@ current_target := "x86_64-unknown-linux-gnu" # TODO: get target
 obj file:
     python3 obj/main.py {{file}}
 
-build file='obj/empty.obj':
-    mkdir -p target
-    just obj {{file}}
+build:
     cargo build --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
 dev file='obj/empty.obj':
@@ -13,10 +11,8 @@ dev file='obj/empty.obj':
     just obj {{file}}
     cargo build --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
-load file='obj/empty.obj':
-    mkdir -p target
-    just obj {{file}}
-    cargo run --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf -- -d target/mesh.pbj
+load:
+    cargo run --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
 dev-load file='obj/empty.obj':
     mkdir -p target
