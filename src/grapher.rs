@@ -31,9 +31,9 @@ impl Grapher {
         display::push_rect_uniform(
             Rect {
                 x: 0,
-                y: MARGIN_TOP as u16,
-                width: SCREEN_WIDTH as u16,
-                height: (SCREEN_HEIGHT - MARGIN_TOP) as u16
+                y: MARGIN_TOP,
+                width: SCREEN_WIDTH,
+                height: SCREEN_HEIGHT - MARGIN_TOP
             },
             WHITE
         );
@@ -42,8 +42,8 @@ impl Grapher {
             Rect {
                 x: 0,
                 y: 0,
-                width: SCREEN_WIDTH as u16 - 20,
-                height: MARGIN_TOP as u16
+                width: SCREEN_WIDTH - 20,
+                height: MARGIN_TOP
             },
             ORANGE
         );

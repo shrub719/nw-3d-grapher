@@ -48,8 +48,8 @@ impl Renderer {
                         Rect { 
                             x: offset_vector.x as u16,
                             y: offset_vector.y as u16,
-                            width: (FB_WIDTH) as u16,
-                            height: (FB_HEIGHT) as u16
+                            width: FB_WIDTH,
+                            height: FB_HEIGHT
                         },
                         &self.buffer
                     );

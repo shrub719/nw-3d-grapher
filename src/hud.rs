@@ -5,7 +5,7 @@ use alloc::format;
 fn draw_hud_string(text: &str, bg_color: Color) {
     display::draw_string(
         text,
-        Point { x: 10, y: (SCREEN_HEIGHT - HUD_HEIGHT) as u16 + 10 },
+        Point { x: 10, y: SCREEN_HEIGHT - HUD_HEIGHT + 10 },
         true,
         WHITE,
         bg_color
@@ -16,8 +16,8 @@ fn draw_help_string(text: &str) {
     display::draw_string(
         text,
         Point {
-            x: (SCREEN_WIDTH - FB_WIDTH) as u16 - 2 + 10,
-            y: MARGIN_TOP as u16 + 10
+            x: SCREEN_WIDTH - FB_WIDTH - 2 + 10,
+            y: MARGIN_TOP + 10
         },
         false,
         DARK_GREY,
@@ -36,9 +36,9 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_update: bool, scale: f32, n:
         display::push_rect_uniform(
             Rect {
                 x: 0,
-                y: (SCREEN_HEIGHT - HUD_HEIGHT) as u16,
-                width: SCREEN_WIDTH as u16,
-                height: HUD_HEIGHT as u16
+                y: SCREEN_HEIGHT - HUD_HEIGHT,
+                width: SCREEN_WIDTH,
+                height: HUD_HEIGHT
             },
             bg_color
         );
@@ -61,7 +61,7 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_update: bool, scale: f32, n:
     let length = text.len() as u16;
     display::draw_string(
         text,
-        Point { x: SCREEN_WIDTH as u16 - 5 - 7 * length, y: SCREEN_HEIGHT as u16 - 15},
+        Point { x: SCREEN_WIDTH - 5 - 7 * length, y: SCREEN_HEIGHT - 15},
         false,
         WHITE,
         bg_color
@@ -70,10 +70,10 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_update: bool, scale: f32, n:
     if help_update {
         display::push_rect_uniform(
             Rect {
-                x: (SCREEN_WIDTH - FB_WIDTH) as u16 - 2,
-                y: MARGIN_TOP as u16,
-                width: FB_WIDTH as u16,
-                height: (SCREEN_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM) as u16
+                x: SCREEN_WIDTH - FB_WIDTH - 2,
+                y: MARGIN_TOP,
+                width: FB_WIDTH,
+                height: SCREEN_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM
             },
             GREY
         );
