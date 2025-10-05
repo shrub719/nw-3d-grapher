@@ -36,12 +36,9 @@ jobs:
 
       - name: Install just
         uses: extractions/setup-just@v3
-      
-      - name: Create dummy object file
-        run: printf "v 0.0 0.0 0.0\nf 1/1/1 1/1/1 1/1/1" >> obj/mesh.obj
-
+        
       - name: Build app
-        run: just build obj/mesh.obj
+        run: just build
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4

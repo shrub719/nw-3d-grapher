@@ -3,24 +3,24 @@ current_target := "x86_64-unknown-linux-gnu" # TODO: get target
 obj file:
     python3 obj/main.py {{file}}
 
-build file:
-    mkdir target
+build file='obj/empty.obj':
+    mkdir -p target
     just obj {{file}}
     cargo build --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
-dev:
+dev file='obj/empty.obj':
     mkdir -p target
-    just obj obj/mesh.obj
+    just obj {{file}}
     cargo build --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
-load file:
+load file='obj/empty.obj':
     mkdir -p target
     just obj {{file}}
     cargo run --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf -- -d target/mesh.pbj
 
-dev-load:
+dev-load file='obj/empty.obj':
     mkdir -p target
-    just obj obj/mesh.obj
+    just obj {{file}}
     cargo run --bin nw_3d_grapher --target=thumbv7em-none-eabihf -- -d target/mesh.pbj
 
 # forget about sim for now
