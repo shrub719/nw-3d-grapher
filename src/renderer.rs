@@ -1,14 +1,14 @@
 use crate::{ eadk::*, config::graphics::*, mat::RVector3, mesh::Mesh };
 
 pub struct Renderer {
-    buffer: [Color; FB_WIDTH * FB_HEIGHT],
-    depth_buffer: [f16; FB_WIDTH * FB_HEIGHT],  // TODO: switching to f32 breaks rendering??
+    buffer: [Color; FB_WIDTH_SIZE * FB_HEIGHT_SIZE],
+    depth_buffer: [f16; FB_WIDTH_SIZE * FB_HEIGHT_SIZE],  // TODO: switching to f32 breaks rendering??
 }
 impl Renderer {
     pub fn new() -> Self {
         Renderer {
-            buffer: [Color{ rgb565: 0x000 }; FB_WIDTH * FB_HEIGHT],
-            depth_buffer: [5.0; FB_WIDTH * FB_HEIGHT]
+            buffer: [Color{ rgb565: 0x000 }; FB_WIDTH_SIZE * FB_HEIGHT_SIZE],
+            depth_buffer: [5.0; FB_WIDTH_SIZE * FB_HEIGHT_SIZE]
         }
     }
 
@@ -119,7 +119,7 @@ impl Renderer {
 
             let scan_width = x_right - x_left;
             for x_scan in (x_left as usize)..=(x_right as usize) {
-                if x_scan >= FB_WIDTH as usize {
+                if x_scan >= FB_WIDTH_SIZE {
                     continue 'height_iter;
                 }
 
@@ -130,7 +130,7 @@ impl Renderer {
                 };
                 let z = (z_left + (z_right - z_left) * scan_progress) as f16;
 
-                let index = y as usize * FB_WIDTH + x_scan;
+                let index = y as usize * FB_WIDTH_SIZE + x_scan;
                 let curr_depth = self.depth_buffer[index];
                 if z < curr_depth {
                     self.buffer[index] = color;

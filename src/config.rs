@@ -22,19 +22,21 @@ pub mod palette {
 
 pub mod graphics {
     // TODO: also make u16 constants
-    pub const SCREEN_WIDTH: usize = 320;
-    pub const SCREEN_HEIGHT: usize = 240;
+    pub const SCREEN_WIDTH: u16 = 320;
+    pub const SCREEN_HEIGHT: u16 = 240;
 
-    pub const HUD_HEIGHT: usize = 36;
+    pub const HUD_HEIGHT: u16 = 36;
 
-    pub const MARGIN_TOP: usize = 18;
-    pub const MARGIN_BOTTOM: usize = HUD_HEIGHT;
+    pub const MARGIN_TOP: u16 = 18;
+    pub const MARGIN_BOTTOM: u16 = HUD_HEIGHT;
 
     // 2 is possible with margins and very few triangles... i kinda wanna try stretch it further
-    pub const FB_TILE: usize = 3;
+    pub const FB_TILE: u16 = 3;
 
-    pub const FB_WIDTH: usize = SCREEN_WIDTH / FB_TILE;
-    pub const FB_HEIGHT: usize = (SCREEN_HEIGHT - (MARGIN_TOP + MARGIN_BOTTOM)) / FB_TILE;
+    pub const FB_WIDTH: u16 = SCREEN_WIDTH / FB_TILE;
+    pub const FB_HEIGHT: u16 = (SCREEN_HEIGHT - (MARGIN_TOP + MARGIN_BOTTOM)) / FB_TILE;
+    pub const FB_WIDTH_SIZE: usize = FB_WIDTH as usize;
+    pub const FB_HEIGHT_SIZE: usize = FB_HEIGHT as usize;
 
     use crate::eadk;
     pub const BG: eadk::Color = eadk::Color::from_rgb(255, 255, 255);
