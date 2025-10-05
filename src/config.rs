@@ -46,3 +46,13 @@ pub mod limits {
     pub const MAX_TRIS: usize = 2000;
     // pub const MAX_LINES: usize = 20;  // TODO: add lines
 }
+
+pub mod strings {
+    pub const ROTATE_NAME: &str = "VIEW";
+    pub const GREEN_NAME: &str = "TRACE";
+    pub const TRANSLATE_NAME: &str = "DOMAIN";
+
+    pub const ROTATE_HELP: &str = "rotation help !";
+    pub const GREEN_HELP: &str = "greengreengreengreengreengreen";
+    pub const TRANSLATE_HELP: &str = "help menu :)";
+}

@@ -1,4 +1,4 @@
-use crate::{ eadk::*, input::Mode, config::{ graphics::*, palette::* } };
+use crate::{ eadk::*, input::Mode, config::{ graphics::*, palette::*, strings::* } };
 #[cfg(target_os = "none")]
 use alloc::format;
 
@@ -54,9 +54,9 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_update: bool, scale: f32, n:
     );
     
     let text = match mode {
-        Mode::Rotate => "VIEW",
-        Mode::Green => "TRACE",
-        Mode::Translate => "DOMAIN"
+        Mode::Rotate => ROTATE_NAME,
+        Mode::Green => GREEN_NAME,
+        Mode::Translate => TRANSLATE_NAME
     };
     let length = text.len() as u16;
     display::draw_string(
@@ -77,6 +77,12 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_update: bool, scale: f32, n:
             },
             GREY
         );
-        draw_help_string("help menu :)");
+        draw_help_string(
+            match mode {
+                Mode::Rotate => ROTATE_HELP,
+                Mode::Green => GREEN_HELP,
+                Mode::Translate => TRANSLATE_HELP
+            }
+        );
     }
 }
