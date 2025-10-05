@@ -37,14 +37,12 @@ def extract_obj(filename):
 def normalise(vertices):
     n = len(vertices)
 
-    x, y, z = 0, 0, 0
-    for vertex in vertices:
-        x += vertex[0]
-        y += vertex[1]
-        z += vertex[2]
-    x /= n
-    y /= n
-    z /= n
+    max_coord = lambda i: max(vertex[i] for vertex in vertices)
+    min_coord = lambda i: min(vertex[i] for vertex in vertices)
+    middle = lambda i: (max_coord(i) + min_coord(i)) / 2
+    x = middle(0)
+    y = middle(1)
+    z = middle(2)
 
     for i, vertex in enumerate(vertices):
         vertices[i] = (
