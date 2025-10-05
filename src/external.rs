@@ -1,5 +1,5 @@
-#[cfg(debug_assertions)]
-pub mod dev {
+#[cfg(feature = "obj")]
+pub mod obj {
     use crate::{
         eadk::*,
         mat::*

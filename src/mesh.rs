@@ -3,8 +3,8 @@ use crate::eadk::random;
 #[cfg(target_os = "none")]
 use alloc::vec::Vec;
 use crate::config::*;
-#[cfg(debug_assertions)]
-use crate::external::dev::load_tris;
+#[cfg(feature = "obj")]
+use crate::external::obj::load_tris;
 
 const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
     [120.0, 0.0, 0.0, 160.0],
@@ -120,7 +120,7 @@ impl Mesh {
 
     pub fn load_mesh_from_file(&mut self) {
         self.tris.clear();
-        #[cfg(debug_assertions)]
+        #[cfg(feature = "obj")]
         for tri in load_tris() {
             self.tris.push(tri);
         }
