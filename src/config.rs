@@ -12,8 +12,8 @@ pub mod palette {
 
     pub const ORANGE: Color = Color::from_rgb(255, 183, 52);
     pub const WHITE: Color = Color::from_rgb(255, 255, 255);
-
-    pub const GREY: Color = Color::from_rgb(220, 220, 220);
+    pub const GREY: Color = Color::from_rgb(230, 230, 230);
+    pub const DARK_GREY: Color = Color::from_rgb(75, 75, 75);
 
     pub const RED: Color = Color::from_rgb(255, 90, 75);
     pub const GREEN: Color = Color::from_rgb(75, 200, 90);
@@ -21,6 +21,7 @@ pub mod palette {
 }
 
 pub mod graphics {
+    // TODO: also make u16 constants
     pub const SCREEN_WIDTH: usize = 320;
     pub const SCREEN_HEIGHT: usize = 240;
 

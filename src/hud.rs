@@ -5,7 +5,7 @@ use alloc::format;
 fn draw_hud_string(text: &str, bg_color: Color) {
     display::draw_string(
         text,
-        Point { x: 10, y: (SCREEN_HEIGHT - HUD_HEIGHT + 10) as u16 },
+        Point { x: 10, y: (SCREEN_HEIGHT - HUD_HEIGHT) as u16 + 10 },
         true,
         WHITE,
         bg_color
@@ -13,7 +13,16 @@ fn draw_hud_string(text: &str, bg_color: Color) {
 }
 
 fn draw_help_string(text: &str) {
-
+    display::draw_string(
+        text,
+        Point {
+            x: (SCREEN_WIDTH - FB_WIDTH) as u16 - 2 + 10,
+            y: MARGIN_TOP as u16 + 10
+        },
+        false,
+        DARK_GREY,
+        GREY
+    );
 }
 
 pub fn draw_hud(mode: Mode, mode_update: bool, help_update: bool, scale: f32, n: usize) {
@@ -68,5 +77,6 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_update: bool, scale: f32, n:
             },
             GREY
         );
+        draw_help_string("help menu :)");
     }
 }
