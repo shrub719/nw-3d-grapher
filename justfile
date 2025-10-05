@@ -7,9 +7,9 @@ obj file:
 build obj="":
     cargo build --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj == "" { "" } else { "--features obj" } }}
 
-dev file="obj/empty.obj":
-    just obj {{file}}
-    cargo build --bin nw_3d_grapher --target=thumbv7em-none-eabihf --features obj
+dev obj="":
+    {{ if obj == "" { "" } else { "just obj " + obj } }}
+    cargo build --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj == "" { "" } else { "--features obj" } }}
 
 load obj="":
     cargo run --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj == "" { "" } else { "--features obj -- -d target/mesh.pbj" } }}
