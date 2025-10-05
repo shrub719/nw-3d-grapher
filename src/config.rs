@@ -13,7 +13,7 @@ pub mod palette {
     pub const ORANGE: Color = Color::from_rgb(255, 183, 52);
     pub const WHITE: Color = Color::from_rgb(255, 255, 255);
 
-    pub const GREY: Color = Color::from_rgb(200, 200, 200);
+    pub const GREY: Color = Color::from_rgb(220, 220, 220);
 
     pub const RED: Color = Color::from_rgb(255, 90, 75);
     pub const GREEN: Color = Color::from_rgb(75, 200, 90);

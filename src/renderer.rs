@@ -24,7 +24,7 @@ impl Renderer {
     pub fn draw_screen(&mut self, mesh: &Mesh, help: bool) {
         for column in 0..FB_TILE {
             for row in 0..FB_TILE {
-                let width = if help {FB_WIDTH_HELP} else {FB_WIDTH};
+                let width = if help { FB_WIDTH_HELP } else { FB_WIDTH };
 
                 self.clear();
                 let offset_vector = RVector3::new(

@@ -16,7 +16,7 @@ fn draw_help_string(text: &str) {
 
 }
 
-pub fn draw_hud(mode: Mode, mode_update: bool, help: bool, help_update: bool, scale: f32, n: usize) {
+pub fn draw_hud(mode: Mode, mode_update: bool, help_update: bool, scale: f32, n: usize) {
     let bg_color = match mode {
         Mode::Rotate => RED,
         Mode::Green => GREEN,

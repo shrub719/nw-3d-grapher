@@ -27,6 +27,7 @@ pub struct Updates {
     pub mode: bool,
     pub hud: bool,
     pub help: bool,
+    pub help_off: bool,
     pub secret: bool,
     pub quit: bool
 }
@@ -38,7 +39,7 @@ pub struct InputHandler {
     pub n_change: f32,
     pub scale_change: f32,
     pub mode: Mode,
-    pub help: bool
+    pub help: bool,
 }
 impl InputHandler {
     pub fn new() -> Self {
@@ -51,6 +52,7 @@ impl InputHandler {
                 mode: true,
                 hud: true,
                 help: false,
+                help_off: false,
                 secret: false,
                 quit: false
             },
@@ -101,6 +103,7 @@ impl InputHandler {
             self.upd.help = self.help != true;
             self.help = true;
         } else {
+            self.upd.help_off = self.help != false;
             self.help = false;
         }
 
@@ -108,7 +111,7 @@ impl InputHandler {
             self.upd.quit = true;
         }
 
-        self.upd.redraw = self.upd.rotation || self.upd.domain || self.upd.scale || self.upd.secret;
+        self.upd.redraw = self.upd.rotation || self.upd.domain || self.upd.scale || self.upd.secret || self.upd.help_off;
         self.upd.hud = self.upd.mode || self.upd.redraw || self.upd.help;
     }
 }
