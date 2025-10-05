@@ -26,6 +26,7 @@ pub struct Updates {
     pub redraw: bool,
     pub mode: bool,
     pub hud: bool,
+    pub help: bool,
     pub secret: bool,
     pub quit: bool
 }
@@ -36,7 +37,8 @@ pub struct InputHandler {
     pub rotation_direction: Vector3,
     pub n_change: f32,
     pub scale_change: f32,
-    pub mode: Mode
+    pub mode: Mode,
+    pub help: bool
 }
 impl InputHandler {
     pub fn new() -> Self {
@@ -48,6 +50,7 @@ impl InputHandler {
                 redraw: true,
                 mode: true,
                 hud: true,
+                help: false,
                 secret: false,
                 quit: false
             },
@@ -55,7 +58,8 @@ impl InputHandler {
             rotation_direction: Vector3::new(0.0, 0.0, 0.0),
             n_change: 0.0,
             scale_change: 0.0,
-            mode: Mode::Rotate
+            mode: Mode::Rotate,
+            help: false,
         }
     }
 
@@ -93,12 +97,19 @@ impl InputHandler {
             self.mode = Mode::Translate;
         }
 
+        if self.keyboard_state.key_down(Key::Toolbox) {
+            self.upd.help = self.help != true;
+            self.help = true;
+        } else {
+            self.help = false;
+        }
+
         if self.keyboard_state.key_down(Key::Home) {
             self.upd.quit = true;
         }
 
         self.upd.redraw = self.upd.rotation || self.upd.domain || self.upd.scale || self.upd.secret;
-        self.upd.hud = self.upd.mode || self.upd.redraw;
+        self.upd.hud = self.upd.mode || self.upd.redraw || self.upd.help;
     }
 }
 

@@ -12,7 +12,11 @@ fn draw_hud_string(text: &str, bg_color: Color) {
     );
 }
 
-pub fn draw_hud(mode: Mode, mode_update: bool, scale: f32, n: usize) {
+fn draw_help_string(text: &str) {
+
+}
+
+pub fn draw_hud(mode: Mode, mode_update: bool, help: bool, help_update: bool, scale: f32, n: usize) {
     let bg_color = match mode {
         Mode::Rotate => RED,
         Mode::Green => GREEN,
@@ -53,4 +57,16 @@ pub fn draw_hud(mode: Mode, mode_update: bool, scale: f32, n: usize) {
         WHITE,
         bg_color
     );
+
+    if help_update {
+        display::push_rect_uniform(
+            Rect {
+                x: (SCREEN_WIDTH - MARGIN_RIGHT_HELP) as u16,
+                y: MARGIN_TOP as u16,
+                width: MARGIN_RIGHT_HELP as u16,
+                height: (SCREEN_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM) as u16
+            },
+            GREY
+        );
+    }
 }

@@ -13,6 +13,8 @@ pub mod palette {
     pub const ORANGE: Color = Color::from_rgb(255, 183, 52);
     pub const WHITE: Color = Color::from_rgb(255, 255, 255);
 
+    pub const GREY: Color = Color::from_rgb(200, 200, 200);
+
     pub const RED: Color = Color::from_rgb(255, 90, 75);
     pub const GREEN: Color = Color::from_rgb(75, 200, 90);
     pub const BLUE: Color = Color::from_rgb(75, 90, 255);
@@ -26,12 +28,13 @@ pub mod graphics {
 
     pub const MARGIN_TOP: usize = 18;
     pub const MARGIN_BOTTOM: usize = HUD_HEIGHT;
-    pub const MARGIN_SIDE: usize = 0;
+    pub const MARGIN_RIGHT_HELP: usize = 100;
 
     // 2 is possible with margins and very few triangles... i kinda wanna try stretch it further
     pub const FB_TILE: usize = 3;
 
-    pub const FB_WIDTH: usize = (SCREEN_WIDTH - 2 * MARGIN_SIDE) / FB_TILE;
+    pub const FB_WIDTH: usize = SCREEN_WIDTH / FB_TILE;
+    pub const FB_WIDTH_HELP: usize = (SCREEN_WIDTH - MARGIN_RIGHT_HELP) / FB_TILE;
     pub const FB_HEIGHT: usize = (SCREEN_HEIGHT - (MARGIN_TOP + MARGIN_BOTTOM)) / FB_TILE;
 
     use crate::eadk;

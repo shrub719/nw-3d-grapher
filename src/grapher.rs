@@ -72,13 +72,13 @@ impl Grapher {
             }
 
             if self.input.upd.hud {
-                draw_hud(self.input.mode, self.input.upd.mode, self.mesh.scale, self.mesh.tris.len());
+                draw_hud(self.input.mode, self.input.upd.mode, self.input.help, self.input.upd.help, self.mesh.scale, self.mesh.tris.len());
             }
 
             if self.input.upd.redraw {
                 info(&format!("fps: {:.1}  ", self.timer.get_fps()));
                 self.mesh.transform();
-                self.renderer.draw_screen(&self.mesh);
+                self.renderer.draw_screen(&self.mesh, self.input.help);
             }
 
             self.input.update();

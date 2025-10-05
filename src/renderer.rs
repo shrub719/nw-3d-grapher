@@ -21,12 +21,14 @@ impl Renderer {
         }
     }
 
-    pub fn draw_screen(&mut self, mesh: &Mesh) {
+    pub fn draw_screen(&mut self, mesh: &Mesh, help: bool) {
         for column in 0..FB_TILE {
             for row in 0..FB_TILE {
+                let width = if help {FB_WIDTH_HELP} else {FB_WIDTH};
+
                 self.clear();
                 let offset_vector = RVector3::new(
-                    (MARGIN_SIDE + column * FB_WIDTH) as isize, 
+                    (column * width) as isize, 
                     (MARGIN_TOP + row * FB_HEIGHT) as isize, 
                     0.0
                 );
