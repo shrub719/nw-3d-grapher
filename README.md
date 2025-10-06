@@ -22,7 +22,7 @@ The app supports importing 3D models as `.pbj`.
    *Optionally, download the example `dog.pbj`*
 1. Connect to your calculator by USB
 1. Go to the [Numworks Installer](https://my.numworks.com/apps) and click Connect (make sure your browser has WebUSB capability)
-1. Upload `nw_3d_grapher.nwa` file
+1. Upload `nw_3d_grapher_obj.nwa` file
 1. Upload any `.pbj` file to the External Data section
 1. Press Install
 <!-- TODO: what does this look like? -->
@@ -46,6 +46,7 @@ The app supports importing 3D models as `.pbj`.
   ```sh
   just build
   ```
+  This creates a binary (`.nwa`) file at `/target/thumbv7em-none-eabihf/release/nw_3d_grapher`
 - To load the app to the calculator, run:
   ```sh
   just load
@@ -65,6 +66,7 @@ The app supports importing 3D models as `.pbj`.
   # Example usage:
   just obj obj/meshes/dog.obj dog
   ```
+  This creates a `.pbj` file in `/target/obj/`.
 - To load to the calculator with a converted PBJ, run:
   ```sh
   just load [object name]
