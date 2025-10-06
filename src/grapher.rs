@@ -59,6 +59,9 @@ impl Grapher {
         while !self.input.upd.quit {
             if self.input.upd.domain {
                 self.mesh.update_domain(self.input.domain_direction);
+                // self.mesh.generate_mesh();
+            }
+            if self.input.upd.random {
                 self.mesh.generate_mesh(self.input.n_change as isize);
             }
             if self.input.upd.load_obj {

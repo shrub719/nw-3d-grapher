@@ -37,6 +37,7 @@ pub struct Updates {
     pub rotation: bool,
     pub scale: bool,
     pub redraw: bool,
+    pub random: bool,  // TODO: shouldn't exist really
     pub mode: bool,
     pub hud: bool,
     pub help_on: bool,
@@ -63,6 +64,7 @@ impl InputHandler {
                 rotation: true,
                 scale: true,
                 redraw: true,
+                random: true,
                 mode: true,
                 hud: true,
                 help_on: false,
@@ -116,10 +118,10 @@ impl InputHandler {
                 &mut self.domain_direction
             );
 
-            bind_keys(&self.keyboard_state, Key::Plus, Key::Minus, &mut self.upd.domain, &mut self.n_change);
+            bind_keys(&self.keyboard_state, Key::Plus, Key::Minus, &mut self.upd.random, &mut self.n_change);
 
             if self.keyboard_state.key_down(Key::Backspace) {
-                self.upd.domain = true;
+                self.upd.random = true;
             }
             if self.keyboard_state.key_down(Key::Power) {
                 self.upd.load_obj = true;
@@ -149,7 +151,7 @@ impl InputHandler {
             self.upd.quit = true;
         }
 
-        self.upd.redraw = self.upd.rotation || self.upd.domain || self.upd.scale || self.upd.load_obj || self.upd.help_off;
+        self.upd.redraw = self.upd.rotation || self.upd.domain || self.upd.scale || self.upd.load_obj || self.upd.help_off || self.upd.random;
         self.upd.hud = self.upd.mode || self.upd.redraw || self.upd.help_on;
     }
 }
