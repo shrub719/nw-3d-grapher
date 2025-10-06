@@ -1,6 +1,10 @@
 import struct, sys
 
 
+def info(string):
+    print("    " + string)
+
+
 def v_to_vertex(line):
     vertex = line[2:].split()
     return tuple(float(coord) for coord in vertex)
@@ -37,7 +41,7 @@ def extract_obj(filename):
             elif line[0] == "f":
                 faces.extend(f_to_face(line))
 
-    print("extracted obj file")
+    info("extracted obj file from " + filename)
     return vertices, faces
 
 
@@ -75,7 +79,6 @@ def normalise(vertices):
             vertex[2] / length * 10
         )
 
-    print("normalised vertices")
     return vertices
 
 
@@ -86,7 +89,6 @@ def obj_to_tris(vertices, faces):
         tri = [vertices[index - 1] for index in face]
         tris.append(tri)
     
-    print("converted object to tris")
     return tris
 
 
@@ -96,7 +98,7 @@ def pack_tris(tris, filename):
             flat = [coord for vertex in tri for coord in vertex]
             f.write(struct.pack("<9f", *flat))
 
-    print("packed tris to " + filename)
+    info("packed tris to " + filename)
 
 
 inpt = sys.argv[1]
@@ -111,4 +113,4 @@ tris = obj_to_tris(vertices, faces)
 
 pack_tris(tris, output)
 
-print(f"created pbj '{name}' ({len(tris)} tris)")
+info(f"created pbj '{name}' ({len(tris)} tris)")
