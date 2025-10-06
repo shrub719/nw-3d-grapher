@@ -63,14 +63,14 @@ pub mod strings {
         "Green :)",
         "Does nothing",
         "",
-        "",
+        "OK: Load obj",
         ":)"
     ];
     pub const DOMAIN_HELP: Help = [
         "D-pad: Trans",
         "Sh/Al: Trans",
-        "+/-: Change n",
+        "+/-: Scale",
         "Bksp: Random",
-        "Pow: Load obj"
+        ""
     ];
 }

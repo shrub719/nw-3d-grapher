@@ -64,6 +64,7 @@ impl Grapher {
             if self.input.upd.load_obj {
                 self.mesh.load_mesh_from_file();
             }
+            
             if self.input.upd.rotation {
                 self.mesh.update_rotation(self.input.rotation_direction, self.timer.delta_time);
             }

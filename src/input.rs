@@ -106,6 +106,12 @@ impl InputHandler {
                 self.rotation_direction.x = f32::NAN;
             }
         } 
+
+        else if self.mode == Mode::Trace {
+            if self.keyboard_state.key_down(Key::Ok) {
+                self.upd.load_obj = true;
+            }
+        }
         
         else if self.mode == Mode::Domain {
             bind_keys_directional(
@@ -121,9 +127,6 @@ impl InputHandler {
 
             if self.keyboard_state.key_down(Key::Backspace) {
                 self.upd.domain = true;
-            }
-            if self.keyboard_state.key_down(Key::Power) {
-                self.upd.load_obj = true;
             }
         }
         
