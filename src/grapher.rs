@@ -58,7 +58,7 @@ impl Grapher {
         // main loop - runs every frame
         while !self.input.upd.quit {
             if self.input.upd.domain {
-                self.mesh.update_domain();
+                self.mesh.update_domain(self.input.domain_direction);
                 self.mesh.generate_mesh(self.input.n_change as isize);
             }
             if self.input.upd.load_obj {
@@ -76,7 +76,7 @@ impl Grapher {
             }
 
             if self.input.upd.redraw {
-                info(&format!("fps: {:.1}  ", self.timer.get_fps()));
+                info(&format!("fps: {:.1}   ", self.timer.get_fps()));
                 self.mesh.transform();
                 self.renderer.draw_screen(&self.mesh, self.input.help);
             }

@@ -11,6 +11,19 @@ fn bind_keys(keyboard_state: &KeyboardState, pos_key: Key, neg_key: Key, update:
     }
 }
 
+fn bind_keys_directional(
+    keyboard_state: &KeyboardState, 
+    x_pos_key: Key, x_neg_key: Key, 
+    y_pos_key: Key, y_neg_key: Key, 
+    z_pos_key: Key, z_neg_key: Key, 
+    update: &mut bool, 
+    vector: &mut Vector3
+) {
+    bind_keys(keyboard_state, x_pos_key, x_neg_key, update, &mut vector.x);
+    bind_keys(keyboard_state, y_pos_key, y_neg_key, update, &mut vector.y);
+    bind_keys(keyboard_state, z_pos_key, z_neg_key, update, &mut vector.z);
+}
+
 #[derive(Clone, Copy, Eq, PartialEq)]
 pub enum Mode {
     Rotate,
@@ -36,6 +49,7 @@ pub struct InputHandler {
     pub upd: Updates,
     pub keyboard_state: KeyboardState,
     pub rotation_direction: Vector3,
+    pub domain_direction: Vector3,
     pub n_change: f32,
     pub scale_change: f32,
     pub mode: Mode,
@@ -58,6 +72,7 @@ impl InputHandler {
             },
             keyboard_state: KeyboardState::scan(),
             rotation_direction: Vector3::new(0.0, 0.0, 0.0),
+            domain_direction: Vector3::new(0.0, 0.0, 0.0),
             n_change: 0.0,
             scale_change: 0.0,
             mode: Mode::Rotate,
@@ -68,14 +83,20 @@ impl InputHandler {
     pub fn update(&mut self) {
         self.keyboard_state = KeyboardState::scan();
         self.rotation_direction = Vector3::new(0.0, 0.0, 0.0);
+        self.domain_direction = Vector3::new(0.0, 0.0, 0.0);
         self.n_change = 0.0;
         self.scale_change = 0.0;
         self.upd = Updates::default();
 
         if self.mode == Mode::Rotate {
-            bind_keys(&self.keyboard_state, Key::Down, Key::Up, &mut self.upd.rotation, &mut self.rotation_direction.x);
-            bind_keys(&self.keyboard_state, Key::Left, Key::Right, &mut self.upd.rotation, &mut self.rotation_direction.y);
-            bind_keys(&self.keyboard_state, Key::Alpha, Key::Shift, &mut self.upd.rotation, &mut self.rotation_direction.z);
+            bind_keys_directional(
+                &self.keyboard_state,
+                Key::Down, Key::Up,
+                Key::Left, Key::Right,
+                Key::Alpha, Key::Shift,
+                &mut self.upd.rotation, 
+                &mut self.rotation_direction
+            );
 
             bind_keys(&self.keyboard_state, Key::Plus, Key::Minus, &mut self.upd.scale, &mut self.scale_change);
 
@@ -86,11 +107,21 @@ impl InputHandler {
         } 
         
         else if self.mode == Mode::Translate {
+            bind_keys_directional(
+                &self.keyboard_state,
+                Key::Left, Key::Right,
+                Key::Up, Key::Down,
+                Key::Alpha, Key::Shift,
+                &mut self.upd.domain, 
+                &mut self.domain_direction
+            );
+
             bind_keys(&self.keyboard_state, Key::Plus, Key::Minus, &mut self.upd.domain, &mut self.n_change);
-            if self.keyboard_state.key_down(Key::Up) {
+
+            if self.keyboard_state.key_down(Key::Backspace) {
                 self.upd.domain = true;
             }
-            if self.keyboard_state.key_down(Key::Down) {
+            if self.keyboard_state.key_down(Key::Power) {
                 self.upd.load_obj = true;
             }
         }

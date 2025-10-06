@@ -52,23 +52,26 @@ pub mod strings {
     pub const GREEN_NAME: &str = "TRACE";
     pub const TRANS_NAME: &str = "DOMAIN";
 
-    type Help<'a> = [&'a str; 4];
+    type Help<'a> = [&'a str; 5];
     pub const ROTATE_HELP: Help = [
         "D-pad: Rotate",  // max line length
         "Sh/Al: Tilt",
-        "+/-: Scale",
-        "Bckspc: Reset"
+        "+/-: Zoom",
+        "Bksp: Reset",
+        ""
     ];
     pub const GREEN_HELP: Help = [
         "Green :)",
         "Does nothing",
         "",
-        ""
+        "",
+        ":)"
     ];
     pub const TRANS_HELP: Help = [
-        "Up: Randomise",
-        "Down: Load obj",
+        "D-pad: Trans",
+        "Sh/Al: Trans",
         "+/-: Change n",
-        ""
+        "Bksp: Random",
+        "Pow: Load obj"
     ];
 }

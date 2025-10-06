@@ -126,7 +126,14 @@ impl Mesh {
         }
     }
 
-    pub fn update_domain(&mut self) {
+    pub fn update_domain(&mut self, domain_direction: Vector3) {
+        self.domain.x0 += domain_direction.x;
+        self.domain.x1 += domain_direction.x;
+        self.domain.y0 += domain_direction.y;
+        self.domain.y1 += domain_direction.y;
+        self.domain.z0 += domain_direction.z;
+        self.domain.z1 += domain_direction.z;
+
         self.domain.update_matrix();
     }
 
