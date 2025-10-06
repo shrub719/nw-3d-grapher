@@ -6,6 +6,16 @@ def v_to_vertex(line):
     return tuple(float(coord) for coord in vertex)
 
 
+# splits n-gons into triangles
+def poly_to_tris(indices):
+    tris = []
+
+    for i in range(1, len(indices)-1):
+        tris.append(tuple(int(indices[j]) for j in [0, i, i+1]))
+    
+    return tris
+
+
 def f_to_face(line):
     face = line[2:].split()
     indices = [index.split("/")[0] for index in face]
@@ -13,12 +23,7 @@ def f_to_face(line):
     if len(indices) == 3:
         return [tuple(int(index) for index in indices)]
     
-    # if quad:
-    # TODO: could be other shapes too
-    return [
-        tuple(int(indices[i]) for i in [0, 1, 2]),
-        tuple(int(indices[i]) for i in [0, 2, 3])
-    ]
+    return poly_to_tris(indices)
 
 
 def extract_obj(filename):
