@@ -61,7 +61,7 @@ impl Grapher {
                 self.mesh.update_domain();
                 self.mesh.generate_mesh(self.input.n_change as isize);
             }
-            if self.input.upd.secret {
+            if self.input.upd.load_obj {
                 self.mesh.load_mesh_from_file();
             }
             if self.input.upd.rotation {
