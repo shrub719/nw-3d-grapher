@@ -48,8 +48,8 @@ pub mod limits {
 
 pub mod strings {
     pub const ROTATE_NAME: &str = "VIEW";
-    pub const GREEN_NAME: &str = "TRACE";
-    pub const TRANS_NAME: &str = "DOMAIN";
+    pub const TRACE_NAME: &str = "TRACE";
+    pub const DOMAIN_NAME: &str = "DOMAIN";
 
     type Help<'a> = [&'a str; 5];
     pub const ROTATE_HELP: Help = [
@@ -59,14 +59,14 @@ pub mod strings {
         "Bksp: Reset",
         ""
     ];
-    pub const GREEN_HELP: Help = [
+    pub const TRACE_HELP: Help = [
         "Green :)",
         "Does nothing",
         "",
         "",
         ":)"
     ];
-    pub const TRANS_HELP: Help = [
+    pub const DOMAIN_HELP: Help = [
         "D-pad: Trans",
         "Sh/Al: Trans",
         "+/-: Change n",

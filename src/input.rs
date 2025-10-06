@@ -26,9 +26,9 @@ fn bind_keys_directional(
 
 #[derive(Clone, Copy, Eq, PartialEq)]
 pub enum Mode {
-    Rotate,
-    Green,
-    Translate
+    View,
+    Trace,
+    Domain
 }
 
 #[derive(Default)]
@@ -36,7 +36,7 @@ pub struct Updates {
     // TODO: use mod? or embedded struct
     pub domain: bool,
     pub rotation: bool,
-    pub scale: bool, // TODO: scale -> zoom
+    pub scale: bool,
     pub redraw: bool,
     pub mode: bool,
     pub hud: bool,
@@ -76,7 +76,7 @@ impl InputHandler {
             domain_direction: Vector3::new(0.0, 0.0, 0.0),
             scale_change: 0.0,
             domain_scale_change: 0.0,
-            mode: Mode::Rotate,
+            mode: Mode::View,
             help: false,
         }
     }
@@ -89,7 +89,7 @@ impl InputHandler {
         self.domain_scale_change = 0.0;
         self.upd = Updates::default();
 
-        if self.mode == Mode::Rotate {
+        if self.mode == Mode::View {
             bind_keys_directional(
                 &self.keyboard_state,
                 Key::Down, Key::Up,
@@ -107,12 +107,12 @@ impl InputHandler {
             }
         } 
         
-        else if self.mode == Mode::Translate {
+        else if self.mode == Mode::Domain {
             bind_keys_directional(
                 &self.keyboard_state,
                 Key::Left, Key::Right,
                 Key::Up, Key::Down,
-                Key::Alpha, Key::Shift,
+                Key::Shift, Key::Alpha,
                 &mut self.upd.domain, 
                 &mut self.domain_direction
             );
@@ -128,14 +128,14 @@ impl InputHandler {
         }
         
         if self.keyboard_state.key_down(Key::Seven) { 
-            self.upd.mode = self.mode != Mode::Rotate;
-            self.mode = Mode::Rotate; 
+            self.upd.mode = self.mode != Mode::View;
+            self.mode = Mode::View; 
         } else if self.keyboard_state.key_down(Key::Eight) { 
-            self.upd.mode = self.mode != Mode::Green;
-            self.mode = Mode::Green;
+            self.upd.mode = self.mode != Mode::Trace;
+            self.mode = Mode::Trace;
         } else if self.keyboard_state.key_down(Key::Nine) { 
-            self.upd.mode = self.mode != Mode::Translate;
-            self.mode = Mode::Translate;
+            self.upd.mode = self.mode != Mode::Domain;
+            self.mode = Mode::Domain;
         }
 
         if self.keyboard_state.key_down(Key::Toolbox) {
