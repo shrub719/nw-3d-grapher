@@ -6,6 +6,9 @@ obj input_file obj_name:
     mkdir -p target/obj
     python3 obj/main.py {{input_file}} {{obj_name}}
 
+dev-obj obj_name="":
+    just obj obj/meshes/{{obj_name}}.obj {{obj_name}}
+
 # obj_toggle toggles whether it needs external data
 build obj_toggle="":
     cargo build --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_toggle == "" { "" } else { "--features obj" } }}
@@ -19,7 +22,7 @@ load obj_name="":
     cargo run --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_name == "" { "" } else { "--features obj -- -d target/obj/" + obj_name + ".pbj" } }}
 
 dev-load obj_name="":
-    {{ if obj_name == "" { "" } else { "just obj obj/meshes/" + obj_name + ".obj " + obj_name } }}
+    {{ if obj_name == "" { "" } else { "just dev-obj " + obj_name } }}
     cargo run --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_name == "" { "" } else { "--features obj -- -d target/obj/" + obj_name + ".pbj" } }}
 
 
