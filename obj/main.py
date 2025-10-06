@@ -76,7 +76,7 @@ def normalise(vertices):
         vertices[i] = (
             vertex[0] / length * 10,
             -vertex[1] / length * 10,   # flip orientation
-            vertex[2] / length * 10
+            -vertex[2] / length * 10
         )
 
     return vertices
