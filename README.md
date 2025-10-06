@@ -27,7 +27,6 @@ The app supports importing 3D models as `.pbj`.
 1. Click **Select a data file**
 1. Upload the `.pbj` file of the 3D model you want
 1. Press **Install**
-<!-- TODO: what does this look like? -->
 
 ## Usage
 

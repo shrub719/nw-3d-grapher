@@ -9,7 +9,7 @@ use crate::external::obj::load_tris;
 const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
     [120.0, 0.0, 0.0, 160.0],
     [0.0, 120.0, 0.0, 120.0],
-    [0.0, 0.0, 1.0, 0.0],     // TODO: what's going on with the z coord
+    [0.0, 0.0, 1.0, 0.0],
     [0.0, 0.0, 0.0, 1.0]
 ] );
 
@@ -126,6 +126,7 @@ impl Mesh {
         }
     }
 
+    // TODO: also scale domain
     pub fn update_domain(&mut self, domain_direction: Vector3) {
         self.domain.x0 += domain_direction.x;
         self.domain.x1 += domain_direction.x;
@@ -158,7 +159,6 @@ impl Mesh {
 
     pub fn transform(&mut self) {
         let mut matrix = PROJECTION_MATRIX;
-        // TODO: can you use quaternions to do the rotation without the translation?
         matrix *= self.rotation.get_rotation_matrix();
         matrix *= get_scale_matrix(self.scale);
         matrix *= self.domain.matrix;

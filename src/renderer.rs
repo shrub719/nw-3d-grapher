@@ -17,7 +17,7 @@ impl Renderer {
             *px = BG;
         }
         for d in self.depth_buffer.iter_mut() {
-            *d = 5.0; // TODO: stop with this nonsense
+            *d = 5.0; // TODO: stop with this nonsense (maybe?)
         }
     }
 

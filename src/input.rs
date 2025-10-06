@@ -33,9 +33,10 @@ pub enum Mode {
 
 #[derive(Default)]
 pub struct Updates {
+    // TODO: use mod? or embedded struct
     pub domain: bool,
     pub rotation: bool,
-    pub scale: bool,
+    pub scale: bool, // TODO: scale -> zoom
     pub redraw: bool,
     pub random: bool,  // TODO: shouldn't exist really
     pub mode: bool,

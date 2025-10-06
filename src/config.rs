@@ -21,7 +21,6 @@ pub mod palette {
 }
 
 pub mod graphics {
-    // TODO: also make u16 constants
     pub const SCREEN_WIDTH: u16 = 320;
     pub const SCREEN_HEIGHT: u16 = 240;
 
