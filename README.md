@@ -80,3 +80,5 @@ The app supports importing 3D models as `.pbj`.
 As this repo (the NEA program) is part of my A level Computer Science coursework, it is under exam regulations. Therefore:
 - **Until August 14 2026** all rights are reserved by me. No permission is granted to copy, use, modify, or distribute any part of this project during this period.
 - **After August 15 2026**, the project is released under the [MIT License](LICENSE).
+
+Dog model in `obj/Mesh_Beagle.obj` and `dog.pbj`: [Beagle](https://poly.pizza/m/0BnDT3T1wTE) by [Poly by Google](https://poly.pizza/u/Poly%20by%20Google) [[CC-BY](https://creativecommons.org/licenses/by/3.0/)] via Poly Pizza

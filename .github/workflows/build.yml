@@ -47,10 +47,14 @@ jobs:
         run: mv target/thumbv7em-none-eabihf/release/nw_3d_grapher target/nwa/nw_3d_grapher.nwa
       
       - name: Build app (obj)
-        run: just build o
+        run: |
+          just obj obj/Mesh_Beagle.obj dog
+          just build o
       
       - name: Move to target/nwa (obj)
-        run: mv target/thumbv7em-none-eabihf/release/nw_3d_grapher target/nwa/nw_3d_grapher_obj.nwa
+        run: |
+          mv target/thumbv7em-none-eabihf/release/nw_3d_grapher target/nwa/nw_3d_grapher_obj.nwa
+          mv target/obj/dog.pbj target/nwa/dog.pbj
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
