@@ -181,6 +181,11 @@ FUN_dev_obj() {
   env "${DEFAULT_SHELL}" ${DEFAULT_SHELL_ARGS} \
     "./$(basename "${0}")"' obj obj/meshes/'"${INTERP_1}"'.obj '"${INTERP_2}"  \
     || recipe_error "dev-obj" "${LINENO:-}"
+  INTERP_3="${VAR_obj_name}" || recipe_error 'dev-obj' "${LINENO:-}"
+  echo_recipe_line 'cp target/obj/'"${INTERP_3}"'.pbj target/thumbv7em-none-eabihf/debug'
+  env "${DEFAULT_SHELL}" ${DEFAULT_SHELL_ARGS} \
+    'cp target/obj/'"${INTERP_3}"'.pbj target/thumbv7em-none-eabihf/debug'  \
+    || recipe_error "dev-obj" "${LINENO:-}"
 
   # Post-recipe dependencies and teardown
   cd "${OLD_WD}"
@@ -597,7 +602,7 @@ listfn() {
 }
 
 dumpfn() {
-  cat <<"e6b60b981a50a19d"
+  cat <<"c8dba55605fa3feb"
 current_target := "x86_64-unknown-linux-gnu" # TODO: get target
 
 # creates .pbj in target/obj from .obj source file
@@ -611,6 +616,7 @@ obj input_file obj_name:
 # obj_name contains .obj and .obj file name (e.g. dog)
 dev-obj obj_name="":
     just obj obj/meshes/{{obj_name}}.obj {{obj_name}}
+    cp target/obj/{{obj_name}}.pbj target/thumbv7em-none-eabihf/debug
 
 # builds release profile
 # obj_toggle toggles whether it will need external data
@@ -648,7 +654,7 @@ run_nwb:
 
 clean:
     cargo clean
-e6b60b981a50a19d
+c8dba55605fa3feb
 }
 
 evaluatefn() {
