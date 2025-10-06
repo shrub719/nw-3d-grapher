@@ -1,9 +1,10 @@
 current_target := "x86_64-unknown-linux-gnu" # TODO: get target
 
-# obj contains .obj file location (e.g. obj/meshes/dog.obj)
-obj file:
+# input_file contains .obj file location (e.g. obj/meshes/dog.obj)
+# obj_name contains .pbj file name (e.g. dog)
+obj input_file obj_name:
     mkdir -p target/obj
-    python3 obj/main.py {{file}}
+    python3 obj/main.py {{input_file}} {{obj_name}}
 
 # obj_toggle toggles whether it needs external data
 build obj_toggle="":
@@ -18,7 +19,7 @@ load obj_name="":
     cargo run --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_name == "" { "" } else { "--features obj -- -d target/obj/" + obj_name + ".pbj" } }}
 
 dev-load obj_name="":
-    {{ if obj_name == "" { "" } else { "just obj obj/meshes/" + obj_name + ".obj" } }}
+    {{ if obj_name == "" { "" } else { "just obj obj/meshes/" + obj_name + ".obj " + obj_name } }}
     cargo run --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_name == "" { "" } else { "--features obj -- -d target/obj/" + obj_name + ".pbj" } }}
 
 

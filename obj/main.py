@@ -88,7 +88,7 @@ def pack_tris(tris, filename):
 
 
 inpt = sys.argv[1]
-name = inpt.split("/")[-1].replace(".obj", "")
+name = sys.argv[2]
 output = "target/obj/" + name + ".pbj"
 
 vertices, faces = extract_obj(inpt)
