@@ -36,13 +36,25 @@ jobs:
 
       - name: Install just
         uses: extractions/setup-just@v3
+
+      - name: Prepare for building
+        run: mkdir -p target/nwa
         
       - name: Build app
         run: just build
 
+      - name: Move to target/nwa
+        run: mv target/thumbv7em-none-eabihf/release/nw_3d_grapher target/nwa/nw_3d_grapher.nwa
+      
+      - name: Build app (obj)
+        run: just build o
+      
+      - name: Move to target/nwa (obj)
+        run: mv target/thumbv7em-none-eabihf/release/nw_3d_grapher target/nwa/nw_3d_grapher_obj.nwa
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: nw-3d-grapher
-          path: target/**/nw_3d_grapher
+          name: nw_3d_grapher_nwas
+          path: target/nwa/*
         
