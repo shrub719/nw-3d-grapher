@@ -13,6 +13,8 @@ def f_to_face(line):
     if len(indices) == 3:
         return [tuple(int(index) for index in indices)]
     
+    # if quad:
+    # TODO: could be other shapes too
     return [
         tuple(int(indices[i]) for i in [0, 1, 2]),
         tuple(int(indices[i]) for i in [0, 2, 3])
@@ -37,6 +39,7 @@ def extract_obj(filename):
 def normalise(vertices):
     n = len(vertices)
 
+    # finds middle coordinate
     max_coord = lambda i: max(vertex[i] for vertex in vertices)
     min_coord = lambda i: min(vertex[i] for vertex in vertices)
     middle = lambda i: (max_coord(i) + min_coord(i)) / 2
@@ -44,6 +47,7 @@ def normalise(vertices):
     y = middle(1)
     z = middle(2)
 
+    # centres object
     for i, vertex in enumerate(vertices):
         vertices[i] = (
             vertex[0] - x,
@@ -51,12 +55,14 @@ def normalise(vertices):
             vertex[2] - z
         )
 
+    # finds average length
     length = 0
     for vertex in vertices:
         length += vertex[0]**2 + vertex[1]**2 + vertex[2]**2
     length = (length/n)**0.5
     if length == 0: length = 1
 
+    # attempts to normalise object
     for i, vertex in enumerate(vertices):
         vertices[i] = (
             vertex[0] / length * 10,
@@ -68,6 +74,7 @@ def normalise(vertices):
     return vertices
 
 
+# turns faces with indices into faces with vertices
 def obj_to_tris(vertices, faces):
     tris = []
     for face in faces:

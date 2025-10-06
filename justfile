@@ -1,26 +1,34 @@
 current_target := "x86_64-unknown-linux-gnu" # TODO: get target
 
+# creates .pbj in target/obj from .obj source file
 # input_file contains .obj file location (e.g. obj/meshes/dog.obj)
 # obj_name contains .pbj file name (e.g. dog)
 obj input_file obj_name:
     mkdir -p target/obj
     python3 obj/main.py {{input_file}} {{obj_name}}
 
+# automatically creates .pbj from obj/meshes
+# obj_name contains .obj and .obj file name (e.g. dog)
 dev-obj obj_name="":
     just obj obj/meshes/{{obj_name}}.obj {{obj_name}}
 
-# obj_toggle toggles whether it needs external data
+# builds release profile
+# obj_toggle toggles whether it will need external data
 build obj_toggle="":
     cargo build --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_toggle == "" { "" } else { "--features obj" } }}
 
-# obj_toggle toggles whether it needs external data
+# builds dev profile
+# obj_toggle toggles whether it will need external data
 dev obj_toggle="":
     cargo build --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_toggle == "" { "" } else { "--features obj" } }}
 
-# obj contains object name (e.g. dog)
+# loads app to calculator
+# obj toggles whether it is loaded with external data, containing object name (e.g. dog) if it is
 load obj_name="":
     cargo run --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_name == "" { "" } else { "--features obj -- -d target/obj/" + obj_name + ".pbj" } }}
 
+# automatically creates .pbj from obj/meshes before loading to calculator
+# obj_name toggles whether it is loaded with external data, containing object name (e.g. dog) if it is
 dev-load obj_name="":
     {{ if obj_name == "" { "" } else { "just dev-obj " + obj_name } }}
     cargo run --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_name == "" { "" } else { "--features obj -- -d target/obj/" + obj_name + ".pbj" } }}
