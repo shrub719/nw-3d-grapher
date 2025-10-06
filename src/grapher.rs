@@ -58,11 +58,8 @@ impl Grapher {
         // main loop - runs every frame
         while !self.input.upd.quit {
             if self.input.upd.domain {
-                self.mesh.update_domain(self.input.domain_direction);
-                // self.mesh.generate_mesh();
-            }
-            if self.input.upd.random {
-                self.mesh.generate_mesh(self.input.n_change as isize);
+                self.mesh.update_domain(self.input.domain_direction, self.input.domain_scale_change);
+                self.mesh.generate_mesh();
             }
             if self.input.upd.load_obj {
                 self.mesh.load_mesh_from_file();

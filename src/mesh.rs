@@ -52,6 +52,32 @@ impl Domain {
         }
     }
 
+    pub fn translate(&mut self, domain_direction: Vector3) {
+        self.x0 += domain_direction.x;
+        self.x1 += domain_direction.x;
+        self.y0 += domain_direction.y;
+        self.y1 += domain_direction.y;
+        self.z0 += domain_direction.z;
+        self.z1 += domain_direction.z;
+    }
+
+    pub fn scale(&mut self, scale: f32) {
+        let dx = (self.x1 - self.x0) * scale / 2.0;
+        let dy = (self.y1 - self.y0) * scale / 2.0;
+        let dz = (self.z1 - self.z0) * scale / 2.0;
+
+        let xm = (self.x0 + self.x1) / 2.0;
+        let ym = (self.y0 + self.y1) / 2.0;
+        let zm = (self.z0 + self.z1) / 2.0;
+
+        self.x0 = xm - dx;
+        self.x1 = xm + dx;
+        self.y0 = ym - dy;
+        self.y1 = ym + dy;
+        self.z0 = zm - dz;
+        self.z1 = zm + dz;
+    }
+
     pub fn update_matrix(&mut self) {
         let dx = self.x1 - self.x0;
         let dy = self.y1 - self.y0;
@@ -96,25 +122,14 @@ impl Mesh {
         }
     }
 
-    pub fn generate_mesh(&mut self, n_change: isize) {
-        if n_change == 0 {
-            self.tris.clear();
-            for _ in 0..test::TEST_N {
-                self.tris.push(
-                    Triangle3([
-                        random_point(), random_point(), random_point()
-                    ])
-                );
-            }
-        }
-        else if n_change > 0 {
+    pub fn generate_mesh(&mut self) {
+        self.tris.clear();
+        for _ in 0..test::TEST_N {
             self.tris.push(
                 Triangle3([
                     random_point(), random_point(), random_point()
                 ])
             );
-        } else if n_change < 0 && self.tris.len() > 1 {
-            self.tris.pop();
         }
     }
 
@@ -126,15 +141,9 @@ impl Mesh {
         }
     }
 
-    // TODO: also scale domain
-    pub fn update_domain(&mut self, domain_direction: Vector3) {
-        self.domain.x0 += domain_direction.x;
-        self.domain.x1 += domain_direction.x;
-        self.domain.y0 += domain_direction.y;
-        self.domain.y1 += domain_direction.y;
-        self.domain.z0 += domain_direction.z;
-        self.domain.z1 += domain_direction.z;
-
+    pub fn update_domain(&mut self, domain_direction: Vector3, domain_scale_change: f32) {
+        self.domain.translate(domain_direction);
+        self.domain.scale(1.0 + 0.2 * domain_scale_change);
         self.domain.update_matrix();
     }
 

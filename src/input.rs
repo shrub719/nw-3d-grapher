@@ -38,7 +38,6 @@ pub struct Updates {
     pub rotation: bool,
     pub scale: bool, // TODO: scale -> zoom
     pub redraw: bool,
-    pub random: bool,  // TODO: shouldn't exist really
     pub mode: bool,
     pub hud: bool,
     pub help_on: bool,
@@ -52,8 +51,8 @@ pub struct InputHandler {
     pub keyboard_state: KeyboardState,
     pub rotation_direction: Vector3,
     pub domain_direction: Vector3,
-    pub n_change: f32,
     pub scale_change: f32,
+    pub domain_scale_change: f32,
     pub mode: Mode,
     pub help: bool,
 }
@@ -65,7 +64,6 @@ impl InputHandler {
                 rotation: true,
                 scale: true,
                 redraw: true,
-                random: true,
                 mode: true,
                 hud: true,
                 help_on: false,
@@ -76,8 +74,8 @@ impl InputHandler {
             keyboard_state: KeyboardState::scan(),
             rotation_direction: Vector3::new(0.0, 0.0, 0.0),
             domain_direction: Vector3::new(0.0, 0.0, 0.0),
-            n_change: 0.0,
             scale_change: 0.0,
+            domain_scale_change: 0.0,
             mode: Mode::Rotate,
             help: false,
         }
@@ -87,8 +85,8 @@ impl InputHandler {
         self.keyboard_state = KeyboardState::scan();
         self.rotation_direction = Vector3::new(0.0, 0.0, 0.0);
         self.domain_direction = Vector3::new(0.0, 0.0, 0.0);
-        self.n_change = 0.0;
         self.scale_change = 0.0;
+        self.domain_scale_change = 0.0;
         self.upd = Updates::default();
 
         if self.mode == Mode::Rotate {
@@ -119,10 +117,10 @@ impl InputHandler {
                 &mut self.domain_direction
             );
 
-            bind_keys(&self.keyboard_state, Key::Plus, Key::Minus, &mut self.upd.random, &mut self.n_change);
+            bind_keys(&self.keyboard_state, Key::Plus, Key::Minus, &mut self.upd.domain, &mut self.domain_scale_change);
 
             if self.keyboard_state.key_down(Key::Backspace) {
-                self.upd.random = true;
+                self.upd.domain = true;
             }
             if self.keyboard_state.key_down(Key::Power) {
                 self.upd.load_obj = true;
@@ -152,7 +150,7 @@ impl InputHandler {
             self.upd.quit = true;
         }
 
-        self.upd.redraw = self.upd.rotation || self.upd.domain || self.upd.scale || self.upd.load_obj || self.upd.help_off || self.upd.random;
+        self.upd.redraw = self.upd.rotation || self.upd.domain || self.upd.scale || self.upd.load_obj || self.upd.help_off;
         self.upd.hud = self.upd.mode || self.upd.redraw || self.upd.help_on;
     }
 }
