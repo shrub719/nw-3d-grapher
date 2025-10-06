@@ -1,22 +1,26 @@
 current_target := "x86_64-unknown-linux-gnu" # TODO: get target
 
+# obj contains .obj file location (e.g. obj/meshes/dog.obj)
 obj file:
-    mkdir -p target
+    mkdir -p target/obj
     python3 obj/main.py {{file}}
 
-build obj="":
-    cargo build --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj == "" { "" } else { "--features obj" } }}
+# obj_toggle toggles whether it needs external data
+build obj_toggle="":
+    cargo build --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_toggle == "" { "" } else { "--features obj" } }}
 
-dev obj="":
-    {{ if obj == "" { "" } else { "just obj " + obj } }}
-    cargo build --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj == "" { "" } else { "--features obj" } }}
+# obj_toggle toggles whether it needs external data
+dev obj_toggle="":
+    cargo build --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_toggle == "" { "" } else { "--features obj" } }}
 
-load obj="":
-    cargo run --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj == "" { "" } else { "--features obj -- -d target/mesh.pbj" } }}
+# obj contains object name (e.g. dog)
+load obj_name="":
+    cargo run --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_name == "" { "" } else { "--features obj -- -d target/obj/" + obj_name + ".pbj" } }}
 
-dev-load file="obj/empty.obj":
-    just obj {{file}}
-    cargo run --bin nw_3d_grapher --target=thumbv7em-none-eabihf --features obj -- -d target/mesh.pbj
+dev-load obj_name="":
+    {{ if obj_name == "" { "" } else { "just obj obj/meshes/" + obj_name + ".obj" } }}
+    cargo run --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_name == "" { "" } else { "--features obj -- -d target/obj/" + obj_name + ".pbj" } }}
+
 
 # forget about sim for now
 sim:

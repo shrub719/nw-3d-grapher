@@ -78,21 +78,25 @@ def obj_to_tris(vertices, faces):
     return tris
 
 
-def pack_tris(tris):
-    with open("target/mesh.pbj", "wb") as f:
+def pack_tris(tris, filename):
+    with open(filename, "wb") as f:
         for tri in tris:
             flat = [coord for vertex in tri for coord in vertex]
             f.write(struct.pack("<9f", *flat))
 
-    print("packed tris to mesh.pbj")
+    print("packed tris to " + filename)
 
 
-vertices, faces = extract_obj(sys.argv[1])
+inpt = sys.argv[1]
+name = inpt.split("/")[-1].replace(".obj", "")
+output = "target/obj/" + name + ".pbj"
+
+vertices, faces = extract_obj(inpt)
 
 vertices = normalise(vertices)
 
 tris = obj_to_tris(vertices, faces)
 
-pack_tris(tris)
+pack_tris(tris, output)
 
-print(f"{len(tris)} tris")
+print(f"created pbj '{name}' ({len(tris)} tris)")
