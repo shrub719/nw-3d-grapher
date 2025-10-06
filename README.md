@@ -9,10 +9,69 @@ For my A level Computer Science NEA.
 
 ### NumWorks Calculator
 1. Go to the [latest release](https://github.com/shrub719/fun-numworks-apps/releases/latest)
-1. Download the `nw_3d_grapher.nwa`
+1. Download `nw_3d_grapher.nwa`
 1. Connect to your calculator by USB
 1. Go to the [Numworks Installer](https://my.numworks.com/apps) and click Connect (make sure your browser has WebUSB capability)
 1. Upload `nw_3d_grapher.nwa` file and press Install
+
+### NumWorks Calculator (with PBJ file)
+The app supports importing 3D models as `.pbj`.
+
+1. Go to the [latest release](https://github.com/shrub719/fun-numworks-apps/releases/latest)
+1. Download `nw_3d_grapher_obj.nwa`  
+   *Optionally, download the example `dog.pbj`*
+1. Connect to your calculator by USB
+1. Go to the [Numworks Installer](https://my.numworks.com/apps) and click Connect (make sure your browser has WebUSB capability)
+1. Upload `nw_3d_grapher.nwa` file
+1. Upload any `.pbj` file to the External Data section
+1. Press Install
+<!-- TODO: what does this look like? -->
+
+## Usage
+
+<!-- TODO: controls, features -->
+
+### Simulator
+<!-- TODO: remapped sim controls -->
+
+## Building
+
+### Dependencies
+
+<!-- TODO -->
+
+### NumWorks Calculator
+
+- To build the app, run:
+  ```sh
+  just build
+  ```
+- To load the app to the calculator, run:
+  ```sh
+  just load
+  ```
+
+### Simulator
+
+<!-- TODO -->
+
+### PBJ Files
+
+The app supports importing 3D models as `.pbj`.
+- To convert a `.obj` file to `.pbj`, run:
+  ```sh
+  just obj [file location] [object name]
+
+  # Example usage:
+  just obj obj/meshes/dog.obj dog
+  ```
+- To load to the calculator with a converted PBJ, run:
+  ```sh
+  just load [object name]
+
+  # Example usage:
+  just load dog
+  ```
 
 ## Licensing
 
