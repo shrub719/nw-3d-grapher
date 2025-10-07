@@ -17,9 +17,15 @@ pub fn explicit_func(tris: &mut Vec<Triangle3>, domain: Domain) {
             let index: usize = 10 * i + j;
             let x = domain.x0 + dx * i as f32;
             let z = domain.z0 + dz * j as f32;
-            grid[index].x = x;
-            grid[index].z = z;
-            grid[index].y = test_curve(x, z);
+            let mut y = test_curve(x, z);
+            // TODO: have tris clip against the domain
+            if y > domain.y1 {
+                y = domain.y1;
+            } else if y < domain.y0 {
+                y = domain.y0;
+            }
+
+            grid[index] = Vector3::new(x, y, z);
         }
     }
 
