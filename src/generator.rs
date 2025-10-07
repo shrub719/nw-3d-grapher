@@ -4,7 +4,7 @@ use crate::mesh::Domain;
 use alloc::vec::Vec;
 
 fn test_curve(x: f32, z: f32) -> f32 {
-    x + z
+    x * x + z * z
 }
 
 pub fn explicit_func(tris: &mut Vec<Triangle3>, domain: Domain) {

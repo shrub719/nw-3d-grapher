@@ -92,7 +92,7 @@ impl InputHandler {
         if self.mode == Mode::View {
             bind_keys_directional(
                 &self.keyboard_state,
-                Key::Down, Key::Up,
+                Key::Up, Key::Down,
                 Key::Left, Key::Right,
                 Key::Alpha, Key::Shift,
                 &mut self.upd.rotation, 
@@ -116,9 +116,9 @@ impl InputHandler {
         else if self.mode == Mode::Domain {
             bind_keys_directional(
                 &self.keyboard_state,
-                Key::Left, Key::Right,
-                Key::Up, Key::Down,
-                Key::Shift, Key::Alpha,
+                Key::Right, Key::Left,
+                Key::Down, Key::Up,
+                Key::Alpha, Key::Alpha,
                 &mut self.upd.domain, 
                 &mut self.domain_direction
             );
