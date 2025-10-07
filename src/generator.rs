@@ -6,6 +6,7 @@ use alloc::vec::Vec;
 
 fn test_curve(x: f32, y: f32) -> f32 {
     (x*x*x * y - y*y*y * x) / 390.0 
+    //x * x + y * y
 }
 
 pub fn explicit_func(tris: &mut Vec<Triangle3>, domain: Domain) {

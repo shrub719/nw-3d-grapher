@@ -3,10 +3,6 @@ pub mod settings {
     pub const SCALE_SPEED: f32 = 0.5;
 }
 
-pub mod test {
-    pub const TEST_N: usize = 50;
-}
-
 pub mod palette {
     use crate::eadk::Color;
 

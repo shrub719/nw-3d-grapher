@@ -200,6 +200,7 @@ pub struct Quaternion {
     pub y: f32,
     pub z: f32
 }
+// TODO: default angle is pi/2 rotated on the x-axis. work that out please
 impl Default for Quaternion {
     fn default() -> Self {
         Quaternion {
