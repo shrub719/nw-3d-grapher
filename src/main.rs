@@ -44,6 +44,7 @@ mod mesh;
 mod input;
 mod hud;
 mod timer;
+mod generator;
 mod grapher;
 use grapher::Grapher;
 

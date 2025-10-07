@@ -5,6 +5,7 @@ use alloc::vec::Vec;
 use crate::config::*;
 #[cfg(feature = "obj")]
 use crate::external::obj::load_tris;
+use crate::generator::*;
 
 const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
     [120.0, 0.0, 0.0, 160.0],
@@ -30,7 +31,8 @@ fn random_point() -> Vector3 {
     Vector3::new(random_coord(), random_coord(), random_coord())
 }
 
-struct Domain {
+#[derive(Clone, Copy)]
+pub struct Domain {
     pub x0: f32,
     pub y0: f32,
     pub z0: f32,
@@ -124,13 +126,7 @@ impl Mesh {
 
     pub fn generate_mesh(&mut self) {
         self.tris.clear();
-        for _ in 0..test::TEST_N {
-            self.tris.push(
-                Triangle3([
-                    random_point(), random_point(), random_point()
-                ])
-            );
-        }
+        explicit_func(&mut self.tris, self.domain);
     }
 
     pub fn load_mesh_from_file(&mut self) {
