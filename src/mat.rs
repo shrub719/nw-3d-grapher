@@ -194,11 +194,12 @@ pub struct Line3(pub [Vector3; 2]);
 impl Mul<Matrix4> for Line3 {
     type Output = RLine3;
 
-    fun mul(self, matrix: Matrix4) -> RLine3 {
+    fn mul(self, matrix: Matrix4) -> RLine3 {
         let mut result = RLine3 ( [RVector3::new(0, 0, 0.0); 2]);
-        let mut index: usize = 0
+        let mut index: usize = 0;
         for vertex in self.0 {
             result.0[index] = RVector3::from_vector3(vertex * matrix);
+            index += 1;
         }
         result
     }
