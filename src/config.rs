@@ -57,17 +57,17 @@ pub mod strings {
         ""
     ];
     pub const TRACE_HELP: Help = [
-        "Green :)",
-        "Does nothing",
-        "",
         "OK: Load obj",
-        ":)"
+        "",
+        "",
+        "",
+        ""
     ];
     pub const DOMAIN_HELP: Help = [
         "D-pad: Trans",
         "Sh/Al: Trans",
         "+/-: Scale",
-        "Bksp: Random",
+        "",
         ""
     ];
 }

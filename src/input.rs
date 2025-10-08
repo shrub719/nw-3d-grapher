@@ -55,6 +55,7 @@ pub struct InputHandler {
     pub domain_scale_change: f32,
     pub mode: Mode,
     pub help: bool,
+    pub domain_cooldown: f32,
 }
 impl InputHandler {
     pub fn new() -> Self {
@@ -78,6 +79,7 @@ impl InputHandler {
             domain_scale_change: 0.0,
             mode: Mode::View,
             help: false,
+            domain_cooldown: 0.1,
         }
     }
 
@@ -114,19 +116,17 @@ impl InputHandler {
         }
         
         else if self.mode == Mode::Domain {
-            bind_keys_directional(
-                &self.keyboard_state,
-                Key::Right, Key::Left,
-                Key::Down, Key::Up,
-                Key::Alpha, Key::Alpha,
-                &mut self.upd.domain, 
-                &mut self.domain_direction
-            );
+            if self.domain_cooldown >= 0.1 {
+                bind_keys_directional(
+                    &self.keyboard_state,
+                    Key::Right, Key::Left,
+                    Key::Down, Key::Up,
+                    Key::Alpha, Key::Alpha,
+                    &mut self.upd.domain, 
+                    &mut self.domain_direction
+                );
 
-            bind_keys(&self.keyboard_state, Key::Plus, Key::Minus, &mut self.upd.domain, &mut self.domain_scale_change);
-
-            if self.keyboard_state.key_down(Key::Backspace) {
-                self.upd.domain = true;
+                bind_keys(&self.keyboard_state, Key::Plus, Key::Minus, &mut self.upd.domain, &mut self.domain_scale_change);
             }
         }
         

@@ -60,6 +60,9 @@ impl Grapher {
             if self.input.upd.domain {
                 self.mesh.update_domain(self.input.domain_direction, self.input.domain_scale_change);
                 self.mesh.generate_mesh();
+                self.input.domain_cooldown = 0.0;
+            } else {
+                self.input.domain_cooldown += self.timer.delta_time;
             }
             if self.input.upd.load_obj {
                 self.mesh.load_mesh_from_file();
@@ -82,7 +85,7 @@ impl Grapher {
                 self.renderer.draw_screen(&self.mesh, self.input.help);
             }
 
-            self.input.update();
+            self.input.update();  // TODO: move delta time to input? no?
             self.timer.update();
         }
     }
