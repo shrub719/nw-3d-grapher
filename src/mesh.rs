@@ -80,6 +80,21 @@ impl Domain {
         self.z1 = zm + dz;
     }
 
+    pub fn set_axes(&mut self, axes: &mut [Line3; 3]) {
+        axes[0] = Line3([
+            Vector3::new(self.x0, self.y0, self.z0),
+            Vector3::new(self.x1, self.y0, self.z0)
+        ]);
+        axes[1] = Line3([
+            Vector3::new(self.x0, self.y0, self.z0),
+            Vector3::new(self.x0, self.y1, self.z0)
+        ]);
+        axes[2] = Line3([
+            Vector3::new(self.x0, self.y0, self.z0),
+            Vector3::new(self.x0, self.y0, self.z1)
+        ]);
+    }
+
     pub fn update_matrix(&mut self) {
         let dx = self.x1 - self.x0;
         let dy = self.y1 - self.y0;
@@ -106,6 +121,8 @@ pub struct Mesh {
     pub tris: Vec<Triangle3>,
     pub transformed_tris: Vec<RTriangle3>,
     // pub lines: Vec<Line>,
+    pub axes: [Line3; 3],  // in order: x, y, z
+    pub transformed_axes:  [RLine3; 3],
     domain: Domain,
     rotation: Quaternion,
     pub scale: f32
@@ -118,6 +135,8 @@ impl Mesh {
             // (attempt to subtract with overflow errors in random places when n > ~824)
             transformed_tris: Vec::with_capacity(limits::MAX_TRIS),
             // lines:  Vec::with_capacity(limits::MAX_LINES), // TODO: transform lines
+            axes: [Line3([Vector3::new(0.0, 0.0, 0.0); 2]); 3],
+            transformed_axes: [RLine3([RVector3::new(0, 0, 0.0); 2]); 3],
             domain: Domain::new(),
             rotation: Quaternion::default(),
             scale: 0.5
@@ -143,6 +162,7 @@ impl Mesh {
         self.domain.translate(domain_direction);
         self.domain.scale(1.0 + settings::DOMAIN_SCALE_SPEED * domain_scale_change);
         self.domain.update_matrix();
+        self.domain.set_axes(&mut self.axes);
     }
 
     pub fn update_rotation(&mut self, rotation_direction: Vector3, delta_time: f32) {
@@ -173,6 +193,9 @@ impl Mesh {
         self.transformed_tris.clear();
         for tri in &self.tris {
             self.transformed_tris.push(*tri * matrix);
+        }
+        for i in 0..2 {
+            self.transformed_axes[i] = self.axes[i] * matrix;
         }
     }
 }
