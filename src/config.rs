@@ -34,8 +34,10 @@ pub mod graphics {
     pub const FB_WIDTH_SIZE: usize = FB_WIDTH as usize;
     pub const FB_HEIGHT_SIZE: usize = FB_HEIGHT as usize;
 
-    use crate::eadk;
-    pub const BG: eadk::Color = eadk::Color::from_rgb(255, 255, 255);
+    use crate::eadk::Color;
+    use super::palette::*;
+    pub const BG: Color = Color::from_rgb(255, 255, 255);
+    pub const AXIS_COLORS: [Color; 3] = [RED, GREEN, BLUE];
 }
 
 pub mod limits {

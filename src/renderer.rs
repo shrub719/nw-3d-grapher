@@ -30,6 +30,9 @@ impl Renderer {
                     (MARGIN_TOP + row * FB_HEIGHT) as isize, 
                     0.0
                 );
+                // TODO: sub offset vector before passing in to func
+
+                // draw tris
                 let mut value: f32 = 0.0;
                 let inc = 255.0 / mesh.tris.len() as f32;
                 for tri in &mesh.transformed_tris {
@@ -43,6 +46,20 @@ impl Renderer {
                     );
                     value += inc;
                 }
+
+                // draw axes
+                let mut i = 0;  // TODO: is there rust enumerate?
+                for axis in &mesh.transformed_axes {
+                    let color = AXIS_COLORS[i];
+                    self.fill_line(
+                        axis.0[0],
+                        axis.0[1],
+                        offset_vector,
+                        color
+                    );
+                    i += 1;
+                }
+
                 if !help || column < FB_TILE - 1 {
                     display::push_rect(
                         Rect { 
@@ -138,5 +155,16 @@ impl Renderer {
                 }
             }
         }
+    }
+
+    // TEMP version
+    fn fill_line(&mut self, mut v0: RVector3, mut v1: RVector3, offset_vector: RVector3, color: Color) {
+        let v2 = RVector3::new(
+            v1.x + 1,
+            v1.y + 1,
+            v1.z + 0.1
+        );
+
+        self.fill_triangle(v0, v1, v2, offset_vector, color);
     }
 }
