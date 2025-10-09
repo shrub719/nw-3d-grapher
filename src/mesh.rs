@@ -55,12 +55,16 @@ impl Domain {
     }
 
     pub fn translate(&mut self, domain_direction: Vector3) {
-        self.x0 += domain_direction.x;
-        self.x1 += domain_direction.x;
-        self.y0 += domain_direction.y;
-        self.y1 += domain_direction.y;
-        self.z0 += domain_direction.z;
-        self.z1 += domain_direction.z;
+        let dx = (self.x1 - self.x0) * 0.1 * domain_direction.x;
+        let dy = (self.y1 - self.y0) * 0.1 * domain_direction.y;
+        let dz = (self.z1 - self.z0) * 0.1 * domain_direction.z;
+
+        self.x0 += dx;
+        self.x1 += dx;
+        self.y0 += dy;
+        self.y1 += dy;
+        self.z0 += dz;
+        self.z1 += dz;
     }
 
     pub fn scale(&mut self, scale: f32) {

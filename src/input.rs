@@ -121,7 +121,7 @@ impl InputHandler {
                     &self.keyboard_state,
                     Key::Right, Key::Left,
                     Key::Up, Key::Down,
-                    Key::Shift, Key::Alpha,
+                    Key::Alpha, Key::Shift,
                     &mut self.upd.domain, 
                     &mut self.domain_direction
                 );
