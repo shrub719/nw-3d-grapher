@@ -194,7 +194,7 @@ impl Mesh {
         for tri in &self.tris {
             self.transformed_tris.push(*tri * matrix);
         }
-        for i in 0..2 {
+        for i in 0..3 {
             self.transformed_axes[i] = self.axes[i] * matrix;
         }
     }

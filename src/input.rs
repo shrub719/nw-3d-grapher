@@ -120,7 +120,7 @@ impl InputHandler {
                 bind_keys_directional(
                     &self.keyboard_state,
                     Key::Right, Key::Left,
-                    Key::Down, Key::Up,
+                    Key::Up, Key::Down,
                     Key::Shift, Key::Alpha,
                     &mut self.upd.domain, 
                     &mut self.domain_direction
