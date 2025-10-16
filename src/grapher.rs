@@ -85,7 +85,7 @@ impl Grapher {
                 self.renderer.draw_screen(&self.mesh, self.input.help);
             }
 
-            self.input.update();  // TODO: move delta time to input? no?
+            self.input.update();
             self.timer.update();
         }
     }
