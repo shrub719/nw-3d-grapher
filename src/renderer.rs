@@ -33,8 +33,6 @@ impl Renderer {
                 // TODO: sub offset vector before passing in to func
 
                 // draw tris
-                let mut value: f32 = 0.0;
-                let inc = 255.0 / mesh.tris.len() as f32;
                 for tri in &mesh.transformed_tris {
                     let color = Color::from_rgb(0, ((-tri.v[0].z + 1.0) / 2.0 * 255.0) as u16, 255);
                     self.fill_triangle(
@@ -44,7 +42,6 @@ impl Renderer {
                         offset_vector,
                         color
                     );
-                    value += inc;
                 }
 
                 // draw axes
@@ -158,7 +155,7 @@ impl Renderer {
     }
 
     // TEMP version
-    fn fill_line(&mut self, mut v0: RVector3, mut v1: RVector3, offset_vector: RVector3, color: Color) {
+    fn fill_line(&mut self, v0: RVector3, v1: RVector3, offset_vector: RVector3, color: Color) {
         let v2 = RVector3::new(
             v0.x + 1,
             v0.y + 1,
