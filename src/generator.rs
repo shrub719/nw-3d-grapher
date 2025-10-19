@@ -32,7 +32,7 @@ fn add_explicit_tris(tris: &mut Vec<Triangle3>, x0: f32, y0: f32, dx: f32, dy: f
         }
     }
 
-    add_tri(tris, [vertices[0], vertices[1], vertices[2]]);
+    add_tri(tris, [vertices[1], vertices[2], vertices[0]]);
     add_tri(tris, [vertices[1], vertices[2], vertices[3]]);
 }
 

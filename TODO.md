@@ -6,7 +6,7 @@
     - [ ] Use proper (configurable) projection matrix
     - [x] Use delta time in manipulation calculations
     - [x] Use quaternions in rotation
-- [ ] Generate domain space mesh from explicit function
+- [x] Generate domain space mesh from explicit function
     - [ ] Lines (and maybe inheritance from a 3D/R3D struct)
 - [ ] Generate domain space mesh from implicit function with marching cubes
     - [ ] March those cubes (create cube loop that minimises redundant calculation)
