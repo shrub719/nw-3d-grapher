@@ -1,4 +1,4 @@
-use crate::{ eadk::*, config::graphics::*, mat::RVector3, mesh::Mesh };
+use crate::{ eadk::*, config::graphics::*, mat::{ RVector3, RTriangle3 }, mesh::Mesh };
 
 pub struct Renderer {
     buffer: [Color; FB_WIDTH_SIZE * FB_HEIGHT_SIZE],
@@ -36,10 +36,7 @@ impl Renderer {
                 for tri in &mesh.transformed_tris {
                     let color = Color::from_rgb(0, ((-tri.v[0].z + 1.0) / 2.0 * 255.0) as u16, 255);
                     self.fill_triangle(
-                        tri.v[0],
-                        tri.v[1],
-                        tri.v[2],
-                        offset_vector,
+                        *tri - offset_vector,
                         color
                     );
                 }
@@ -73,10 +70,8 @@ impl Renderer {
         // display::wait_for_vblank();
     }
 
-    fn fill_triangle(&mut self, mut v0: RVector3, mut v1: RVector3, mut v2: RVector3, offset_vector: RVector3, color: Color) {
-        v0 -= offset_vector;
-        v1 -= offset_vector;
-        v2 -= offset_vector;
+    fn fill_triangle(&mut self, tri: RTriangle3, color: Color) {
+        let [mut v0, mut v1, mut v2] = tri.v;
 
         use core::mem::swap;
         if v0.y > v1.y { swap(&mut v0, &mut v1) }
@@ -166,8 +161,14 @@ impl Renderer {
             v1.y + 1,
             v1.z + 0.1
         );
+        let tri1 = RTriangle3 {
+            v: [v0, v1, v2]
+        };
+        let tri2 = RTriangle3 {
+            v: [v1, v3, v2]
+        };
 
-        self.fill_triangle(v0, v1, v2, offset_vector, color);
-        self.fill_triangle(v1, v3, v2, offset_vector, color);
+        self.fill_triangle(tri1 - offset_vector, color);
+        self.fill_triangle(tri2 - offset_vector, color);
     }
 }

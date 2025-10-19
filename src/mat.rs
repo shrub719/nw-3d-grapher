@@ -1,6 +1,5 @@
-use core::ops::{ SubAssign, Mul, MulAssign };
+use core::ops::{ Sub, SubAssign, Mul, MulAssign };
 use crate::trig::*;
-use crate::eadk::Color;
 
 #[derive(Clone, Copy, Debug)]
 pub struct RVector3 {
@@ -33,6 +32,17 @@ impl SubAssign for RVector3 {
         self.x -= other.x;
         self.y -= other.y;
         self.z -= other.z;
+    }
+}
+impl Sub for RVector3 {
+    type Output = RVector3;
+
+    fn sub(self, other: Self) -> RVector3 {
+        RVector3 {
+            x: self.x - other.x,
+            y: self.y - other.y,
+            z: self.z - other.z
+        }
     }
 }
 
@@ -209,21 +219,24 @@ impl Mul<Matrix4> for Line3 {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct RTriangle3 {
-    pub v: [RVector3; 3],
-    pub color: Color
+    pub v: [RVector3; 3]
 }
-impl SubAssign<RVector3> for RTriangle3 {
-    fn sub_assign(&mut self, vector: RVector3) {
-        for mut vertex in self.v {
-            vertex -= vector;
+impl Sub<RVector3> for RTriangle3 {
+    type Output = RTriangle3;
+
+    fn sub(self, vector: RVector3) -> RTriangle3 {
+        // TODO: map
+        let mut tri = RTriangle3::new();
+        for i in 0..3 {
+            tri.v[i] = self.v[i] - vector;
         }
+        tri
     }
 }
 impl RTriangle3 {
     pub fn new() -> Self {
         RTriangle3{
-            v: [RVector3::new(0, 0, 0.0); 3],
-            color: Color{ rgb565: 0x000 }
+            v: [RVector3::new(0, 0, 0.0); 3]
         }
     }
 }
