@@ -1,4 +1,4 @@
-use core::ops::{ SubAssign, Mul, MulAssign };
+use core::ops::{ Sub, SubAssign, Mul, MulAssign };
 use crate::trig::*;
 
 #[derive(Clone, Copy, Debug)]
@@ -32,6 +32,17 @@ impl SubAssign for RVector3 {
         self.x -= other.x;
         self.y -= other.y;
         self.z -= other.z;
+    }
+}
+impl Sub for RVector3 {
+    type Output = RVector3;
+
+    fn sub(self, other: Self) -> RVector3 {
+        RVector3 {
+            x: self.x - other.x,
+            y: self.y - other.y,
+            z: self.z - other.z
+        }
     }
 }
 
@@ -179,10 +190,10 @@ impl Mul<Matrix4> for Triangle3 {
     type Output = RTriangle3;
 
     fn mul(self, matrix: Matrix4) -> RTriangle3 {
-        let mut result = RTriangle3 ( [RVector3::new(0, 0, 0.0); 3] );
+        let mut result = RTriangle3::new();
         let mut index: usize = 0;
         for vertex in self.0 {
-            result.0[index] = RVector3::from_vector3(vertex * matrix);
+            result.v[index] = RVector3::from_vector3(vertex * matrix);
             index += 1;
         }
         result
@@ -207,7 +218,28 @@ impl Mul<Matrix4> for Line3 {
 
 #[repr(C)]
 #[derive(Clone, Copy)]
-pub struct RTriangle3(pub [RVector3; 3]);
+pub struct RTriangle3 {
+    pub v: [RVector3; 3]
+}
+impl Sub<RVector3> for RTriangle3 {
+    type Output = RTriangle3;
+
+    fn sub(self, vector: RVector3) -> RTriangle3 {
+        // TODO: map
+        let mut tri = RTriangle3::new();
+        for i in 0..3 {
+            tri.v[i] = self.v[i] - vector;
+        }
+        tri
+    }
+}
+impl RTriangle3 {
+    pub fn new() -> Self {
+        RTriangle3{
+            v: [RVector3::new(0, 0, 0.0); 3]
+        }
+    }
+}
 
 #[derive(Clone, Copy)]
 pub struct RLine3(pub [RVector3; 2]);

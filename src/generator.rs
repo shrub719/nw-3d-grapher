@@ -10,7 +10,7 @@ fn test_curve(x: f32, y: f32) -> f32 {
 }
 
 // TODO: clip
-fn add_tri(tris: &mut Vec<Triangle3>, mut vertices: [Vector3; 3]) {
+fn add_tri(tris: &mut Vec<Triangle3>, vertices: [Vector3; 3]) {
     tris.push(Triangle3(vertices));
 }
 

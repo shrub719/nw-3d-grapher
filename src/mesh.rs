@@ -1,5 +1,4 @@
 use crate::mat::*;
-use crate::eadk::random;
 #[cfg(target_os = "none")]
 use alloc::vec::Vec;
 use crate::config::*;
@@ -21,14 +20,6 @@ fn get_scale_matrix(scale: f32) -> Matrix4 {
         [0.0  , 0.0  , scale, 0.0],
         [0.0  , 0.0  , 0.0  , 1.0]
     ])
-}
-
-fn random_coord() -> f32 {
-    (random() as u16 as f32) / (u16::MAX as f32) * 20.0 - 10.0
-}
-
-fn random_point() -> Vector3 {
-    Vector3::new(random_coord(), random_coord(), random_coord())
 }
 
 #[derive(Clone, Copy)]
