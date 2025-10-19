@@ -10,10 +10,8 @@ fn test_curve(x: f32, y: f32) -> f32 {
 }
 
 // TODO: clip
-fn add_tri(tris: &mut Vec<Triangle3>, v0: Vector3, v1: Vector3, v2: Vector3) {
-    tris.push(Triangle3([
-        v0, v1, v2
-    ]));
+fn add_tri(tris: &mut Vec<Triangle3>, mut vertices: [Vector3; 3]) {
+    tris.push(Triangle3(vertices));
 }
 
 // TODO: split poly into tris
@@ -34,8 +32,8 @@ fn add_explicit_tris(tris: &mut Vec<Triangle3>, x0: f32, y0: f32, dx: f32, dy: f
         }
     }
 
-    add_tri(tris, vertices[0], vertices[1], vertices[2]);
-    add_tri(tris, vertices[1], vertices[2], vertices[3]);
+    add_tri(tris, [vertices[0], vertices[1], vertices[2]]);
+    add_tri(tris, [vertices[1], vertices[2], vertices[3]]);
 }
 
 pub fn explicit_func(tris: &mut Vec<Triangle3>, domain: Domain) {
