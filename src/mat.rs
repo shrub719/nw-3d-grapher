@@ -212,7 +212,7 @@ pub struct RTriangle3(pub [RVector3; 3]);
 #[derive(Clone, Copy)]
 pub struct RLine3(pub [RVector3; 2]);
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub struct Quaternion {
     pub w: f32,
     pub x: f32,
@@ -223,10 +223,10 @@ pub struct Quaternion {
 impl Default for Quaternion {
     fn default() -> Self {
         Quaternion {
-            w: 1.0,
-            x: 0.0,
-            y: 0.0,
-            z: 0.0
+            w: 0.5713734,
+            x: 0.77361715,
+            y: 0.2203645,
+            z: -0.16275544
         }
     }
 }
