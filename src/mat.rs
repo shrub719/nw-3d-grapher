@@ -1,5 +1,6 @@
 use core::ops::{ SubAssign, Mul, MulAssign };
 use crate::trig::*;
+use crate::eadk::Color;
 
 #[derive(Clone, Copy, Debug)]
 pub struct RVector3 {
@@ -179,10 +180,10 @@ impl Mul<Matrix4> for Triangle3 {
     type Output = RTriangle3;
 
     fn mul(self, matrix: Matrix4) -> RTriangle3 {
-        let mut result = RTriangle3 ( [RVector3::new(0, 0, 0.0); 3] );
+        let mut result = RTriangle3::new();
         let mut index: usize = 0;
         for vertex in self.0 {
-            result.0[index] = RVector3::from_vector3(vertex * matrix);
+            result.v[index] = RVector3::from_vector3(vertex * matrix);
             index += 1;
         }
         result
@@ -207,7 +208,25 @@ impl Mul<Matrix4> for Line3 {
 
 #[repr(C)]
 #[derive(Clone, Copy)]
-pub struct RTriangle3(pub [RVector3; 3]);
+pub struct RTriangle3 {
+    pub v: [RVector3; 3],
+    pub color: Color
+}
+impl SubAssign<RVector3> for RTriangle3 {
+    fn sub_assign(&mut self, vector: RVector3) {
+        for mut vertex in self.v {
+            vertex -= vector;
+        }
+    }
+}
+impl RTriangle3 {
+    pub fn new() -> Self {
+        RTriangle3{
+            v: [RVector3::new(0, 0, 0.0); 3],
+            color: Color{ rgb565: 0x000 }
+        }
+    }
+}
 
 #[derive(Clone, Copy)]
 pub struct RLine3(pub [RVector3; 2]);

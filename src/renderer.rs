@@ -36,11 +36,11 @@ impl Renderer {
                 let mut value: f32 = 0.0;
                 let inc = 255.0 / mesh.tris.len() as f32;
                 for tri in &mesh.transformed_tris {
-                    let color = Color::from_rgb(0, ((-tri.0[0].z + 1.0) / 2.0 * 255.0) as u16, 255);
+                    let color = Color::from_rgb(0, ((-tri.v[0].z + 1.0) / 2.0 * 255.0) as u16, 255);
                     self.fill_triangle(
-                        tri.0[0],
-                        tri.0[1],
-                        tri.0[2],
+                        tri.v[0],
+                        tri.v[1],
+                        tri.v[2],
                         offset_vector,
                         color
                     );
