@@ -3,7 +3,7 @@ use crate::{
         mat::*,
         generator::*
     },
-    config::*
+    constants::*
 };
 #[cfg(target_os = "none")]
 use alloc::vec::Vec;

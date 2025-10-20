@@ -1,4 +1,4 @@
-use crate::config::palette::*;
+use crate::constants::palette::*;
 
 #[repr(C)]
 #[derive(Copy, Clone)]

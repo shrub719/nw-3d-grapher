@@ -4,7 +4,7 @@ use crate::{
         mesh::Domain
     },
     trig::*,
-    config::limits::*
+    constants::limits::*
 };
 #[cfg(target_os = "none")]
 use alloc::vec::Vec;

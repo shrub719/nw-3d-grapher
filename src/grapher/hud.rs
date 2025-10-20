@@ -1,7 +1,7 @@
 use crate::{ 
     eadk::*, 
     grapher::input::Mode, 
-    config::{ 
+    constants::{ 
         graphics::*, 
         palette::*, 
         strings::* 

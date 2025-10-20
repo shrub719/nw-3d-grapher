@@ -7,7 +7,7 @@ use crate::{
         timer::*
     },
     eadk::*,
-    config::{ graphics::*, palette::* }
+    constants::{ graphics::*, palette::* }
 };
 #[cfg(target_os = "none")]
 use alloc::format;

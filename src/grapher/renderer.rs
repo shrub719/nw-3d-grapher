@@ -1,6 +1,6 @@
 use crate::{ 
     eadk::*, 
-    config::graphics::*, 
+    constants::graphics::*, 
     grapher::{
         mat::{ 
             RVector3, 
