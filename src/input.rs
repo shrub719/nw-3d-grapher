@@ -1,4 +1,7 @@
-use crate::{ mat::*, eadk::input::* };
+use crate::{ 
+    mat::*, 
+    eadk::input::* 
+};
 
 fn bind_keys(keyboard_state: &KeyboardState, pos_key: Key, neg_key: Key, update: &mut bool, value: &mut f32) {
     if keyboard_state.key_down(pos_key) {
@@ -135,7 +138,7 @@ impl InputHandler {
                         &mut self.upd.domain, 
                         &mut self.domain_trans_direction
                     );
-                    
+
                     let mut scale_change = 0.0;
                     bind_keys(&self.keyboard_state, Key::Minus, Key::Plus, &mut self.upd.domain, &mut scale_change);
                     self.domain_scale_direction = Vector3::new(scale_change, scale_change, scale_change);

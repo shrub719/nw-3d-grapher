@@ -1,7 +1,9 @@
-use crate::mat::*;
-use crate::trig::*;
-use crate::mesh::Domain;
-use crate::config::limits::*;
+use crate::{
+    mat::*,
+    trig::*,
+    mesh::Domain,
+    config::limits::*
+};
 #[cfg(target_os = "none")]
 use alloc::vec::Vec;
 

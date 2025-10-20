@@ -9,7 +9,16 @@ use crate::{
 };
 #[cfg(target_os = "none")]
 use alloc::format;
-use crate::eadk::info;
+
+pub fn info(text: &str) {
+    display::draw_string(
+        text,
+        Point { x: 5, y: 3 },
+        false,
+        WHITE,
+        ORANGE
+    );
+}
 
 pub struct Grapher {
     renderer: Renderer,
@@ -87,9 +96,8 @@ impl Grapher {
             self.input.update();
             self.timer.update();
             
-            let fps = self.timer.get_fps();
-            if fps < 800.0 {   // temp fix
-                info(&format!("fps: {:.1}   ", self.timer.get_fps()));
+            if self.timer.fps < 800.0 {   // temp fix
+                info(&format!("fps: {:.1}   ", self.timer.fps));
             }
         }
     }

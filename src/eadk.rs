@@ -474,23 +474,6 @@ pub fn debug_info(text: &str, wait: usize) {
     timing::msleep(wait as u32);
 }
 
-pub fn info(text: &str) {
-    // pub fn draw_string(
-    //     text: &str,
-    //     point: Point,
-    //     large_font: bool,
-    //     text_color: Color,
-    //     background_color: Color,
-    // ) 
-    display::draw_string(
-        text,
-        Point { x: 5, y: 3 },
-        false,
-        Color::from_rgb(255, 255, 255),
-        Color::from_rgb(255, 183, 52)
-    );
-}
-
 #[cfg(feature = "obj")]
 pub fn get_data() -> &'static [u8] {
     unsafe {

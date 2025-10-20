@@ -1,4 +1,12 @@
-use crate::{ eadk::*, input::Mode, config::{ graphics::*, palette::*, strings::* } };
+use crate::{ 
+    eadk::*, 
+    input::Mode, 
+    config::{ 
+        graphics::*, 
+        palette::*, 
+        strings::* 
+    } 
+};
 #[cfg(target_os = "none")]
 use alloc::format;
 

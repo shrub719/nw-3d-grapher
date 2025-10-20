@@ -1,4 +1,12 @@
-use crate::{ eadk::*, config::graphics::*, mat::{ RVector3, RTriangle3 }, mesh::Mesh };
+use crate::{ 
+    eadk::*, 
+    config::graphics::*, 
+    mat::{ 
+        RVector3, 
+        RTriangle3 
+    }, 
+    mesh::Mesh 
+};
 
 pub struct Renderer {
     buffer: [Color; FB_WIDTH_SIZE * FB_HEIGHT_SIZE],

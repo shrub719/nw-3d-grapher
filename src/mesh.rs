@@ -1,10 +1,12 @@
-use crate::mat::*;
+use crate::{
+    mat::*,
+    config::*,
+    generator::*
+};
 #[cfg(target_os = "none")]
 use alloc::vec::Vec;
-use crate::config::*;
 #[cfg(feature = "obj")]
 use crate::external::obj::load_tris;
-use crate::generator::*;
 
 const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
     [120.0, 0.0, 0.0, 160.0],

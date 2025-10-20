@@ -36,7 +36,7 @@ pub mod graphics {
 
     use crate::eadk::Color;
     use super::palette::*;
-    pub const BG: Color = Color::from_rgb(255, 255, 255);
+    pub const BG: Color = WHITE;
     pub const AXIS_COLORS: [Color; 3] = [RED, GREEN, BLUE];
 }
 
