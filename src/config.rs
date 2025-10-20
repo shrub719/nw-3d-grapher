@@ -51,17 +51,25 @@ pub mod strings {
     pub const TRACE_NAME: &str = "TRACE";
     pub const DOMAIN_NAME: &str = "DOMAIN";
 
-    type Help<'a> = [&'a str; 6];
+    type Help<'a> = [&'a str; 10];
     pub const ROTATE_HELP: Help = [
-        "D-pad: Rotate",  // max line length
-        "Sh/Al: Tilt",
-        "+/-: Zoom",
-        "Bksp: Reset",
+        "D-pad, Sh/Al:",  // max line length
+        "  Rotate",
         "",
-        ""
+        "+/-:",
+        "  Zoom",
+        "",
+        "Backspace:",
+        "  Reset",
+        "",
+        "",
     ];
     pub const TRACE_HELP: Help = [
-        "OK: Load obj",
+        "OK:",
+        "  Load obj",
+        "",
+        "",
+        "",
         "",
         "",
         "",
@@ -71,9 +79,13 @@ pub mod strings {
     pub const DOMAIN_HELP: Help = [
         "D-pad, Sh/Al:",
         "  Translate",
-        "+/-: Scale",
+        "",
+        "+/-:",
+        "  Scale",
+        "",
         "X + D-pad:",
         "  Scale w/",
-        "  direction"
+        "  direction",
+        ""
     ];
 }

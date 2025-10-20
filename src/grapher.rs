@@ -80,13 +80,17 @@ impl Grapher {
             }
 
             if self.input.upd.redraw {
-                info(&format!("fps: {:.1}   ", self.timer.get_fps()));
                 self.mesh.transform();
                 self.renderer.draw_screen(&self.mesh, self.input.help);
             }
 
             self.input.update();
             self.timer.update();
+            
+            let fps = self.timer.get_fps();
+            if fps < 800.0 {   // temp fix
+                info(&format!("fps: {:.1}   ", self.timer.get_fps()));
+            }
         }
     }
 }
