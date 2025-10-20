@@ -20,16 +20,6 @@ mod hud;
 mod timer;
 mod generator;
 
-pub fn info(text: &str) {
-    display::draw_string(
-        text,
-        Point { x: 5, y: 3 },
-        false,
-        WHITE,
-        ORANGE
-    );
-}
-
 pub struct Grapher {
     renderer: Renderer,
     mesh: Mesh,
@@ -107,7 +97,7 @@ impl Grapher {
             self.timer.update();
             
             if self.timer.fps < 800.0 {   // temp fix
-                info(&format!("fps: {:.1}   ", self.timer.fps));
+                header_info(&format!("FPS: {:.1}   ", self.timer.fps));
             }
         }
     }

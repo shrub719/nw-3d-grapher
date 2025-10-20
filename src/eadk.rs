@@ -1,3 +1,5 @@
+use crate::config::palette::*;
+
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct Color {
@@ -470,8 +472,24 @@ fn panic(panic: &PanicInfo<'_>) -> ! {
 }
 
 pub fn debug_info(text: &str, wait: usize) {
-    write_wrapped(text, 42);
+    display::draw_string(
+        text,
+        Point { x: 10, y: 30 },
+        false,
+        BLACK,
+        WHITE,
+    );
     timing::msleep(wait as u32);
+}
+
+pub fn header_info(text: &str) {
+    display::draw_string(
+        text,
+        Point { x: 5, y: 3 },
+        false,
+        WHITE,
+        ORANGE
+    );
 }
 
 #[cfg(feature = "obj")]
