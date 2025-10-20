@@ -122,7 +122,7 @@ pub struct Mesh {
     // pub lines: Vec<Line>,
     pub axes: [Line3; 3],  // in order: x, y, z
     pub transformed_axes:  [RLine3; 3],
-    domain: Domain,
+    pub domain: Domain,
     rotation: Quaternion,
     pub scale: f32
 }

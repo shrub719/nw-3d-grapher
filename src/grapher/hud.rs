@@ -1,6 +1,9 @@
 use crate::{ 
     eadk::*, 
-    grapher::input::Mode, 
+    grapher::{
+        input::Mode,
+        mesh::Domain
+    },
     constants::{ 
         graphics::*, 
         palette::*, 
@@ -20,6 +23,19 @@ fn draw_hud_string(text: &str, bg_color: Color) {
     );
 }
 
+fn draw_hud_string_table(text: &str, row: u16, column: u16, bg_color: Color) {
+    display::draw_string(
+        text,
+        Point {
+            x: 10 + column * 80,
+            y: SCREEN_HEIGHT - HUD_HEIGHT + 5 + 15 * row
+        },
+        false,
+        WHITE,
+        bg_color
+    );
+}
+
 fn draw_help_string(text: &str, offset: u16) {
     display::draw_string(
         text,
@@ -33,7 +49,7 @@ fn draw_help_string(text: &str, offset: u16) {
     );
 }
 
-pub fn draw_hud(mode: Mode, mode_update: bool, help_on: bool, scale: f32) {
+pub fn draw_hud(mode: Mode, mode_update: bool, help_on: bool, scale: f32, domain: Domain) {
     let bg_color = match mode {
         Mode::View => RED,
         Mode::Trace => GREEN,
@@ -50,30 +66,41 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_on: bool, scale: f32) {
             },
             bg_color
         );
+
+        let text = match mode {
+            Mode::View => ROTATE_NAME,
+            Mode::Trace => TRACE_NAME,
+            Mode::Domain => DOMAIN_NAME
+        };
+        let length = text.len() as u16;
+        display::draw_string(
+            text,
+            Point { x: SCREEN_WIDTH - 5 - 7 * length, y: SCREEN_HEIGHT - 15},
+            false,
+            WHITE,
+            bg_color
+        );
     }
 
-    draw_hud_string(
-        &(match mode {
-            Mode::View => format!("Scale: {:.2}   ", scale),
-            Mode::Trace => format!("{}", scale),
-            Mode::Domain => format!{"{}", scale}
-        }),
-        bg_color
-    );
-    
-    let text = match mode {
-        Mode::View => ROTATE_NAME,
-        Mode::Trace => TRACE_NAME,
-        Mode::Domain => DOMAIN_NAME
-    };
-    let length = text.len() as u16;
-    display::draw_string(
-        text,
-        Point { x: SCREEN_WIDTH - 5 - 7 * length, y: SCREEN_HEIGHT - 15},
-        false,
-        WHITE,
-        bg_color
-    );
+    if mode == Mode::View {
+        draw_hud_string(
+            &format!("scale: {:.2}", scale),
+            bg_color
+        );
+    } else if mode == Mode::Trace {
+        draw_hud_string(
+            "green",
+            bg_color
+        );
+    } else if mode == Mode::Domain {
+        // TODO: do nicer
+        draw_hud_string_table(&format!("x0: {:.1}  ", domain.x0), 0, 0, bg_color);
+        draw_hud_string_table(&format!("x1: {:.1}  ", domain.x1), 1, 0, bg_color);
+        draw_hud_string_table(&format!("y0: {:.1}  ", domain.y0), 0, 1, bg_color);
+        draw_hud_string_table(&format!("y1: {:.1}  ", domain.y1), 1, 1, bg_color);
+        draw_hud_string_table(&format!("z0: {:.1}  ", domain.z0), 0, 2, bg_color);
+        draw_hud_string_table(&format!("z1: {:.1}  ", domain.z1), 1, 2, bg_color);
+    }
 
     if help_on {
         let help_lines = match mode {

@@ -85,7 +85,7 @@ impl Grapher {
             }
 
             if self.input.upd.hud {
-                draw_hud(self.input.mode, self.input.upd.mode, self.input.upd.help_on, self.mesh.scale);
+                draw_hud(self.input.mode, self.input.upd.mode, self.input.upd.help_on, self.mesh.scale, self.mesh.domain);
             }
 
             if self.input.upd.redraw {
@@ -97,7 +97,7 @@ impl Grapher {
             self.timer.update();
             
             if self.timer.fps < 800.0 {   // temp fix
-                header_info(&format!("FPS: {:.1}   ", self.timer.fps));
+                header_info(&format!("fps: {:.1}   ", self.timer.fps));
             }
         }
     }
