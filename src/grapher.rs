@@ -12,7 +12,7 @@ use crate::{
 #[cfg(target_os = "none")]
 use alloc::format;
 
-mod mat;
+pub mod mat;
 mod renderer;
 mod mesh;
 mod input;
