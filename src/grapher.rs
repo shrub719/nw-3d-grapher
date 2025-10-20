@@ -58,7 +58,7 @@ impl Grapher {
         // main loop - runs every frame
         while !self.input.upd.quit {
             if self.input.upd.domain {
-                self.mesh.update_domain(self.input.domain_direction, self.input.domain_scale_change);
+                self.mesh.update_domain(self.input.domain_trans_direction, self.input.domain_scale_direction);
                 self.mesh.generate_mesh();
                 self.input.domain_cooldown = 0.0;
             } else {

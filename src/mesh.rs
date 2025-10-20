@@ -45,10 +45,10 @@ impl Domain {
         }
     }
 
-    pub fn translate(&mut self, domain_direction: Vector3) {
-        let dx = (self.x1 - self.x0) * 0.1 * domain_direction.x;
-        let dy = (self.y1 - self.y0) * 0.1 * domain_direction.y;
-        let dz = (self.z1 - self.z0) * 0.1 * domain_direction.z;
+    pub fn translate(&mut self, trans_direction: Vector3) {
+        let dx = (self.x1 - self.x0) * 0.1 * trans_direction.x;
+        let dy = (self.y1 - self.y0) * 0.1 * trans_direction.y;
+        let dz = (self.z1 - self.z0) * 0.1 * trans_direction.z;
 
         self.x0 += dx;
         self.x1 += dx;
@@ -58,10 +58,10 @@ impl Domain {
         self.z1 += dz;
     }
 
-    pub fn scale(&mut self, scale: f32) {
-        let dx = (self.x1 - self.x0) * scale / 2.0;
-        let dy = (self.y1 - self.y0) * scale / 2.0;
-        let dz = (self.z1 - self.z0) * scale / 2.0;
+    pub fn scale(&mut self, scale_direction: Vector3) {
+        let dx = (self.x1 - self.x0) * (1.0 + scale_direction.x * settings::DOMAIN_SCALE_SPEED) / 2.0;
+        let dy = (self.y1 - self.y0) * (1.0 + scale_direction.y * settings::DOMAIN_SCALE_SPEED) / 2.0;
+        let dz = (self.z1 - self.z0) * (1.0 + scale_direction.z * settings::DOMAIN_SCALE_SPEED) / 2.0;
 
         let xm = (self.x0 + self.x1) / 2.0;
         let ym = (self.y0 + self.y1) / 2.0;
@@ -151,11 +151,11 @@ impl Mesh {
         }
     }
 
-    pub fn update_domain(&mut self, domain_direction: Vector3, domain_scale_change: f32) {
+    pub fn update_domain(&mut self, trans_direction: Vector3, scale_direction: Vector3) {
         // TODO: transforms for very large numbers make everything go haywire
         // don't calculate the tris in terms of the domain
-        self.domain.translate(domain_direction);
-        self.domain.scale(1.0 + settings::DOMAIN_SCALE_SPEED * domain_scale_change);
+        self.domain.translate(trans_direction);
+        self.domain.scale(scale_direction);
         self.domain.update_matrix();
         self.domain.set_axes(&mut self.axes);
     }

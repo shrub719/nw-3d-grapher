@@ -50,9 +50,9 @@ pub struct InputHandler {
     pub upd: Updates,
     pub keyboard_state: KeyboardState,
     pub rotation_direction: Vector3,
-    pub domain_direction: Vector3,
+    pub domain_trans_direction: Vector3,
     pub scale_change: f32,
-    pub domain_scale_change: f32,
+    pub domain_scale_direction: Vector3,
     pub mode: Mode,
     pub help: bool,
     pub domain_cooldown: f32,
@@ -74,9 +74,9 @@ impl InputHandler {
             },
             keyboard_state: KeyboardState::scan(),
             rotation_direction: Vector3::new(0.0, 0.0, 0.0),
-            domain_direction: Vector3::new(0.0, 0.0, 0.0),
+            domain_trans_direction: Vector3::new(0.0, 0.0, 0.0),
             scale_change: 0.0,
-            domain_scale_change: 0.0,
+            domain_scale_direction: Vector3::new(0.0, 0.0, 0.0),
             mode: Mode::View,
             help: false,
             domain_cooldown: 0.1,
@@ -86,9 +86,9 @@ impl InputHandler {
     pub fn update(&mut self) {
         self.keyboard_state = KeyboardState::scan();
         self.rotation_direction = Vector3::new(0.0, 0.0, 0.0);
-        self.domain_direction = Vector3::new(0.0, 0.0, 0.0);
+        self.domain_trans_direction = Vector3::new(0.0, 0.0, 0.0);
         self.scale_change = 0.0;
-        self.domain_scale_change = 0.0;
+        self.domain_scale_direction = Vector3::new(0.0, 0.0, 0.0);
         self.upd = Updates::default();
 
         if self.mode == Mode::View {
@@ -117,16 +117,29 @@ impl InputHandler {
         
         else if self.mode == Mode::Domain {
             if self.domain_cooldown >= 0.1 {
-                bind_keys_directional(
-                    &self.keyboard_state,
-                    Key::Right, Key::Left,
-                    Key::Up, Key::Down,
-                    Key::Alpha, Key::Shift,
-                    &mut self.upd.domain, 
-                    &mut self.domain_direction
-                );
-
-                bind_keys(&self.keyboard_state, Key::Minus, Key::Plus, &mut self.upd.domain, &mut self.domain_scale_change);
+                if self.keyboard_state.key_down(Key::Multiplication) {
+                    bind_keys_directional(
+                        &self.keyboard_state,
+                        Key::Right, Key::Left,
+                        Key::Up, Key::Down,
+                        Key::Alpha, Key::Shift,
+                        &mut self.upd.domain,
+                        &mut self.domain_scale_direction
+                    );
+                } else {
+                    bind_keys_directional(
+                        &self.keyboard_state,
+                        Key::Right, Key::Left,
+                        Key::Up, Key::Down,
+                        Key::Alpha, Key::Shift,
+                        &mut self.upd.domain, 
+                        &mut self.domain_trans_direction
+                    );
+                    
+                    let mut scale_change = 0.0;
+                    bind_keys(&self.keyboard_state, Key::Minus, Key::Plus, &mut self.upd.domain, &mut scale_change);
+                    self.domain_scale_direction = Vector3::new(scale_change, scale_change, scale_change);
+                }
             }
         }
         
