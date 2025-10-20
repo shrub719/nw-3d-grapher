@@ -2,7 +2,7 @@
 pub mod obj {
     use crate::{
         eadk::*,
-        mat::*
+        grapher::mat::*
     };
     use core::{ ptr, mem };
 
