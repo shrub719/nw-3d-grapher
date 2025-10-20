@@ -1,11 +1,13 @@
 use crate::{ 
     eadk::*, 
     config::graphics::*, 
-    mat::{ 
-        RVector3, 
-        RTriangle3 
-    }, 
-    mesh::Mesh 
+    grapher::{
+        mat::{ 
+            RVector3, 
+            RTriangle3 
+        }, 
+        mesh::Mesh 
+    }
 };
 
 pub struct Renderer {

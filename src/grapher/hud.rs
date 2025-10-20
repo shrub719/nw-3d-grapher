@@ -1,6 +1,6 @@
 use crate::{ 
     eadk::*, 
-    input::Mode, 
+    grapher::input::Mode, 
     config::{ 
         graphics::*, 
         palette::*, 

@@ -1,7 +1,9 @@
 use crate::{
-    mat::*,
-    config::*,
-    generator::*
+    grapher::{
+        mat::*,
+        generator::*
+    },
+    config::*
 };
 #[cfg(target_os = "none")]
 use alloc::vec::Vec;

@@ -38,13 +38,6 @@ pub mod eadk;
 pub mod external;
 mod config;
 mod trig;
-mod mat;
-mod renderer;
-mod mesh;
-mod input;
-mod hud;
-mod timer;
-mod generator;
 mod grapher;
 use grapher::Grapher;
 

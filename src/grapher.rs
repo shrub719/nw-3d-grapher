@@ -1,14 +1,24 @@
 use crate::{
-    renderer::*,
-    mesh::Mesh,
-    input::*,
-    hud::*,
-    timer::*,
+    grapher::{
+        renderer::*,
+        mesh::Mesh,
+        input::*,
+        hud::*,
+        timer::*
+    },
     eadk::*,
     config::{ graphics::*, palette::* }
 };
 #[cfg(target_os = "none")]
 use alloc::format;
+
+mod mat;
+mod renderer;
+mod mesh;
+mod input;
+mod hud;
+mod timer;
+mod generator;
 
 pub fn info(text: &str) {
     display::draw_string(

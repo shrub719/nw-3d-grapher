@@ -1,7 +1,9 @@
 use crate::{
-    mat::*,
+    grapher::{
+        mat::*,
+        mesh::Domain
+    },
     trig::*,
-    mesh::Domain,
     config::limits::*
 };
 #[cfg(target_os = "none")]
