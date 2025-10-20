@@ -33,7 +33,7 @@ fn draw_help_string(text: &str, offset: u16) {
     );
 }
 
-pub fn draw_hud(mode: Mode, mode_update: bool, help_on: bool, scale: f32, n: usize) {
+pub fn draw_hud(mode: Mode, mode_update: bool, help_on: bool, scale: f32) {
     let bg_color = match mode {
         Mode::View => RED,
         Mode::Trace => GREEN,
@@ -54,9 +54,9 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_on: bool, scale: f32, n: usi
 
     draw_hud_string(
         &(match mode {
-            Mode::View => format!("scale: {:.2}     ", scale),
-            Mode::Trace => format!("green"),
-            Mode::Domain => format!("tris: {}      ", n)
+            Mode::View => format!("Scale: {:.2}   ", scale),
+            Mode::Trace => format!("{}", scale),
+            Mode::Domain => format!{"{}", scale}
         }),
         bg_color
     );

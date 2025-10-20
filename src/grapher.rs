@@ -85,7 +85,7 @@ impl Grapher {
             }
 
             if self.input.upd.hud {
-                draw_hud(self.input.mode, self.input.upd.mode, self.input.upd.help_on, self.mesh.scale, self.mesh.tris.len());
+                draw_hud(self.input.mode, self.input.upd.mode, self.input.upd.help_on, self.mesh.scale);
             }
 
             if self.input.upd.redraw {
