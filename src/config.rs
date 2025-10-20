@@ -51,12 +51,13 @@ pub mod strings {
     pub const TRACE_NAME: &str = "TRACE";
     pub const DOMAIN_NAME: &str = "DOMAIN";
 
-    type Help<'a> = [&'a str; 5];
+    type Help<'a> = [&'a str; 6];
     pub const ROTATE_HELP: Help = [
         "D-pad: Rotate",  // max line length
         "Sh/Al: Tilt",
         "+/-: Zoom",
         "Bksp: Reset",
+        "",
         ""
     ];
     pub const TRACE_HELP: Help = [
@@ -64,13 +65,15 @@ pub mod strings {
         "",
         "",
         "",
+        "",
         ""
     ];
     pub const DOMAIN_HELP: Help = [
-        "D-pad: Trans",
-        "Sh/Al: Trans",
+        "D-pad, Sh/Al:",
+        "  Translate",
         "+/-: Scale",
-        "",
-        ""
+        "X + D-pad:",
+        "  Scale w/",
+        "  direction"
     ];
 }
