@@ -40,11 +40,14 @@ impl Renderer {
                     (MARGIN_TOP + row * FB_HEIGHT) as isize, 
                     0.0
                 );
-                // TODO: sub offset vector before passing in to func
 
                 // draw tris
                 for tri in &mesh.transformed_tris {
-                    let color = Color::from_rgb(0, ((-tri.v[0].z + 1.0) / 2.0 * 255.0) as u16, 255);
+                    let mut value = ((-tri.v[0].z + 1.0) / 2.0 * 255.0);
+                    if value > 255.0 { value = 255.0 };
+                    if value < 0.0 { value = 0.0 };
+
+                    let color = Color::from_rgb(0, value as u16, 255);
                     self.fill_triangle(
                         *tri - offset_vector,
                         color
