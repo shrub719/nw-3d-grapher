@@ -43,7 +43,7 @@ impl Renderer {
 
                 // draw tris
                 for tri in &mesh.transformed_tris {
-                    let mut value = ((-tri.v[0].z + 1.0) / 2.0 * 255.0);
+                    let mut value = (-tri.v[0].z + 1.0) / 2.0 * 255.0;
                     if value > 255.0 { value = 255.0 };
                     if value < 0.0 { value = 0.0 };
 

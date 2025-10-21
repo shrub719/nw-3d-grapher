@@ -56,8 +56,17 @@ impl Grapher {
             },
             ORANGE
         );
+
         display::draw_string(
             "3D GRAPHER",
+            Point { x: 122, y: 3 },
+            false,
+            WHITE,
+            ORANGE
+        );
+        #[cfg(debug_assertions)]
+        display::draw_string(
+            "3D GRAPHER          (dev)",
             Point { x: 122, y: 3 },
             false,
             WHITE,

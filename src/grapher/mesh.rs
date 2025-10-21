@@ -12,7 +12,7 @@ use crate::external::obj::load_tris;
 
 const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
     [120.0, 0.0, 0.0, 160.0],
-    [0.0, 120.0, 0.0, 100.0],
+    [0.0, 120.0, 0.0, 110.0],
     [0.0, 0.0, 1.0, 0.0],
     [0.0, 0.0, 0.0, 1.0]
 ] );
