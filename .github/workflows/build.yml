@@ -87,19 +87,17 @@ jobs:
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly    
-          target: thumbv7em-none-eabihf
+          toolchain: nightly
 
       - name: Install just
         uses: extractions/setup-just@v3
 
       - name: Prepare for building
-        run: mkdir -p target/nwa
+        run: mkdir -p target/output
         
       - name: Build nwb
         run: | 
           just nwb-build
-          ls -R
           mv target/aarch64-apple-darwin/release/libnw_3d_grapher_sim.dylib target/output/nw_3d_grapher_macos
 
       - name: Upload build artifacts
