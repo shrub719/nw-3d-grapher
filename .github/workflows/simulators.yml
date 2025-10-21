@@ -43,7 +43,7 @@ jobs:
           python-version: '3.10'
 
       - name: Clone Epsilon
-        run: git clone https://github.com/numworks/epsilon epsilon_simulator -b version-20cd epsilon_simulator
+        run: git clone https://github.com/numworks/epsilon epsilon_simulator -b version-20
 
       - name: Setup build environment
         working-directory: epsilon_simulator
