@@ -1,4 +1,4 @@
-current_target := "x86_64-unknown-linux-gnu" # TODO: get target
+current_target := `rustc -Vv | grep host | awk '{print $2}'`
 
 # ===== DEVICE =====
 
