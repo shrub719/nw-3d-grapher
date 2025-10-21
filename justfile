@@ -50,6 +50,7 @@ nwb-dev:
 # builds epsilon simulator
 build-sim jobs="1":
     -git clone https://github.com/numworks/epsilon epsilon_simulator -b version-20
+    ./epsilon_simulator/build/setup.sh --only-simulator
     cd epsilon_simulator && make PLATFORM=simulator -j {{jobs}}
 
 # run app on simulator
