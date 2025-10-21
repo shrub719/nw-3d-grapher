@@ -12,8 +12,64 @@ on:
       - 'prototype/**'
 
 jobs:
-  build:
+
+  ubuntu:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Nwlink
+        run: |
+          npm install -g nwlink
+          echo "$HOME/.npm-global/bin" >> $GITHUB_PATH
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly    
+          target: thumbv7em-none-eabihf
+
+      - name: Install just
+        uses: extractions/setup-just@v3
+
+      - name: Prepare for building
+        run: mkdir -p target/output
+        
+      - name: Build nwa
+        run: |
+          just build
+          mv target/thumbv7em-none-eabihf/release/nw_3d_grapher target/output/nw_3d_grapher.nwa
+      
+      - name: Build nwa (obj)
+        run: |
+          just build o
+          mv target/thumbv7em-none-eabihf/release/nw_3d_grapher target/output/nw_3d_grapher_obj.nwa
+
+      - name: Pack test obj
+        run: |
+          just obj obj/Mesh_Beagle.obj dog
+          mv target/obj/dog.pbj target/output/dog.pbj
+
+      - name: Build nwb
+        run: |
+          just nwb-build
+          mv target/x86_64-unknown-linux-gnu/release/libnw_3d_grapher_sim.so target/output/nw_3d_grapher_linux
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: nw_3d_grapher_ubuntu
+          path: target/output/*
+
+  
+  macos:
+    runs-on: macOS-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -40,25 +96,14 @@ jobs:
       - name: Prepare for building
         run: mkdir -p target/nwa
         
-      - name: Build app
-        run: just build
-
-      - name: Move to target/nwa
-        run: mv target/thumbv7em-none-eabihf/release/nw_3d_grapher target/nwa/nw_3d_grapher.nwa
-      
-      - name: Build app (obj)
-        run: |
-          just obj obj/Mesh_Beagle.obj dog
-          just build o
-      
-      - name: Move to target/nwa (obj)
-        run: |
-          mv target/thumbv7em-none-eabihf/release/nw_3d_grapher target/nwa/nw_3d_grapher_obj.nwa
-          mv target/obj/dog.pbj target/nwa/dog.pbj
+      - name: Build nwb
+        run: | 
+          just nwb-build
+          mv target/darwin/release/libnw_3d_grapher_sim.dylib target/output/nw_3d_grapher_macos
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: nw_3d_grapher_nwas
+          name: nw_3d_grapher_macos
           path: target/nwa/*
         
