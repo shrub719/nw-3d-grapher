@@ -8,16 +8,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          name: numworks/epsilon
+          ref: refs/heads/version-20
         
       - name: Install Python 3.10
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-
-      - name: Clone Epsilon
-        run: |
-          git clone https://github.com/numworks/epsilon epsilon_simulator -b version-20
-          cd epsilon_simulator
 
       - name: Setup build environment
         run: build/setup.sh --only-simulator
@@ -34,18 +32,16 @@ jobs:
   macos:
     runs-on: macOS-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Epsilon
         uses: actions/checkout@v3
+        with:
+          name: numworks/epsilon
+          ref: refs/heads/branch-20
         
       - name: Install Python 3.10
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-
-      - name: Clone Epsilon
-        run: |
-          git clone https://github.com/numworks/epsilon epsilon_simulator -b version-20
-          cd epsilon_simulator
 
       - name: Setup build environment
         run: build/setup.sh --only-simulator
