@@ -94,12 +94,12 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_on: bool, scale: f32, domain
         );
     } else if mode == Mode::Domain {
         // TODO: do nicer
-        draw_hud_string_table(&format!("x0: {:.1}  ", domain.x0), 0, 0, bg_color);
-        draw_hud_string_table(&format!("x1: {:.1}  ", domain.x1), 1, 0, bg_color);
-        draw_hud_string_table(&format!("y0: {:.1}  ", domain.y0), 0, 1, bg_color);
-        draw_hud_string_table(&format!("y1: {:.1}  ", domain.y1), 1, 1, bg_color);
-        draw_hud_string_table(&format!("z0: {:.1}  ", domain.z0), 0, 2, bg_color);
-        draw_hud_string_table(&format!("z1: {:.1}  ", domain.z1), 1, 2, bg_color);
+        draw_hud_string_table(&format!("x: {:.1}  ", domain.x0), 0, 0, bg_color);
+        draw_hud_string_table(&format!("   {:.1}  ", domain.x1), 1, 0, bg_color);
+        draw_hud_string_table(&format!("y: {:.1}  ", domain.y0), 0, 1, bg_color);
+        draw_hud_string_table(&format!("   {:.1}  ", domain.y1), 1, 1, bg_color);
+        draw_hud_string_table(&format!("z: {:.1}  ", domain.z0), 0, 2, bg_color);
+        draw_hud_string_table(&format!("   {:.1}  ", domain.z1), 1, 2, bg_color);
     }
 
     if help_on {
