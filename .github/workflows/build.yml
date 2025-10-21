@@ -99,7 +99,7 @@ jobs:
       - name: Build nwb
         run: | 
           just nwb-build
-          mv target/darwin/release/libnw_3d_grapher_sim.dylib target/output/nw_3d_grapher_macos
+          mv target/aarch64-apple-darwin/release/libnw_3d_grapher_sim.dylib target/output/nw_3d_grapher_macos
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
