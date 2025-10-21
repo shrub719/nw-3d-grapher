@@ -104,5 +104,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: nw_3d_grapher_macos
-          path: target/nwa/*
+          path: target/output/*
         
