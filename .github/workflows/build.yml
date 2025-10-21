@@ -5,11 +5,15 @@ on:
       - '**.md'
       - 'LICENSE'
       - 'prototype/**'
+    branches:
+      - main
   push:
     paths-ignore: 
       - '**.md'
       - 'LICENSE'
       - 'prototype/**'
+    branches:
+      - main
 
 jobs:
 
