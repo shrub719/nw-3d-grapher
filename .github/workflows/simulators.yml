@@ -8,50 +8,54 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          name: numworks/epsilon
-          ref: refs/heads/version-20
         
       - name: Install Python 3.10
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
+      - name: Clone Epsilon
+        run: git clone https://github.com/numworks/epsilon epsilon_simulator -b version-20
+
       - name: Setup build environment
+        working-directory: epsilon_simulator
         run: build/setup.sh --only-simulator
 
       - name: Make simulator
+        working-directory: epsilon_simulator
         run: make PLATFORM=simulator epsilon.bin -j 8
       
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: epsilon_linux
-          path: output/release/simulator/linux/epsilon.bin
+          path: epsilon_simulator/output/release/simulator/linux/epsilon.bin
 
   macos:
     runs-on: macOS-latest
     steps:
-      - name: Checkout Epsilon
+      - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          name: numworks/epsilon
-          ref: refs/heads/branch-20
         
       - name: Install Python 3.10
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
+      - name: Clone Epsilon
+        run: git clone https://github.com/numworks/epsilon epsilon_simulator -b version-20cd epsilon_simulator
+
       - name: Setup build environment
+        working-directory: epsilon_simulator
         run: build/setup.sh --only-simulator
 
       - name: Make simulator
+        working-directory: epsilon_simulator
         run: make PLATFORM=simulator epsilon.app -j 8
       
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: epsilon_macos
-          path: output/release/simulator/macos/epsilon.app
+          path: epsilon_simulator/output/release/simulator/macos/epsilon.app
       
