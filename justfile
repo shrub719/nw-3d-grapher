@@ -60,20 +60,44 @@ remap-sim sim_dir="epsilon_simulator":
 
 # builds epsilon simulator
 # jobs is the number of jobs to use while building
-build-sim jobs="1":
-    -git clone https://github.com/numworks/epsilon epsilon_simulator -b version-20
-    just remap-sim
+setup-sim:
+    git clone https://github.com/numworks/epsilon epsilon_simulator -b version-20
     ./epsilon_simulator/build/setup.sh --only-simulator
+    just remap-sim
+
+# builds epsilon simulator
+# jobs is the number of jobs to use while building
+build-sim jobs="8":
+    just remap-sim
     cd epsilon_simulator && make PLATFORM=simulator -j {{jobs}}
 
-# run app on simulator
-# sim_dir is the directory containing epsilon
+# run app on simulator from simulator directory
+# sim_dir is the directory of the epsilon repo
 [macos]
-nwb-run sim_dir="epsilon_simulator":
+nwb-run-dir sim_dir:
     ./{{sim_dir}}/output/release/simulator/macos/epsilon.app/Contents/MacOS/Epsilon --nwb ./target/{{current_target}}/release/libnw_3d_grapher_sim.dylib
 [linux]
-nwb-run sim_dir="epsilon_simulator":
+nwb-run-dir sim_dir:
     ./{{sim_dir}}/output/release/simulator/linux/epsilon.bin --nwb ./target/{{current_target}}/release/libnw_3d_grapher_sim.so
+
+# run app on simulator from binary file
+# bin_file is the location of epsilon
+[macos]
+nwb-run-bin bin_file:
+    {{bin_file}}/Contents/MacOS/Epsilon --nwb ./target/{{current_target}}/release/libnw_3d_grapher_sim.dylib
+[linux]
+nwb-run-bin bin_file:
+    {{bin_file}} --nwb ./target/{{current_target}}/release/libnw_3d_grapher_sim.so
+
+# run app on simulator
+# argument is the location of epsilon OR the directory of the epsilon repo
+# dir_or_bin is d if argument is a directory, b if argument is a binary file
+nwb-run argument="epsilon_simulator" dir_or_bin="d":
+    if dir_or_bin == "b"; then \
+        just nwb-run-bin {{argument}}; \
+    else \
+        just nwb-run-dir {{argument}}; \
+    fi
 
 # run dev profile on simulator
 [macos]
