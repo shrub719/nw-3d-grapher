@@ -36,7 +36,7 @@ impl Grapher {
         }
     }
 
-    pub fn main_loop(&mut self) {
+    fn setup_ui() {
         display::push_rect_uniform(
             Rect {
                 x: 0,
@@ -94,6 +94,10 @@ impl Grapher {
             WHITE,
             ORANGE
         );
+    }
+
+    pub fn main_loop(&mut self) {
+        Grapher::setup_ui();
 
         // main loop - runs every frame
         while !self.input.upd.quit {
