@@ -57,17 +57,6 @@ impl Grapher {
             ORANGE
         );
 
-        #[cfg(not(target_os = "none"))]
-        display::push_rect_uniform(
-            Rect {
-                x: SCREEN_WIDTH - 20,
-                y: 0,
-                width: 20,
-                height: MARGIN_TOP
-            },
-            ORANGE
-        );
-
         display::draw_string(
             "3D GRAPHER",
             Point { x: 122, y: 3 },
@@ -76,19 +65,31 @@ impl Grapher {
             ORANGE
         );
 
+        #[cfg(not(target_os = "none"))]
+        {
+            display::push_rect_uniform(
+                Rect {
+                    x: SCREEN_WIDTH - 20,
+                    y: 0,
+                    width: 20,
+                    height: MARGIN_TOP
+                },
+                ORANGE
+            );
+            #[cfg(not(target_os = "none"))]
+            display::draw_string(
+                "sim",
+                Point { x: 295, y: 3 },
+                false,
+                WHITE,
+                ORANGE
+            );
+        }
+
         #[cfg(debug_assertions)]
         display::draw_string(
-            "3D GRAPHER           dev",
-            Point { x: 122, y: 3 },
-            false,
-            WHITE,
-            ORANGE
-        );
-
-        #[cfg(not(target_os = "none"))]
-        display::draw_string(
-            "sim",
-            Point { x: 295, y: 3 },
+            "dev",
+            Point { x: 270, y: 3 },
             false,
             WHITE,
             ORANGE
