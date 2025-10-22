@@ -1,5 +1,5 @@
 # NumWorks 3D Grapher
-> [Documentation](https://github.com/shrub719/3d-grapher-docs)
+> [Documentation](https://github.com/shrub719/nw-3d-grapher-docs)
 
 3D Grapher app for NumWorks Epsilon.  
 
@@ -9,7 +9,7 @@ For my A level Computer Science NEA.
 ## Installation
 
 ### NumWorks calculator
-1. Go to the [latest release](https://github.com/shrub719/fun-numworks-apps/releases/latest)
+1. Go to the [latest release](https://github.com/shrub719/nw-3d-grapher/releases/latest)
 1. Download `nw_3d_grapher.nwa`
 1. Connect to your calculator by USB
 1. Go to the [Numworks Installer](https://my.numworks.com/apps) and click **Connect** (make sure your browser has WebUSB capability)
@@ -19,7 +19,7 @@ For my A level Computer Science NEA.
 ### NumWorks calculator (with PBJ file)
 The app supports importing 3D models as `.pbj`.
 
-1. Go to the [latest release](https://github.com/shrub719/fun-numworks-apps/releases/latest)
+1. Go to the [latest release](https://github.com/shrub719/nw-3d-grapher/releases/latest)
 1. Download `nw_3d_grapher_obj.nwa`  
    *Optionally, download the example `dog.pbj`*
 1. Connect to your calculator by USB
@@ -34,6 +34,7 @@ The app supports importing 3D models as `.pbj`.
 1. Go to the [latest release](https://github.com/shrub719/fun-numworks-apps/releases/latest)
 1. Download the `.nwb` file for your operating system
 1. Download the simulator file for your operating system
+   > **Note:** NumWorks does not allow simulators to be redistributed, so you will have to [patch and build the simulator yourself](build/BUILDING.md#building-the-simulator).
 1. Run the `.nwb` file with the simulator in your terminal:
    ```sh
    # linux
@@ -53,72 +54,13 @@ Unfortunately, the simulator does not support importing models from `.pbj` files
 <!-- TODO: controls, features -->
 
 ### Simulator
+
 <!-- TODO: remapped sim controls -->
 
 
 ## Building
 
-### NumWorks calculator
-
-To build the app, run:
-```sh
-just build
-```
-This creates a binary (`.nwa`) file at `/target/thumbv7em-none-eabihf/release/nw_3d_grapher`.
-
-To load the app to the calculator, run:
-```sh
-just load
-```
-
-### PBJ files
-
-The app supports importing 3D models as `.pbj`.
-
-To convert a `.obj` file to `.pbj`, run:
-```sh
-just obj [file location] [object name]
-
-# Example usage:
-just obj obj/meshes/dog.obj dog
-```
-This creates a `.pbj` file in `/target/obj/`.
-
-To build the app with PBJ support, run:
-```sh
-just build o
-```
-
-To load the app to the calculator with a converted PBJ, run:
-```sh
-just load [object name]
-
-# Example usage:
-just load dog
-```
-
-### Simulator
-
-To build the app for the simulator, run:
-```sh
-just nwb-build
-```
-This creates a binary (nwb) file at `/target/[your Rust host]/release/libnw_3d_grapher`, with a file extension according to your operating system.
-
-<!-- TODO -->
-To build the simulator, run:
-```sh
-just setup-sim
-just build-sim
-```
-> **Note:** you may need to downgrade Python to version 3.10 in order to build.
-
-This creates a binary/app file at `/epsilon_simulator/output/release/simulator/[your operating system]/epsilon`, with a file extension according to your operating system.
-
-To run the app on the simulator, run:
-```sh
-just nwb-run
-```
+See [BUILDING.md](build/BUILDING.md) for instructions on how to build the app or the simulator.
 
 
 ## Licensing
@@ -128,3 +70,5 @@ As this repo (the NEA program) is part of my A level Computer Science coursework
 - **After August 15 2026**, the project is released under the [MIT License](LICENSE).
 
 Dog model in `obj/Mesh_Beagle.obj` and `dog.pbj`: [Beagle](https://poly.pizza/m/0BnDT3T1wTE) by [Poly by Google](https://poly.pizza/u/Poly%20by%20Google) [[CC-BY](https://creativecommons.org/licenses/by/3.0/)] via Poly Pizza.
+
+This project is a third-party app and is not affiliated with NumWorks. NumWorks is a registered trademark of NumWorks SAS.
