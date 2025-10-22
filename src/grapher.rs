@@ -88,8 +88,8 @@ impl Grapher {
 
         #[cfg(debug_assertions)]
         display::draw_string(
-            "dev",
-            Point { x: 270, y: 3 },
+            "(dev)",
+            Point { x: 255, y: 3 },
             false,
             WHITE,
             ORANGE
