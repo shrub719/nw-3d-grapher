@@ -5,9 +5,10 @@
 
 For my A level Computer Science NEA.
 
+
 ## Installation
 
-### NumWorks Calculator
+### NumWorks calculator
 1. Go to the [latest release](https://github.com/shrub719/fun-numworks-apps/releases/latest)
 1. Download `nw_3d_grapher.nwa`
 1. Connect to your calculator by USB
@@ -15,7 +16,7 @@ For my A level Computer Science NEA.
 1. Upload `nw_3d_grapher.nwa`
 1. Press **Install**
 
-### NumWorks Calculator (with PBJ file)
+### NumWorks calculator (with PBJ file)
 The app supports importing 3D models as `.pbj`.
 
 1. Go to the [latest release](https://github.com/shrub719/fun-numworks-apps/releases/latest)
@@ -28,20 +29,24 @@ The app supports importing 3D models as `.pbj`.
 1. Upload the `.pbj` file of the 3D model you want
 1. Press **Install**
 
+### Simulator
+
+<!-- TODO -->
+
+
 ## Usage
+
+### NumWorks calculator
 
 <!-- TODO: controls, features -->
 
 ### Simulator
 <!-- TODO: remapped sim controls -->
 
+
 ## Building
 
-### Dependencies
-
-<!-- TODO -->
-
-### NumWorks Calculator
+### NumWorks calculator
 
 To build the app, run:
 ```sh
@@ -54,11 +59,7 @@ To load the app to the calculator, run:
 just load
 ```
 
-### Simulator
-
-<!-- TODO -->
-
-### PBJ Files
+### PBJ files
 
 The app supports importing 3D models as `.pbj`.
 
@@ -71,13 +72,35 @@ just obj obj/meshes/dog.obj dog
 ```
 This creates a `.pbj` file in `/target/obj/`.
 
-To load to the calculator with a converted PBJ, run:
+To build the app with PBJ support, run:
+```sh
+just build o
+```
+
+To load the app to the calculator with a converted PBJ, run:
 ```sh
 just load [object name]
 
 # Example usage:
 just load dog
 ```
+
+### Simulator
+
+To build the app for the simulator, run:
+```sh
+just nwb-build
+```
+This creates a binary (nwb) file at `/target/[your Rust host]/release/libnw_3d_grapher`, with a file extension according to your operating system.
+
+To build the simulator, run:
+```sh
+just build-sim
+```
+> **Note:** you may need to downgrade Python to version 3.10.
+
+This creates a binary/app file at `/epsilon_simulator/output/release/simulator/[your operating system]/epsilon`, with a file extension according to your operating system.
+
 
 ## Licensing
 
