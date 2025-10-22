@@ -56,15 +56,15 @@ nwb-dev:
 # remaps sim inputs
 # sim_dir is the directory containing epsilon
 remap-sim sim_dir="epsilon_simulator":
-    python3 build/sim/patch_inputs.py {{sim_dir}}
+    python3 build/sim/remap_inputs.py {{sim_dir}}
 
 # builds epsilon simulator
 # jobs is the number of jobs to use while building
 build-sim jobs="1":
     -git clone https://github.com/numworks/epsilon epsilon_simulator -b version-20
+    just remap-sim
     ./epsilon_simulator/build/setup.sh --only-simulator
     cd epsilon_simulator && make PLATFORM=simulator -j {{jobs}}
-    just remap-sim
 
 # run app on simulator
 # sim_dir is the directory containing epsilon

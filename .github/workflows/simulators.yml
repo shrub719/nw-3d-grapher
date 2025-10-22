@@ -17,6 +17,9 @@ jobs:
       - name: Clone Epsilon
         run: git clone https://github.com/numworks/epsilon epsilon_simulator -b version-20
 
+      - name: Remap simulator inputs
+        run: python3 build/sim/remap_inputs.py epsilon_simulator
+
       - name: Setup build environment
         working-directory: epsilon_simulator
         run: build/setup.sh --only-simulator
@@ -44,6 +47,9 @@ jobs:
 
       - name: Clone Epsilon
         run: git clone https://github.com/numworks/epsilon epsilon_simulator -b version-20
+
+      - name: Remap simulator inputs
+        run: python3 build/sim/remap_inputs.py epsilon_simulator
 
       - name: Setup build environment
         working-directory: epsilon_simulator

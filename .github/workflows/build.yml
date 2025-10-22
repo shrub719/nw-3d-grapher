@@ -57,7 +57,7 @@ jobs:
 
       - name: Pack test obj
         run: |
-          just obj obj/Mesh_Beagle.obj dog
+          just obj build/obj/Mesh_Beagle.obj dog
           mv target/obj/dog.pbj target/output/dog.pbj
 
       - name: Build nwb
