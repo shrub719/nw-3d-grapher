@@ -7,12 +7,12 @@ current_target := `rustc -Vv | grep host | awk '{print $2}'`
 # obj_name contains .pbj file name (e.g. dog)
 obj input_file obj_name:
     mkdir -p target/obj
-    python3 obj/main.py {{input_file}} {{obj_name}}
+    python3 build/obj/main.py {{input_file}} {{obj_name}}
 
 # automatically creates .pbj from obj/meshes
 # obj_name contains .obj and .obj file name (e.g. dog)
 dev-obj obj_name:
-    just obj obj/meshes/{{obj_name}}.obj {{obj_name}}
+    just obj build/obj/meshes/{{obj_name}}.obj {{obj_name}}
     cp target/obj/{{obj_name}}.pbj target/thumbv7em-none-eabihf/debug
     cp target/obj/{{obj_name}}.pbj target/thumbv7em-none-eabihf/release
 
@@ -37,8 +37,8 @@ load obj_name="":
 # automatically creates .pbj from obj/meshes before loading to calculator
 # obj_name toggles whether it is loaded with external data, containing object name (e.g. dog) if it is
 dev-load obj_name="":
-    if obj_name != "" then
-        just dev-obj {{obj_name}}
+    if obj_name != ""; then \
+        just dev-obj {{obj_name}}; \
     fi
     cargo run --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_name == "" { "" } else { "--features obj -- -d target/obj/" + obj_name + ".pbj" } }}
 
