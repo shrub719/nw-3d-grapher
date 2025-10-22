@@ -6,11 +6,14 @@
 
 1. Install [Node.js](https://nodejs.org/en/download)
 1. Install [Nwlink](https://www.npmjs.com/package/nwlink/v/0.0.12):
+
    ```sh
    npm install -g nwlink
    ```
+
 1. Install [Rust](https://rust-lang.org/tools/install/)
 1. Install [Just](https://just.systems/):
+
    ```sh
    cargo install just
    ```
@@ -65,21 +68,34 @@ To build the app for the simulator, run:
 ```sh
 just nwb-build
 ```
-This creates a binary (nwb) file at `/target/[your Rust host]/release/libnw_3d_grapher`, with a file extension according to your operating system.
+This creates a binary (`.nwb`) file at `/target/[your Rust host]/release/libnw_3d_grapher_sim`, with a file extension according to your operating system.
 
 
 ## Building the simulator
 
-### Setup build environment <!-- TODO -->
+### Setup build environment
 
-### Building <!-- TODO -->
+1. Install the [Epsilon SDK](https://www.numworks.com/engineering/software/build/)
+1. Install [Python 3.10](https://www.python.org/downloads/release/python-3100/)  
+   *Makefile is broken for recent versions of Python.* <!-- TODO: what is broken? -->
+1. Run:
+
+   ```sh
+   just setup-sim
+   ```
+
+   This will:
+   1. Clone Epsilon
+   1. Run `build/setup.sh`
+   1. Remap the simulator controls
+
+### Building
 
 To build the simulator, run:
 ```sh
-just setup-sim
-just build-sim
+just build-sim [jobs]
 ```
-> **Note:** you may need to downgrade Python to version 3.10 in order to build.
+where `[jobs]` is the number of jobs to use when making.
 
 This creates a binary/app file at `/epsilon_simulator/output/release/simulator/[your operating system]/epsilon`, with a file extension according to your operating system.
 
