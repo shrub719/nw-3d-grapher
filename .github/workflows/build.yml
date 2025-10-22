@@ -63,7 +63,7 @@ jobs:
       - name: Build nwb
         run: |
           just nwb-build
-          mv target/x86_64-unknown-linux-gnu/release/libnw_3d_grapher_sim.so target/output/nw_3d_grapher_sim_linux.nwb
+          mv target/x86_64-unknown-linux-gnu/release/libnw_3d_grapher_sim.so target/output/nw_3d_grapher_linux.nwb
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -102,7 +102,7 @@ jobs:
       - name: Build nwb
         run: | 
           just nwb-build
-          mv target/aarch64-apple-darwin/release/libnw_3d_grapher_sim.dylib target/output/nw_3d_grapher_sim_macos.nwb
+          mv target/aarch64-apple-darwin/release/libnw_3d_grapher_sim.dylib target/output/nw_3d_grapher_macos.nwb
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4

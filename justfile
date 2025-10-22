@@ -60,6 +60,7 @@ remap-sim sim_dir="epsilon_simulator":
 
 # builds epsilon simulator
 # jobs is the number of jobs to use while building
+# TODO: fix
 setup-sim:
     git clone https://github.com/numworks/epsilon epsilon_simulator -b version-20
     ./epsilon_simulator/build/setup.sh --only-simulator

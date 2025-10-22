@@ -32,7 +32,18 @@ The app supports importing 3D models as `.pbj`.
 ### Simulator
 
 1. Go to the [latest release](https://github.com/shrub719/fun-numworks-apps/releases/latest)
-1. Download the appropriate 
+1. Download the `.nwb` file for your operating system
+1. Download the simulator file for your operating system
+1. Run the `.nwb` file with the simulator in your terminal:
+   ```sh
+   # linux
+   ./epsilon_linux.bin --nwb ./nw_3d_grapher_linux.nwb
+
+   # macos
+   ./epsilon_macos.app --nwb ./nw_3d_grapher_macos.nwb
+   ```
+
+Unfortunately, the simulator does not support importing models from `.pbj` files.
 
 
 ## Usage
@@ -94,6 +105,7 @@ just nwb-build
 ```
 This creates a binary (nwb) file at `/target/[your Rust host]/release/libnw_3d_grapher`, with a file extension according to your operating system.
 
+<!-- TODO -->
 To build the simulator, run:
 ```sh
 just setup-sim
@@ -102,6 +114,11 @@ just build-sim
 > **Note:** you may need to downgrade Python to version 3.10 in order to build.
 
 This creates a binary/app file at `/epsilon_simulator/output/release/simulator/[your operating system]/epsilon`, with a file extension according to your operating system.
+
+To run the app on the simulator, run:
+```sh
+just nwb-run
+```
 
 
 ## Licensing

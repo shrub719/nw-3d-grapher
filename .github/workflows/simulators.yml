@@ -27,12 +27,17 @@ jobs:
       - name: Make simulator
         working-directory: epsilon_simulator
         run: make PLATFORM=simulator epsilon.bin -j 8
+
+      - name: Prepare for uploading
+        run: |
+          mkdir -p target/output
+          mv epsilon_simulator/output/release/simulator/linux/epsilon.bin target/output/epsilon_linux.bin
       
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: epsilon_linux.bin
-          path: epsilon_simulator/output/release/simulator/linux/epsilon.bin
+          name: epsilon_linux
+          path: target/output/*
 
   macos:
     runs-on: macOS-latest
@@ -58,10 +63,15 @@ jobs:
       - name: Make simulator
         working-directory: epsilon_simulator
         run: make PLATFORM=simulator epsilon.app -j 8
+
+      - name: Prepare for uploading
+        run: |
+          mkdir -p target/output
+          mv epsilon_simulator/output/release/simulator/macos/epsilon.app target/output/epsilon_macos.app
       
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: epsilon_macos.app
-          path: epsilon_simulator/output/release/simulator/macos/epsilon.app
+          name: epsilon_macos
+          path: target/output/*
       
