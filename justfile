@@ -7,7 +7,7 @@ current_target := `rustc -Vv | grep host | awk '{print $2}'`
 # obj_name contains .pbj file name (e.g. dog)
 obj input_file obj_name:
     mkdir -p target/obj
-    python3 build/obj/main.py {{input_file}} {{obj_name}}
+    python3 build/obj/pack_obj.py {{input_file}} {{obj_name}}
 
 # automatically creates .pbj from obj/meshes
 # obj_name contains .obj and .obj file name (e.g. dog)
