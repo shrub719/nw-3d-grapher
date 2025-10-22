@@ -1,6 +1,5 @@
 import struct, sys
 
-
 def info(string):
     print("    " + string)
 
