@@ -2,11 +2,25 @@
 
 ## Building the app
 
-### Setup build environment
+### Setup build environment <!-- TODO -->
 
-<!-- TODO -->
+1. Install [Node.js](https://nodejs.org/en/download)
+1. Install [Nwlink](https://www.npmjs.com/package/nwlink/v/0.0.12):
+   ```sh
+   npm install -g nwlink
+   ```
+1. Install [Rust](https://rust-lang.org/tools/install/)
+1. Install [Just](https://just.systems/):
+   ```sh
+   cargo install just
+   ```
 
 ### NumWorks calculator
+
+Building for the NumWorks calculator requires adding its Rust target:
+```sh
+rustup target add thumbv7em-none-eabihf
+```
 
 To build the app, run:
 ```sh
@@ -19,7 +33,7 @@ To load the app to the calculator, run:
 just load
 ```
 
-### PBJ files
+### NumWorks calculator with PBJ files
 
 The app supports importing 3D models as `.pbj`.
 
@@ -53,7 +67,13 @@ just nwb-build
 ```
 This creates a binary (nwb) file at `/target/[your Rust host]/release/libnw_3d_grapher`, with a file extension according to your operating system.
 
-<!-- TODO -->
+
+## Building the simulator
+
+### Setup build environment <!-- TODO -->
+
+### Building <!-- TODO -->
+
 To build the simulator, run:
 ```sh
 just setup-sim
@@ -67,8 +87,3 @@ To run the app on the simulator, run:
 ```sh
 just nwb-run
 ```
-
-## Building the simulator
-
-<!-- TODO -->
-
