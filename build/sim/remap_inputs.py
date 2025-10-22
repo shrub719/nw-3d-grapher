@@ -11,10 +11,10 @@ constexpr static KeySDLKeyPair sKeyPairs[] = {
   KeySDLKeyPair(Key::Left,      SDL_SCANCODE_LEFT),
   KeySDLKeyPair(Key::Right,     SDL_SCANCODE_RIGHT),
 
-  KeySDLKeyPair(Key::S,         SDL_SCANCODE_DOWN),
-  KeySDLKeyPair(Key::W,         SDL_SCANCODE_UP),
-  KeySDLKeyPair(Key::A,         SDL_SCANCODE_LEFT),
-  KeySDLKeyPair(Key::D,         SDL_SCANCODE_RIGHT),
+  KeySDLKeyPair(Key::Down,      SDL_SCANCODE_S),
+  KeySDLKeyPair(Key::Up,        SDL_SCANCODE_W),
+  KeySDLKeyPair(Key::Left,      SDL_SCANCODE_A),
+  KeySDLKeyPair(Key::Right,     SDL_SCANCODE_D),
 
   KeySDLKeyPair(Key::Shift,     SDL_SCANCODE_LSHIFT),
   KeySDLKeyPair(Key::Shift,     SDL_SCANCODE_RSHIFT),
