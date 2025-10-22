@@ -31,7 +31,8 @@ The app supports importing 3D models as `.pbj`.
 
 ### Simulator
 
-<!-- TODO -->
+1. Go to the [latest release](https://github.com/shrub719/fun-numworks-apps/releases/latest)
+1. Download the appropriate 
 
 
 ## Usage
@@ -95,9 +96,10 @@ This creates a binary (nwb) file at `/target/[your Rust host]/release/libnw_3d_g
 
 To build the simulator, run:
 ```sh
+just setup-sim
 just build-sim
 ```
-> **Note:** you may need to downgrade Python to version 3.10.
+> **Note:** you may need to downgrade Python to version 3.10 in order to build.
 
 This creates a binary/app file at `/epsilon_simulator/output/release/simulator/[your operating system]/epsilon`, with a file extension according to your operating system.
 

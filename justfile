@@ -67,50 +67,30 @@ setup-sim:
 
 # builds epsilon simulator
 # jobs is the number of jobs to use while building
-build-sim jobs="8":
-    just remap-sim
+build-sim jobs="8": remap-sim
     cd epsilon_simulator && make PLATFORM=simulator -j {{jobs}}
 
-# run app on simulator from simulator directory
+# run app on simulator
 # sim_dir is the directory of the epsilon repo
 [macos]
-nwb-run-dir sim_dir:
+nwb-run sim_dir="epsilon_simulator": nwb-build
     ./{{sim_dir}}/output/release/simulator/macos/epsilon.app/Contents/MacOS/Epsilon --nwb ./target/{{current_target}}/release/libnw_3d_grapher_sim.dylib
 [linux]
-nwb-run-dir sim_dir:
+nwb-run sim_dir="epsilon_simulator": nwb-build
     ./{{sim_dir}}/output/release/simulator/linux/epsilon.bin --nwb ./target/{{current_target}}/release/libnw_3d_grapher_sim.so
-
-# run app on simulator from binary file
-# bin_file is the location of epsilon
-[macos]
-nwb-run-bin bin_file:
-    {{bin_file}}/Contents/MacOS/Epsilon --nwb ./target/{{current_target}}/release/libnw_3d_grapher_sim.dylib
-[linux]
-nwb-run-bin bin_file:
-    {{bin_file}} --nwb ./target/{{current_target}}/release/libnw_3d_grapher_sim.so
-
-# run app on simulator
-# argument is the location of epsilon OR the directory of the epsilon repo
-# dir_or_bin is d if argument is a directory, b if argument is a binary file
-nwb-run argument="epsilon_simulator" dir_or_bin="d":
-    if dir_or_bin == "b"; then \
-        just nwb-run-bin {{argument}}; \
-    else \
-        just nwb-run-dir {{argument}}; \
-    fi
 
 # run dev profile on simulator
 [macos]
-nwb-dev-run:
+nwb-dev-run: nwb-dev
     ./epsilon_simulator/output/release/simulator/macos/epsilon.app/Contents/MacOS/Epsilon --nwb ./target/{{current_target}}/debug/libnw_3d_grapher_sim.dylib
 [linux]
-nwb-dev-run:
+nwb-dev-run: nwb-dev
     ./epsilon_simulator/output/release/simulator/linux/epsilon.bin --nwb ./target/{{current_target}}/debug/libnw_3d_grapher_sim.so
 
 
 # ===== UTILS =====
 
-ndev: nwb-dev nwb-dev-run
+ndev: nwb-dev-run
 
 clean:
     cargo clean
