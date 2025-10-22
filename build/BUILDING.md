@@ -5,6 +5,7 @@
 ### Setup build environment <!-- TODO -->
 
 1. Install [Node.js](https://nodejs.org/en/download)
+
 1. Install [Nwlink](https://www.npmjs.com/package/nwlink/v/0.0.12):
 
    ```sh
@@ -12,6 +13,7 @@
    ```
 
 1. Install [Rust](https://rust-lang.org/tools/install/)
+
 1. Install [Just](https://just.systems/):
 
    ```sh
@@ -76,8 +78,10 @@ This creates a binary (`.nwb`) file at `/target/[your Rust host]/release/libnw_3
 ### Setup build environment
 
 1. Install the [Epsilon SDK](https://www.numworks.com/engineering/software/build/)
+
 1. Install [Python 3.10](https://www.python.org/downloads/release/python-3100/)  
    *Makefile is broken for recent versions of Python.* <!-- TODO: what is broken? -->
+
 1. Run:
 
    ```sh
