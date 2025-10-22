@@ -47,7 +47,7 @@ To convert a `.obj` file to `.pbj`, run:
 just obj [file location] [object name]
 
 # Example usage:
-just obj obj/meshes/dog.obj dog
+just obj build/obj/Mesh_Beagle.obj dog
 ```
 This creates a `.pbj` file in `/target/obj/`.
 
