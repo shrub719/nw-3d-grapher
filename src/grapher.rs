@@ -76,7 +76,6 @@ impl Grapher {
                 },
                 ORANGE
             );
-            #[cfg(not(target_os = "none"))]
             display::draw_string(
                 "sim",
                 Point { x: 295, y: 3 },

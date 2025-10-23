@@ -1,6 +1,7 @@
 use crate::{ 
     grapher::mat::*, 
-    eadk::input::* 
+    eadk::input::*,
+    constants::controls::*
 };
 
 fn bind_keys(keyboard_state: &KeyboardState, pos_key: Key, neg_key: Key, update: &mut bool, value: &mut f32) {
@@ -97,67 +98,67 @@ impl InputHandler {
         if self.mode == Mode::View {
             bind_keys_directional(
                 &self.keyboard_state,
-                Key::Down, Key::Up,
-                Key::Left, Key::Right,
-                Key::Alpha, Key::Shift,
+                D_DOWN, D_UP,
+                D_LEFT, D_RIGHT,
+                D_SP_1, D_SP_2,
                 &mut self.upd.rotation, 
                 &mut self.rotation_direction
             );
 
-            bind_keys(&self.keyboard_state, Key::Plus, Key::Minus, &mut self.upd.scale, &mut self.scale_change);
+            bind_keys(&self.keyboard_state, INCREASE, DECREASE, &mut self.upd.scale, &mut self.scale_change);
 
-            if self.keyboard_state.key_down(Key::Backspace) {
+            if self.keyboard_state.key_down(RESET) {
                 self.upd.rotation = true;
                 self.rotation_direction.x = f32::NAN;
             }
         } 
 
         else if self.mode == Mode::Trace {
-            if self.keyboard_state.key_down(Key::Ok) {
+            if self.keyboard_state.key_down(CONFIRM) {
                 self.upd.load_obj = true;
             }
         }
         
         else if self.mode == Mode::Domain {
             if self.domain_cooldown >= 0.1 {
-                if self.keyboard_state.key_down(Key::Multiplication) {
+                if self.keyboard_state.key_down(MODIFIER) {
                     bind_keys_directional(
                         &self.keyboard_state,
-                        Key::Right, Key::Left,
-                        Key::Up, Key::Down,
-                        Key::Alpha, Key::Shift,
+                        D_RIGHT, D_LEFT,
+                        D_UP, D_DOWN,
+                        D_SP_1, D_SP_2,
                         &mut self.upd.domain,
                         &mut self.domain_scale_direction
                     );
                 } else {
                     bind_keys_directional(
                         &self.keyboard_state,
-                        Key::Right, Key::Left,
-                        Key::Up, Key::Down,
-                        Key::Alpha, Key::Shift,
+                        D_RIGHT, D_LEFT,
+                        D_UP, D_DOWN,
+                        D_SP_1, D_SP_2,
                         &mut self.upd.domain, 
                         &mut self.domain_trans_direction
                     );
 
                     let mut scale_change = 0.0;
-                    bind_keys(&self.keyboard_state, Key::Minus, Key::Plus, &mut self.upd.domain, &mut scale_change);
+                    bind_keys(&self.keyboard_state, DECREASE, INCREASE, &mut self.upd.domain, &mut scale_change);
                     self.domain_scale_direction = Vector3::new(scale_change, scale_change, scale_change);
                 }
             }
         }
         
-        if self.keyboard_state.key_down(Key::Seven) || self.keyboard_state.key_down(Key::One) { 
+        if self.keyboard_state.key_down(MODE_1) || self.keyboard_state.key_down(Key::One) { 
             self.upd.mode = self.mode != Mode::View;
             self.mode = Mode::View; 
-        } else if self.keyboard_state.key_down(Key::Eight) || self.keyboard_state.key_down(Key::Two) { 
+        } else if self.keyboard_state.key_down(MODE_2) || self.keyboard_state.key_down(Key::Two) { 
             self.upd.mode = self.mode != Mode::Trace;
             self.mode = Mode::Trace;
-        } else if self.keyboard_state.key_down(Key::Nine) || self.keyboard_state.key_down(Key::Three) { 
+        } else if self.keyboard_state.key_down(MODE_3) || self.keyboard_state.key_down(Key::Three) { 
             self.upd.mode = self.mode != Mode::Domain;
             self.mode = Mode::Domain;
         }
 
-        if self.keyboard_state.key_down(Key::Toolbox) {
+        if self.keyboard_state.key_down(HELP) {
             self.upd.help_on = self.help != true || self.upd.mode;
             self.help = true;
         } else {
@@ -165,7 +166,7 @@ impl InputHandler {
             self.help = false;
         }
 
-        if self.keyboard_state.key_down(Key::Home) {
+        if self.keyboard_state.key_down(EXIT) {
             self.upd.quit = true;
         }
 

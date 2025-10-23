@@ -31,7 +31,7 @@ constexpr static KeySDLKeyPair sKeyPairs[] = {
   KeySDLKeyPair(Key::Multiplication, SDL_SCANCODE_0),
   KeySDLKeyPair(Key::Multiplication, SDL_SCANCODE_X),
 
-  KeySDLKeyPair(Key::OK,        SDL_SCANCODE_RETURN),
+  KeySDLKeyPair(Key::Ok,        SDL_SCANCODE_RETURN),
   KeySDLKeyPair(Key::Back,      SDL_SCANCODE_ESCAPE),
 
   KeySDLKeyPair(Key::Toolbox,   SDL_SCANCODE_TAB),
