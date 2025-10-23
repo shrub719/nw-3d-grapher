@@ -2,7 +2,7 @@
 
 ## Building the app
 
-### Setup build environment <!-- TODO -->
+### Setup build environment
 
 1. Install [Node.js](https://nodejs.org/en/download)
 
@@ -38,7 +38,7 @@ To load the app to the calculator, run:
 just load
 ```
 
-### NumWorks calculator with PBJ files
+### NumWorks calculator (with PBJ file)
 
 The app supports importing 3D models as `.pbj`.
 
@@ -80,7 +80,7 @@ This creates a binary (`.nwb`) file at `/target/[your Rust host]/release/libnw_3
 1. Install the [Epsilon SDK](https://www.numworks.com/engineering/software/build/)
 
 1. Install [Python 3.10](https://www.python.org/downloads/release/python-3100/)  
-   *Makefile is broken for recent versions of Python.* <!-- TODO: what is broken? -->
+   *lz4 is broken for more recent versions of Python.*
 
 1. Run:
 

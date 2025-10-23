@@ -9,6 +9,7 @@ For my A level Computer Science NEA.
 ## Installation
 
 ### NumWorks calculator
+
 1. Go to the [latest release](https://github.com/shrub719/nw-3d-grapher/releases/latest)
 
 1. Download `nw_3d_grapher.nwa`
@@ -22,6 +23,7 @@ For my A level Computer Science NEA.
 1. Press **Install**
 
 ### NumWorks calculator (with PBJ file)
+
 The app supports importing 3D models as `.pbj`.
 
 1. Go to the [latest release](https://github.com/shrub719/nw-3d-grapher/releases/latest)
@@ -57,7 +59,7 @@ The app supports importing 3D models as `.pbj`.
    ./epsilon_linux.bin --nwb ./nw_3d_grapher_linux.nwb
 
    # macos
-   ./epsilon_macos.app --nwb ./nw_3d_grapher_macos.nwb
+   ./epsilon_macos.app/Contents/MacOS/Epsilon --nwb ./nw_3d_grapher_macos.nwb
    ```
 
 Unfortunately, the simulator does not support importing models from `.pbj` files.
@@ -79,7 +81,7 @@ Unfortunately, the simulator does not support importing models from `.pbj` files
 See [BUILDING.md](build/BUILDING.md) for instructions on how to build the app or the simulator.
 
 
-## Licensing
+## Licensing and credits
 
 As this repo (the NEA program) is part of my A level Computer Science coursework, it is under exam regulations. Therefore:
 - **Until August 14 2026** all rights are reserved by me. No permission is granted to copy, use, modify, or distribute any part of this project during this period.
@@ -88,3 +90,7 @@ As this repo (the NEA program) is part of my A level Computer Science coursework
 Dog model in `obj/Mesh_Beagle.obj` and `dog.pbj`: [Beagle](https://poly.pizza/m/0BnDT3T1wTE) by [Poly by Google](https://poly.pizza/u/Poly%20by%20Google) [[CC-BY](https://creativecommons.org/licenses/by/3.0/)] via Poly Pizza.
 
 This project is a third-party app and is not affiliated with NumWorks. NumWorks is a registered trademark of NumWorks SAS.
+
+Thanks to:
+   - [yannis300307](https://github.com/yannis30030) for parts of the extended EADK, and for [NumcraftRust](https://github.com/yannis300307/NumcraftRust) which inspired this project
+   - [fricht](https://github.com/fricht) for the external data EADK additions

@@ -1,3 +1,6 @@
+// thanks to yannis300307 for the extended eadk (most of this file)
+// thanks to fricht for their external data functions (indicated)
+
 use crate::constants::palette::*;
 
 #[repr(C)]
@@ -493,6 +496,7 @@ pub fn header_info(text: &str) {
     );
 }
 
+// ===== credit to fricht =====
 #[cfg(feature = "obj")]
 pub fn get_data() -> &'static [u8] {
     unsafe {
@@ -519,6 +523,7 @@ unsafe extern "C" {
     #[link_name = "eadk_external_data_size"]
     pub static data_size: usize;
 }
+// ============================
 
 unsafe extern "C" {
     pub static mut _heap_start: u8;
