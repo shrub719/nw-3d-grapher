@@ -27,7 +27,7 @@ inputs = [
     ["DECREASE", "MINUS"],
     ["DECREASE", "F"],
     ["MODIFIER", "0"],
-    ["DECREASE", "X"],
+    ["MODIFIER", "X"],
 
     ["CONFIRM", "RETURN"],
     ["BACK", "ESCAPE"],
