@@ -73,7 +73,8 @@ def convert_inputs(remapped_inputs):
     key_pairs = "constexpr static KeySDLKeyPair sKeyPairs[] = {\n"
 
     for ion_code, scancode in inputs:
-        key_pair = f"  KeySDLKeyPair({ion_code},    SDL_SCANCODE_{scancode}),\n"
+        spaces = (30 - len(ion_code)) * " "
+        key_pair = f"  KeySDLKeyPair({ion_code},{spaces}SDL_SCANCODE_{scancode}),\n"
         key_pairs = key_pairs + key_pair
     key_pairs = key_pairs + "};"
 
