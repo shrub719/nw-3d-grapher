@@ -147,13 +147,13 @@ impl InputHandler {
             }
         }
         
-        if self.keyboard_state.key_down(MODE_1) || self.keyboard_state.key_down(Key::One) { 
+        if self.keyboard_state.key_down(MODE_1) || self.keyboard_state.key_down(MODE_1B) { 
             self.upd.mode = self.mode != Mode::View;
             self.mode = Mode::View; 
-        } else if self.keyboard_state.key_down(MODE_2) || self.keyboard_state.key_down(Key::Two) { 
+        } else if self.keyboard_state.key_down(MODE_2) || self.keyboard_state.key_down(MODE_2B) { 
             self.upd.mode = self.mode != Mode::Trace;
             self.mode = Mode::Trace;
-        } else if self.keyboard_state.key_down(MODE_3) || self.keyboard_state.key_down(Key::Three) { 
+        } else if self.keyboard_state.key_down(MODE_3) || self.keyboard_state.key_down(MODE_3B) { 
             self.upd.mode = self.mode != Mode::Domain;
             self.mode = Mode::Domain;
         }
