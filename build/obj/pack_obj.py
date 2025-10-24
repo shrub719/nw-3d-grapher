@@ -40,7 +40,6 @@ def extract_obj(filename):
             elif line[0] == "f":
                 faces.extend(f_to_face(line))
 
-    info("extracted obj file from " + filename)
     return vertices, faces
 
 
@@ -96,8 +95,6 @@ def pack_tris(tris, filename):
         for tri in tris:
             flat = [coord for vertex in tri for coord in vertex]
             f.write(struct.pack("<9f", *flat))
-
-    info("packed tris to " + filename)
 
 
 inpt = sys.argv[1]
