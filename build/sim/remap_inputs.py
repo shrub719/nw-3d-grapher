@@ -18,6 +18,7 @@ def remap_key_pair(identifier, key, inputs):
     inputs[key] = inputs.pop(identifier)
 
 
+# converts identifiers (e.g. D_DOWN) to their respective ion keys (e.g. Key::Down) according to constants.rs
 def remap_controls(app_controls_file, inputs):
     controls = ""
 
@@ -31,6 +32,7 @@ def remap_controls(app_controls_file, inputs):
             remap_key_pair(identifier_match[0], key_match[0], inputs)
 
 
+# converts inputs dict to C++ code
 def convert_inputs(inputs):
     key_pairs = "constexpr static KeySDLKeyPair sKeyPairs[] = {\n"
 
