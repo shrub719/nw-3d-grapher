@@ -1,5 +1,17 @@
 name: Make simulators
 on:
+  pull_request:
+    paths:
+      - 'build/sim/**'
+      - 'justfile'
+    branches:
+      - main
+  push:
+    paths:
+      - 'build/sim/**'
+      - 'justfile'
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
