@@ -1,57 +1,21 @@
-import sys, re
+import sys, re, json
 
 REMAP_EXP = r'constexpr static KeySDLKeyPair sKeyPairs\[] ?= ?\{[\S\s]*?};'
 IDENTIFIER_EXP = r"pub const (\w+): Key ="
 KEY_EXP = r": Key =\s+(Key::\w+);"
-
-inputs = [
-    ["D_DOWN", "DOWN"],
-    ["D_DOWN", "S"],
-    ["D_UP", "UP"],
-    ["D_UP", "W"],
-    ["D_LEFT", "LEFT"],
-    ["D_LEFT", "A"],
-    ["D_RIGHT", "RIGHT"],
-    ["D_RIGHT", "D"],
-    ["D_SP_1", "LCTRL"],
-    ["D_SP_1", "RCTRL"],
-    ["D_SP_1", "E"],
-    ["D_SP_2", "LSHIFT"],
-    ["D_SP_2", "RSHIFT"],
-    ["D_SP_2", "Q"],
-
-    ["INCREASE", "KP_PLUS"],
-    ["INCREASE", "EQUALS"],
-    ["INCREASE", "R"],
-    ["DECREASE", "KP_MINUS"],
-    ["DECREASE", "MINUS"],
-    ["DECREASE", "F"],
-    ["MODIFIER", "0"],
-    ["MODIFIER", "X"],
-
-    ["CONFIRM", "RETURN"],
-    ["BACK", "ESCAPE"],
-
-    ["HELP", "TAB"],
-    ["RESET", "BACKSPACE"],
-
-    ["MODE_1", "7"],
-    ["MODE_1B", "1"],
-    ["MODE_2", "8"],
-    ["MODE_2B", "2"],
-    ["MODE_3", "9"],
-    ["MODE_3B", "3"]
-]
 
 
 def info(string):
     print("    " + string)
 
 
+def read_inputs(filename):
+    with open(filename, "r") as f:
+        return json.load(f)
+
+
 def remap_key_pair(identifier, key, inputs):
-    for i in range(len(inputs)):
-        if inputs[i][0] == identifier:
-            inputs[i][0] = key
+    inputs[key] = inputs.pop(identifier)
 
 
 def remap_controls(app_controls_file, inputs):
@@ -72,10 +36,11 @@ def remap_controls(app_controls_file, inputs):
 def convert_inputs(remapped_inputs):
     key_pairs = "constexpr static KeySDLKeyPair sKeyPairs[] = {\n"
 
-    for ion_code, scancode in inputs:
-        spaces = (30 - len(ion_code)) * " "
-        key_pair = f"  KeySDLKeyPair({ion_code},{spaces}SDL_SCANCODE_{scancode}),\n"
-        key_pairs = key_pairs + key_pair
+    for ion_code, scancodes in inputs.items():
+        for scancode in scancodes:
+            spaces = (30 - len(ion_code)) * " "
+            key_pair = f"  KeySDLKeyPair({ion_code},{spaces}SDL_SCANCODE_{scancode}),\n"
+            key_pairs = key_pairs + key_pair
     key_pairs = key_pairs + "};"
 
     return key_pairs
@@ -102,6 +67,8 @@ def remap_file(sim_input_file, key_pairs):
 sim_dir = sys.argv[1]
 sim_input_file = sim_dir + "/ion/src/simulator/shared/keyboard.cpp"
 app_controls_file = "src/constants.rs"
+
+inputs = read_inputs("build/sim/inputs.json")
 
 remapped_inputs = remap_controls(app_controls_file, inputs)
 
