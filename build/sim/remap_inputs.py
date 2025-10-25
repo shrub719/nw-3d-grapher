@@ -30,10 +30,8 @@ def remap_controls(app_controls_file, inputs):
         if identifier_match and key_match:
             remap_key_pair(identifier_match[0], key_match[0], inputs)
 
-    return inputs
 
-
-def convert_inputs(remapped_inputs):
+def convert_inputs(inputs):
     key_pairs = "constexpr static KeySDLKeyPair sKeyPairs[] = {\n"
 
     for ion_code, scancodes in inputs.items():
@@ -70,8 +68,8 @@ app_controls_file = "src/constants.rs"
 
 inputs = read_inputs("build/sim/inputs.json")
 
-remapped_inputs = remap_controls(app_controls_file, inputs)
+remap_controls(app_controls_file, inputs)
 
-key_pairs = convert_inputs(remapped_inputs)
+key_pairs = convert_inputs(inputs)
 
 remap_file(sim_input_file, key_pairs)
