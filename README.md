@@ -49,13 +49,15 @@ The app supports importing 3D models as `.pbj`.
 
 1. Download the `.nwb` file for your operating system
 
+    > **Note:** on Windows, use WSL.
+
 1. Get the simulator for your operating system
    > **Note:** NumWorks does not allow simulators to be redistributed, so you will have to [patch and build the simulator yourself](build/BUILDING.md#building-the-simulator).
 
 1. Run the `.nwb` file with the simulator in your terminal:
 
    ```sh
-   # linux
+   # linux/wsl
    ./epsilon_linux.bin --nwb ./nw_3d_grapher_linux.nwb
 
    # macos

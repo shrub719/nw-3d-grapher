@@ -1,5 +1,8 @@
 # NumWorks 3D Grapher - Building
 
+
+> **Note:** on Windows, use WSL.
+
 ## Building the app
 
 ### Setup build environment
