@@ -1,7 +1,7 @@
 use crate::{ 
     eadk::*, 
     constants::graphics::*, 
-    grapher::{
+    viewer::{
         mat::{ 
             RVector3, 
             RTriangle3 

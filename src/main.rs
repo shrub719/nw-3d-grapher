@@ -22,7 +22,7 @@ extern crate alloc;
 #[used]
 #[cfg(target_os = "none")]
 #[unsafe(link_section = ".rodata.eadk_app_name")]
-pub static EADK_APP_NAME: [u8; 11] = *b"3D Grapher\0";
+pub static EADK_APP_NAME: [u8; 11] = *b"3D Viewer\0";
 
 #[used]
 #[cfg(target_os = "none")]
@@ -38,8 +38,8 @@ pub mod eadk;
 pub mod external;
 mod constants;
 mod trig;
-mod grapher;
-use grapher::Grapher;
+mod viewer;
+use viewer::Viewer;
 
 #[unsafe(no_mangle)]
 pub fn main() -> isize {
@@ -49,8 +49,8 @@ pub fn main() -> isize {
         unsafe { HEAP.init(eadk::HEAP_START as usize, heap_size) }
     }
 
-    let mut grapher = Grapher::new();
-    grapher.main_loop();
+    let mut viewer = Viewer::new();
+    viewer.main_loop();
 
     0
 }

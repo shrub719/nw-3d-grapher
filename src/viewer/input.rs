@@ -1,5 +1,5 @@
 use crate::{ 
-    grapher::mat::*, 
+    viewer::mat::*, 
     eadk::input::*,
     constants::controls::*
 };

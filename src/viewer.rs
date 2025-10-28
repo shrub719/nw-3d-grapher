@@ -1,5 +1,5 @@
 use crate::{
-    grapher::{
+    viewer::{
         renderer::*,
         mesh::Mesh,
         input::*,
@@ -17,15 +17,15 @@ mod mesh;
 mod input;
 mod timer;
 
-pub struct Grapher {
+pub struct Viewer {
     renderer: Renderer,
     mesh: Mesh,
     input: InputHandler,
     timer: Timer
 }
-impl Grapher {
+impl Viewer {
     pub fn new() -> Self {
-        Grapher {
+        Viewer {
             renderer: Renderer::new(),
             mesh: Mesh::new(),
             input: InputHandler::new(),
@@ -93,7 +93,7 @@ impl Grapher {
     }
 
     pub fn main_loop(&mut self) {
-        Grapher::setup_ui();
+        Viewer::setup_ui();
 
         self.mesh.domain.update_matrix();
         self.mesh.load_mesh_from_file();

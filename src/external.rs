@@ -1,7 +1,7 @@
 pub mod obj {
     use crate::{
         eadk::*,
-        grapher::mat::*
+        viewer::mat::*
     };
     use core::{ ptr, mem };
 

@@ -1,5 +1,5 @@
 use crate::{
-    grapher::{
+    viewer::{
         mat::*
     },
     constants::*
