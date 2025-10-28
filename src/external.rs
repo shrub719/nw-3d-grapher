@@ -1,4 +1,3 @@
-#[cfg(feature = "obj")]
 pub mod obj {
     use crate::{
         eadk::*,

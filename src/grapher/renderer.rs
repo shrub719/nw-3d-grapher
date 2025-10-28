@@ -54,30 +54,15 @@ impl Renderer {
                     );
                 }
 
-                // draw axes
-                let mut i = 0;  // TODO: is there rust enumerate?
-                for axis in &mesh.transformed_axes {
-                    let color = AXIS_COLORS[i];
-                    self.fill_line(
-                        axis.0[0],
-                        axis.0[1],
-                        offset_vector,
-                        color
-                    );
-                    i += 1;
-                }
-
-                if !help || column < FB_TILE - 1 {
-                    display::push_rect(
-                        Rect { 
-                            x: offset_vector.x as u16,
-                            y: offset_vector.y as u16,
-                            width: FB_WIDTH,
-                            height: FB_HEIGHT
-                        },
-                        &self.buffer
-                    );
-                }
+                display::push_rect(
+                    Rect { 
+                        x: offset_vector.x as u16,
+                        y: offset_vector.y as u16,
+                        width: FB_WIDTH,
+                        height: FB_HEIGHT
+                    },
+                    &self.buffer
+                );
             }
         }
         // display::wait_for_vblank();

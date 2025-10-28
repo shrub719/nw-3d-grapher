@@ -98,28 +98,16 @@ impl Grapher {
     pub fn main_loop(&mut self) {
         Grapher::setup_ui();
 
+        self.mesh.domain.update_matrix();
+        self.mesh.load_mesh_from_file();
+
         // main loop - runs every frame
-        while !self.input.upd.quit {
-            if self.input.upd.domain {
-                self.mesh.update_domain(self.input.domain_trans_direction, self.input.domain_scale_direction);
-                self.mesh.generate_mesh();
-                self.input.domain_cooldown = 0.0;
-            } else {
-                self.input.domain_cooldown += self.timer.delta_time;
-            }
-            if self.input.upd.load_obj {
-                self.mesh.load_mesh_from_file();
-            }
-            
+        while !self.input.upd.quit {   
             if self.input.upd.rotation {
                 self.mesh.update_rotation(self.input.rotation_direction, self.timer.delta_time);
             }
             if self.input.upd.scale {
                 self.mesh.update_scale(self.input.scale_change, self.timer.delta_time);
-            }
-
-            if self.input.upd.hud {
-                draw_hud(self.input.mode, self.input.upd.mode, self.input.upd.help_on, self.mesh.scale, self.mesh.domain);
             }
 
             if self.input.upd.redraw {

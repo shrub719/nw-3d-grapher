@@ -7,7 +7,6 @@ use crate::{
 };
 #[cfg(target_os = "none")]
 use alloc::vec::Vec;
-#[cfg(feature = "obj")]
 use crate::external::obj::load_tris;
 
 const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
@@ -49,51 +48,6 @@ impl Domain {
         }
     }
 
-    pub fn translate(&mut self, trans_direction: Vector3) {
-        let dx = (self.x1 - self.x0) * 0.1 * trans_direction.x;
-        let dy = (self.y1 - self.y0) * 0.1 * trans_direction.y;
-        let dz = (self.z1 - self.z0) * 0.1 * trans_direction.z;
-
-        self.x0 += dx;
-        self.x1 += dx;
-        self.y0 += dy;
-        self.y1 += dy;
-        self.z0 += dz;
-        self.z1 += dz;
-    }
-
-    pub fn scale(&mut self, scale_direction: Vector3) {
-        let dx = (self.x1 - self.x0) * (1.0 + scale_direction.x * settings::DOMAIN_SCALE_SPEED) / 2.0;
-        let dy = (self.y1 - self.y0) * (1.0 + scale_direction.y * settings::DOMAIN_SCALE_SPEED) / 2.0;
-        let dz = (self.z1 - self.z0) * (1.0 + scale_direction.z * settings::DOMAIN_SCALE_SPEED) / 2.0;
-
-        let xm = (self.x0 + self.x1) / 2.0;
-        let ym = (self.y0 + self.y1) / 2.0;
-        let zm = (self.z0 + self.z1) / 2.0;
-
-        self.x0 = xm - dx;
-        self.x1 = xm + dx;
-        self.y0 = ym - dy;
-        self.y1 = ym + dy;
-        self.z0 = zm - dz;
-        self.z1 = zm + dz;
-    }
-
-    pub fn set_axes(&mut self, axes: &mut [Line3; 3]) {
-        axes[0] = Line3([
-            Vector3::new(self.x0, self.y0, self.z0),
-            Vector3::new(self.x1, self.y0, self.z0)
-        ]);
-        axes[1] = Line3([
-            Vector3::new(self.x0, self.y0, self.z0),
-            Vector3::new(self.x0, self.y1, self.z0)
-        ]);
-        axes[2] = Line3([
-            Vector3::new(self.x0, self.y0, self.z0),
-            Vector3::new(self.x0, self.y0, self.z1)
-        ]);
-    }
-
     pub fn update_matrix(&mut self) {
         let dx = self.x1 - self.x0;
         let dy = self.y1 - self.y0;
@@ -120,8 +74,6 @@ pub struct Mesh {
     pub tris: Vec<Triangle3>,
     pub transformed_tris: Vec<RTriangle3>,
     // pub lines: Vec<Line>,
-    pub axes: [Line3; 3],  // in order: x, y, z
-    pub transformed_axes:  [RLine3; 3],
     pub domain: Domain,
     rotation: Quaternion,
     pub scale: f32
@@ -134,34 +86,17 @@ impl Mesh {
             // (attempt to subtract with overflow errors in random places when n > ~824)
             transformed_tris: Vec::with_capacity(limits::MAX_TRIS),
             // lines:  Vec::with_capacity(limits::MAX_LINES), // TODO: transform lines
-            axes: [Line3([Vector3::new(0.0, 0.0, 0.0); 2]); 3],
-            transformed_axes: [RLine3([RVector3::new(0, 0, 0.0); 2]); 3],
             domain: Domain::new(),
             rotation: Quaternion::default(),
             scale: 0.5
         }
     }
 
-    pub fn generate_mesh(&mut self) {
-        self.tris.clear();
-        explicit_func(&mut self.tris, self.domain);
-    }
-
     pub fn load_mesh_from_file(&mut self) {
         self.tris.clear();
-        #[cfg(feature = "obj")]
         for tri in load_tris() {
             self.tris.push(tri);
         }
-    }
-
-    pub fn update_domain(&mut self, trans_direction: Vector3, scale_direction: Vector3) {
-        // TODO: transforms for very large numbers make everything go haywire
-        // don't calculate the tris in terms of the domain
-        self.domain.translate(trans_direction);
-        self.domain.scale(scale_direction);
-        self.domain.update_matrix();
-        self.domain.set_axes(&mut self.axes);
     }
 
     pub fn update_rotation(&mut self, rotation_direction: Vector3, delta_time: f32) {
@@ -192,9 +127,6 @@ impl Mesh {
         self.transformed_tris.clear();
         for tri in &self.tris {
             self.transformed_tris.push(*tri * matrix);
-        }
-        for i in 0..3 {
-            self.transformed_axes[i] = self.axes[i] * matrix;
         }
     }
 }
