@@ -50,20 +50,8 @@ pub mod controls {
 
     pub const INCREASE: Key =   Key::Plus;
     pub const DECREASE: Key =   Key::Minus;
-    pub const MODIFIER: Key =   Key::Multiplication;
 
-    pub const CONFIRM: Key =    Key::OK;
-    pub const BACK: Key =       Key::Back;
-
-    pub const HELP: Key =       Key::Toolbox;
-    pub const RESET: Key =      Key::Backspace;
-
-    pub const MODE_1: Key =     Key::Seven;
-    pub const MODE_1B: Key =    Key::One;
-    pub const MODE_2: Key =     Key::Eight;
-    pub const MODE_2B: Key =    Key::Two;
-    pub const MODE_3: Key =     Key::Nine;
-    pub const MODE_3B: Key =    Key::Three;
+    pub const SWITCH: Key =     Key::OK;
 
     pub const EXIT: Key =       Key::Home;
 }

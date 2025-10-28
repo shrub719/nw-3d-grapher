@@ -31,7 +31,7 @@ impl Renderer {
         }
     }
 
-    pub fn draw_screen(&mut self, mesh: &Mesh, help: bool) {
+    pub fn draw_screen(&mut self, mesh: &Mesh) {
         for column in 0..FB_TILE {
             for row in 0..FB_TILE {
                 self.clear();

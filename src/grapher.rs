@@ -109,7 +109,7 @@ impl Grapher {
 
             if self.input.upd.redraw {
                 self.mesh.transform();
-                self.renderer.draw_screen(&self.mesh, self.input.help);
+                self.renderer.draw_screen(&self.mesh);
             }
 
             self.input.update();
