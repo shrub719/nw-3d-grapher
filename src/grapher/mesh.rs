@@ -1,7 +1,6 @@
 use crate::{
     grapher::{
-        mat::*,
-        generator::*
+        mat::*
     },
     constants::*
 };

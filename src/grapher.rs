@@ -3,7 +3,6 @@ use crate::{
         renderer::*,
         mesh::Mesh,
         input::*,
-        hud::*,
         timer::*
     },
     eadk::*,
@@ -16,9 +15,7 @@ pub mod mat;
 mod renderer;
 mod mesh;
 mod input;
-mod hud;
 mod timer;
-mod generator;
 
 pub struct Grapher {
     renderer: Renderer,

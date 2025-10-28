@@ -146,27 +146,4 @@ impl Renderer {
             }
         }
     }
-
-    // TEMP version
-    fn fill_line(&mut self, v0: RVector3, v1: RVector3, offset_vector: RVector3, color: Color) {
-        let v2 = RVector3::new(
-            v0.x + 1,
-            v0.y + 1,
-            v0.z + 0.1
-        );
-        let v3 = RVector3::new(
-            v1.x + 1,
-            v1.y + 1,
-            v1.z + 0.1
-        );
-        let tri1 = RTriangle3 {
-            v: [v0, v1, v2]
-        };
-        let tri2 = RTriangle3 {
-            v: [v1, v3, v2]
-        };
-
-        self.fill_triangle(tri1 - offset_vector, color);
-        self.fill_triangle(tri2 - offset_vector, color);
-    }
 }
