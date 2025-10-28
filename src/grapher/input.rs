@@ -41,7 +41,8 @@ pub struct InputHandler {
     pub upd: Updates,
     pub keyboard_state: KeyboardState,
     pub rotation_direction: Vector3,
-    pub scale_change: f32
+    pub scale_change: f32,
+    pub shading: bool,
 }
 impl InputHandler {
     pub fn new() -> Self {
@@ -54,11 +55,13 @@ impl InputHandler {
             },
             keyboard_state: KeyboardState::scan(),
             rotation_direction: Vector3::new(0.0, 0.0, 0.0),
-            scale_change: 0.0
+            scale_change: 0.0,
+            shading: true,
         }
     }
 
     pub fn update(&mut self) {
+        let prev_switch = self.keyboard_state.key_down(SWITCH);
         self.keyboard_state = KeyboardState::scan();
         self.rotation_direction = Vector3::new(0.0, 0.0, 0.0);
         self.scale_change = 0.0;
@@ -74,6 +77,11 @@ impl InputHandler {
         );
 
         bind_keys(&self.keyboard_state, INCREASE, DECREASE, &mut self.upd.scale, &mut self.scale_change);
+
+        if self.keyboard_state.key_down(SWITCH) && !prev_switch {
+            self.shading = !self.shading;
+            self.upd.rotation = true;
+        }
 
         if self.keyboard_state.key_down(EXIT) {
             self.upd.quit = true;

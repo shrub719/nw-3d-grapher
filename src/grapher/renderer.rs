@@ -31,7 +31,7 @@ impl Renderer {
         }
     }
 
-    pub fn draw_screen(&mut self, mesh: &Mesh) {
+    pub fn draw_screen(&mut self, mesh: &Mesh, shading: bool) {
         for column in 0..FB_TILE {
             for row in 0..FB_TILE {
                 self.clear();
@@ -42,16 +42,22 @@ impl Renderer {
                 );
 
                 // draw tris
+                let mut value: f32 = 0.0;
+                let inc = 255.0 / mesh.tris.len() as f32;
                 for tri in &mesh.transformed_tris {
-                    let mut value = (-tri.v[0].z + 1.0) / 2.0 * 255.0;
-                    if value > 255.0 { value = 255.0 };
-                    if value < 0.0 { value = 0.0 };
+                    if shading {
+                        value = (-tri.v[0].z + 1.0) / 2.0 * 255.0;
+                        if value > 255.0 { value = 255.0 };
+                        if value < 0.0 { value = 0.0 };
+                    }
 
                     let color = Color::from_rgb(0, value as u16, 255);
                     self.fill_triangle(
                         *tri - offset_vector,
                         color
                     );
+
+                    if !shading { value += inc }
                 }
 
                 display::push_rect(
