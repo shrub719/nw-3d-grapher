@@ -98,3 +98,7 @@ clean-sim:
     cd ./epsilon_simulator && make clean
 
 clean-all: clean clean-sim
+
+t:
+    just nwb-dev
+    ./epsilon_simulator/output/release/simulator/macos/epsilon.app/Contents/MacOS/Epsilon --nwb ./target/x86_64-apple-darwin/debug/libnw_3d_grapher_sim.dylib --nwb-external-data target/obj/peach.pbj

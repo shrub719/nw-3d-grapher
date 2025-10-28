@@ -22,7 +22,7 @@ pub mod graphics {
     pub const SCREEN_WIDTH: u16 = 320;
     pub const SCREEN_HEIGHT: u16 = 240;
 
-    pub const HUD_HEIGHT: u16 = 36;
+    pub const HUD_HEIGHT: u16 = 0;
 
     pub const MARGIN_TOP: u16 = 18;
     pub const MARGIN_BOTTOM: u16 = HUD_HEIGHT;
