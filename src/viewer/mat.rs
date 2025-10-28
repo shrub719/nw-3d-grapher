@@ -236,10 +236,10 @@ pub struct Quaternion {
 impl Default for Quaternion {
     fn default() -> Self {
         Quaternion {
-            w: 0.5713734,
-            x: 0.77361715,
-            y: 0.2203645,
-            z: -0.16275544
+            w: 1.0,
+            x: 0.0,
+            y: 0.0,
+            z: 0.0
         }
     }
 }

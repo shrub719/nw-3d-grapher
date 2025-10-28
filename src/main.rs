@@ -22,7 +22,7 @@ extern crate alloc;
 #[used]
 #[cfg(target_os = "none")]
 #[unsafe(link_section = ".rodata.eadk_app_name")]
-pub static EADK_APP_NAME: [u8; 11] = *b"3D Viewer\0";
+pub static EADK_APP_NAME: [u8; 6] = *b"3Dino\0";
 
 #[used]
 #[cfg(target_os = "none")]

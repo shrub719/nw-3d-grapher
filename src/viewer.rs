@@ -55,8 +55,8 @@ impl Viewer {
         );
 
         display::draw_string(
-            "3D GRAPHER",
-            Point { x: 122, y: 3 },
+            "   3DINO",
+            Point { x: 120, y: 3 },
             false,
             WHITE,
             ORANGE
