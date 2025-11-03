@@ -10,9 +10,7 @@ For my A level Computer Science NEA.
 
 ### NumWorks calculator
 
-1. Go to the [latest release](https://github.com/shrub719/nw-3d-grapher/releases/latest)
-
-1. Download `nw_3d_grapher.nwa`
+1. Download `nw_3d_grapher.nwa` [here](https://github.com/shrub719/nw-3d-grapher/releases/latest/downloads/nw_3d_grapher.nwa)
 
 1. Connect to your calculator by USB
 
