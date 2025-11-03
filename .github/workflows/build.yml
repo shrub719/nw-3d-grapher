@@ -51,16 +51,6 @@ jobs:
         run: |
           just build
           mv target/thumbv7em-none-eabihf/release/nw_3d_grapher target/output/nw_3d_grapher.nwa
-      
-      - name: Build nwa (obj)
-        run: |
-          just build o
-          mv target/thumbv7em-none-eabihf/release/nw_3d_grapher target/output/nw_3d_grapher_obj.nwa
-
-      - name: Pack test obj
-        run: |
-          just obj build/obj/Mesh_Beagle.obj dog
-          mv target/obj/dog.pbj target/output/dog.pbj
 
       - name: Build nwb
         run: |
