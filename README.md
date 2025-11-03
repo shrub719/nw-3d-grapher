@@ -10,34 +10,15 @@ For my A level Computer Science NEA.
 
 ### NumWorks calculator
 
-1. Download `nw_3d_grapher.nwa` [here](https://github.com/shrub719/nw-3d-grapher/releases/latest/downloads/nw_3d_grapher.nwa)
+1. Go to the [latest release](https://github.com/shrub719/nw-3d-grapher/releases/latest)
+
+1. Download `nw_3d_grapher.nwa`
 
 1. Connect to your calculator by USB
 
 1. Go to the [Numworks Installer](https://my.numworks.com/apps) and click **Connect** (make sure your browser has WebUSB capability)
 
 1. Upload `nw_3d_grapher.nwa`
-
-1. Press **Install**
-
-### NumWorks calculator (with PBJ file)
-
-The app supports importing 3D models as `.pbj`.
-
-1. Go to the [latest release](https://github.com/shrub719/nw-3d-grapher/releases/latest)
-
-1. Download `nw_3d_grapher_obj.nwa`  
-   *Optionally, download the example `dog.pbj`*
-
-1. Connect to your calculator by USB
-
-1. Go to the [Numworks Installer](https://my.numworks.com/apps) and click **Connect** (make sure your browser has WebUSB capability)
-
-1. Upload `nw_3d_grapher_obj.nwa`
-
-1. Click **Select a data file**
-
-1. Upload the `.pbj` file of the 3D model you want
 
 1. Press **Install**
 
@@ -62,7 +43,9 @@ The app supports importing 3D models as `.pbj`.
    ./epsilon_macos.app/Contents/MacOS/Epsilon --nwb ./nw_3d_grapher_macos.nwb
    ```
 
-Unfortunately, the simulator does not support importing models from `.pbj` files.
+### PBJ Files
+
+To import 3D models to your NumWorks calculator or simulator, use [3Dino](https://github.com/shrub719/nw-3dino) instead.
 
 
 ## Usage

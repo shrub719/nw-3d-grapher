@@ -43,6 +43,8 @@ just load
 
 ### NumWorks calculator (with PBJ file)
 
+> **Note:** To import 3D models to your NumWorks calculator or simulator, use [3Dino](https://github.com/shrub719/nw-3dino) instead.
+
 The app supports importing 3D models as `.pbj`.
 
 To convert a `.obj` file to `.pbj`, run:
