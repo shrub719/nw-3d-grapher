@@ -1,46 +1,22 @@
 current_target := `rustc -Vv | grep host | awk '{print $2}'`
 
-# ===== OBJECTS =====
-
-# creates .pbj in target/obj from .obj source file
-# input_file contains .obj file location (e.g. obj/meshes/dog.obj)
-# obj_name contains .pbj file name (e.g. dog)
-obj input_file obj_name:
-    mkdir -p target/obj
-    python3 build/obj/pack_obj.py {{input_file}} {{obj_name}}
-
-# automatically creates .pbj from obj/meshes
-# obj_name contains .obj and .obj file name (e.g. dog)
-dev-obj obj_name:
-    just obj build/obj/meshes/{{obj_name}}.obj {{obj_name}}
-    cp target/obj/{{obj_name}}.pbj target/thumbv7em-none-eabihf/debug
-    cp target/obj/{{obj_name}}.pbj target/thumbv7em-none-eabihf/release
-
-
 # ===== DEVICE =====
 
 # builds release profile
-# obj_toggle toggles whether it will need external data
-build obj_toggle="":
-    cargo build --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_toggle == "" { "" } else { "--features obj" } }}
+build:
+    cargo build --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
 # builds dev profile
-# obj_toggle toggles whether it will need external data
-dev obj_toggle="":
-    cargo build --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_toggle == "" { "" } else { "--features obj" } }}
+dev:
+    cargo build --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
 # loads app to calculator
-# obj toggles whether it is loaded with external data, containing object name (e.g. dog) if it is
-load obj_name="":
-    cargo run --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_name == "" { "" } else { "--features obj -- -d target/obj/" + obj_name + ".pbj" } }}
+load:
+    cargo run --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf 
 
-# automatically creates .pbj from obj/meshes before loading to calculator
-# obj_name toggles whether it is loaded with external data, containing object name (e.g. dog) if it is
-dev-load obj_name="":
-    if obj_name != ""; then \
-        just dev-obj {{obj_name}}; \
-    fi
-    cargo run --bin nw_3d_grapher --target=thumbv7em-none-eabihf {{ if obj_name == "" { "" } else { "--features obj -- -d target/obj/" + obj_name + ".pbj" } }}
+# loads dev profile to calculator
+dev-load:
+    cargo run --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
 
 # ===== SIMULATOR =====
