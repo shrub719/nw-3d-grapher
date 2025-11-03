@@ -47,11 +47,11 @@ fn add_explicit_tris(tris: &mut Vec<Triangle3>, x0: f32, y0: f32, dx: f32, dy: f
 }
 
 pub fn explicit_func(tris: &mut Vec<Triangle3>, domain: Domain) {
-    let dx = (domain.x1 - domain.x0) / SAMPLE_N as f32;
-    let dy = (domain.y1 - domain.y0) / SAMPLE_N as f32;
+    let dx = (domain.x1 - domain.x0) / EXPLICIT_N as f32;
+    let dy = (domain.y1 - domain.y0) / EXPLICIT_N as f32;
 
-    for i in 0..SAMPLE_N {
-        for j in 0..SAMPLE_N {
+    for i in 0..EXPLICIT_N {
+        for j in 0..EXPLICIT_N {
             let x = domain.x0 + dx * i as f32;
             let y = domain.y0 + dy * j as f32;
             
@@ -61,5 +61,22 @@ pub fn explicit_func(tris: &mut Vec<Triangle3>, domain: Domain) {
 }
 
 pub fn implicit_func(tris: &mut Vec<Triangle3>, domain: Domain) {
-     
+    let dx = (domain.x1 - domain.x0) / EXPLICIT_N as f32;
+    let dy = (domain.y1 - domain.y0) / EXPLICIT_N as f32;
+    let dz = (domain.z1 - domain.z0) / EXPLICIT_N as f32;
+
+    for i in 0..IMPLICIT_N {
+        for j in 0..IMPLICIT_N {
+            for k in 0..IMPLICIT_N {
+                let x0 = domain.x0 + dx * i as f32;
+                let y0 = domain.y0 + dy * j as f32;
+                let z0 = domain.z0 + dz * k as f32;
+                let x1 = x0 + dx;
+                let y1 = y0 + dy;
+                let z1 = z0 + dz;
+
+                
+            }
+        }
+    }
 }
