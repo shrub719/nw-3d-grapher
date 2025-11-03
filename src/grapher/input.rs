@@ -46,7 +46,6 @@ pub struct Updates {
     pub hud: bool,
     pub help_on: bool,
     pub help_off: bool,
-    pub load_obj: bool,
     pub quit: bool
 }
 
@@ -73,7 +72,6 @@ impl InputHandler {
                 hud: true,
                 help_on: false,
                 help_off: false,
-                load_obj: false,
                 quit: false
             },
             keyboard_state: KeyboardState::scan(),
@@ -114,9 +112,7 @@ impl InputHandler {
         } 
 
         else if self.mode == Mode::Trace {
-            if self.keyboard_state.key_down(CONFIRM) {
-                self.upd.load_obj = true;
-            }
+         
         }
         
         else if self.mode == Mode::Domain {
@@ -170,7 +166,7 @@ impl InputHandler {
             self.upd.quit = true;
         }
 
-        self.upd.redraw = self.upd.rotation || self.upd.domain || self.upd.scale || self.upd.load_obj || self.upd.help_off;
+        self.upd.redraw = self.upd.rotation || self.upd.domain || self.upd.scale || self.upd.help_off;
         self.upd.hud = self.upd.mode || self.upd.redraw || self.upd.help_on;
     }
 }

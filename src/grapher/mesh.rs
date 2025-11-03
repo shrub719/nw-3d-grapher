@@ -147,13 +147,6 @@ impl Mesh {
         explicit_func(&mut self.tris, self.domain);
     }
 
-    pub fn load_mesh_from_file(&mut self) {
-        self.tris.clear();
-        #[cfg(feature = "obj")]
-        for tri in load_tris() {
-            self.tris.push(tri);
-        }
-    }
 
     pub fn update_domain(&mut self, trans_direction: Vector3, scale_direction: Vector3) {
         // TODO: transforms for very large numbers make everything go haywire
