@@ -13,14 +13,20 @@ fn test_curve(x: f32, y: f32) -> f32 {
     sin(x * sin(y))
 }
 
+fn test_surface(x: f32, y: f32, z: f32) -> f32 {
+    x*x*x*x + 2.0*x*x*y*y + 2.0*x*x*z*z + y*y*y*y + 2.0*y*y*z*z + z*z*z*z + 8.0*x*y*z - 10.0*x*x - 10.0*y*y - 10.0*z*z + 20.0
+}
+
 // TODO: clip
 fn add_tri(tris: &mut Vec<Triangle3>, vertices: [Vector3; 3]) {
     tris.push(Triangle3(vertices));
 }
 
 // TODO: split poly into tris
-fn add_poly(tris: &mut Vec<Triangle3>) {
-
+fn add_poly(tris: &mut Vec<Triangle3>, poly: &[Vector3]) {
+    for v in 1..poly.len()-1 {
+        add_tri(tris, [poly[0], poly[v], poly[v+1]]);
+    }
 }
 
 fn add_explicit_tris(tris: &mut Vec<Triangle3>, x0: f32, y0: f32, dx: f32, dy: f32) {
@@ -32,12 +38,12 @@ fn add_explicit_tris(tris: &mut Vec<Triangle3>, x0: f32, y0: f32, dx: f32, dy: f
             let y = y0 + j as f32 * dy;
             let z = test_curve(x, y);
 
-            vertices[i*2 + j] = Vector3::new(x, y, z);
+            let index = if i == 0 { i*2 + j } else { i*2 + 1-j };
+            vertices[index] = Vector3::new(x, y, z);
         }
     }
 
-    add_tri(tris, [vertices[1], vertices[2], vertices[0]]);
-    add_tri(tris, [vertices[1], vertices[2], vertices[3]]);
+    add_poly(tris, &vertices);
 }
 
 pub fn explicit_func(tris: &mut Vec<Triangle3>, domain: Domain) {
@@ -52,4 +58,8 @@ pub fn explicit_func(tris: &mut Vec<Triangle3>, domain: Domain) {
             add_explicit_tris(tris, x, y, dx, dy);
         }
     }
+}
+
+pub fn implicit_func(tris: &mut Vec<Triangle3>, domain: Domain) {
+     
 }
