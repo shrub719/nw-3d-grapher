@@ -16,7 +16,7 @@ For my A level Computer Science NEA.
 
 1. Connect to your calculator by USB
 
-1. Go to the [Numworks Installer](https://my.numworks.com/apps) and click **Connect** (make sure your browser has WebUSB capability)
+1. Go to the [NumWorks Installer](https://my.numworks.com/apps) and click **Connect** (make sure your browser has WebUSB capability)
 
 1. Upload `nw_3d_grapher.nwa`
 
