@@ -6,8 +6,6 @@ use crate::{
     constants::*
 };
 use heapless::Vec;
-#[cfg(feature = "obj")]
-use crate::external::obj::load_tris;
 
 const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
     [120.0, 0.0, 0.0, 160.0],
