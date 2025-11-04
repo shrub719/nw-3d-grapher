@@ -17,6 +17,10 @@ fn test_surface(x: f32, y: f32, z: f32) -> f32 {
     x*x*x*x + 2.0*x*x*y*y + 2.0*x*x*z*z + y*y*y*y + 2.0*y*y*z*z + z*z*z*z + 8.0*x*y*z - 10.0*x*x - 10.0*y*y - 10.0*z*z + 20.0
 }
 
+fn implicit(v: Vector3) -> f32 {
+    test_surface(v.x, v.y, v.z)
+}
+
 // TODO: clip
 fn add_tri(tris: &mut Vec<Triangle3, { MAX_TRIS }>, vertices: [Vector3; 3]) {
     let _ = tris.push(Triangle3(vertices));
@@ -65,7 +69,28 @@ pub fn march_that_cube(
     v0: Vector3, v1: Vector3, v2: Vector3, v3: Vector3,
     v4: Vector3, v5: Vector3, v6: Vector3, v7: Vector3
 ) {
-     
+    let mut edge_index: usize = 0;
+    
+    if implicit(v0) < 0.0 { edge_index |= 1 << 0 };
+    if implicit(v1) < 0.0 { edge_index |= 1 << 1 };
+    if implicit(v2) < 0.0 { edge_index |= 1 << 2 };
+    if implicit(v3) < 0.0 { edge_index |= 1 << 3 };
+    if implicit(v4) < 0.0 { edge_index |= 1 << 4 };
+    if implicit(v5) < 0.0 { edge_index |= 1 << 5 };
+    if implicit(v6) < 0.0 { edge_index |= 1 << 6 };
+    if implicit(v7) < 0.0 { edge_index |= 1 << 7 };
+
+    let mut edge = EDGE_TABLE[edge_index];
+    let mut vertices: [Vector3; 12];
+
+    // TODO: just use a bunch of if statements
+    let mut i = 0;
+    while edge != 0 {
+        let curr_edge = edge % 2;
+        
+        i += 1;
+        edge = edge >> 1;
+    }
 }
 
 pub fn implicit_func(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain) {
@@ -83,37 +108,17 @@ pub fn implicit_func(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain) {
                 let y1 = y0 + dy;
                 let z1 = z0 + dz;
                 
-                // TODO: don't do manually
-                let edges: [[Vector3; 2]; 12] = [
-                    [Vector3::new(x0, y0, z0), Vector3::new(x1, y0, z0)],
-                    [Vector3::new(x0, y0, z0), Vector3::new(x0, y1, z0)],
-                    [Vector3::new(x0, y0, z0), Vector3::new(x0, y0, z1)],
-
-                    [Vector3::new(x1, y0, z0), Vector3::new(x1, y1, z0)],
-                    [Vector3::new(x1, y0, z0), Vector3::new(x1, y0, z1)],
-
-                    [Vector3::new(x0, y1, z0), Vector3::new(x1, y1, z0)],
-                    [Vector3::new(x0, y1, z0), Vector3::new(x0, y1, z1)],
-
-                    [Vector3::new(x0, y0, z1), Vector3::new(x1, y0, z1)],
-                    [Vector3::new(x0, y0, z1), Vector3::new(x0, y1, z1)],
-
-                    [Vector3::new(x1, y1, z1), Vector3::new(x0, y1, z1)],
-                    [Vector3::new(x1, y1, z1), Vector3::new(x1, y0, z1)],
-                    [Vector3::new(x1, y1, z1), Vector3::new(x1, y1, z0)],
-                ];
-
-                for edge in edges {
-                    let v0 = edge[0];
-                    let v1 = edge[1];
-                    let t0 = test_surface(v0.x, v0.y, v0.z);
-                    let t1 = test_surface(v1.x, v1.y, v1.z);
-
-                    // has intersection
-                    if t0 * t1 < 0.0 {
-                        
-                    }
-                }
+                march_that_cube(
+                    tris,
+                    Vector3::new(x0, y0, z0),
+                    Vector3::new(x1, y0, z0),
+                    Vector3::new(x1, y1, z0),
+                    Vector3::new(x0, y1, z0),
+                    Vector3::new(x0, y0, z1),
+                    Vector3::new(x1, y0, z1),
+                    Vector3::new(x1, y1, z1),
+                    Vector3::new(x0, y1, z1)
+                );
             }
         }
     }
