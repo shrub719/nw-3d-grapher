@@ -179,7 +179,7 @@ impl Mesh {
 
         self.transformed_tris.clear();
         for tri in &self.tris {
-            self.transformed_tris.push(*tri * matrix);
+            let _ = self.transformed_tris.push(*tri * matrix);
         }
         for i in 0..3 {
             self.transformed_axes[i] = self.axes[i] * matrix;

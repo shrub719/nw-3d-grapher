@@ -18,13 +18,13 @@ fn test_surface(x: f32, y: f32, z: f32) -> f32 {
 
 // TODO: clip
 fn add_tri(tris: &mut Vec<Triangle3, { MAX_TRIS }>, vertices: [Vector3; 3]) {
-    tris.push(Triangle3(vertices));
+    let _ = tris.push(Triangle3(vertices));
 }
 
 // TODO: split poly into tris
 fn add_poly(tris: &mut Vec<Triangle3, { MAX_TRIS }>, poly: &[Vector3]) {
     for v in 1..poly.len()-1 {
-        add_tri(tris, [poly[0], poly[v], poly[v+1]]);
+        let _ = add_tri(tris, [poly[0], poly[v], poly[v+1]]);
     }
 }
 
@@ -73,7 +73,7 @@ pub fn implicit_func(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain) {
                 let x1 = x0 + dx;
                 let y1 = y0 + dy;
                 let z1 = z0 + dz;
-
+                
                 
             }
         }
