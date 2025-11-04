@@ -14,3 +14,10 @@
 - [ ] UI
     - [ ] Settings menu (vsync, delta time)
 - [ ] Pompeiu
+
+
+## Better to do
+- [ ] Remove TODOs
+- [ ] Move generator and tables to a separate mod/folder
+- [ ] Make shading not dependent on VIEW scale
+
