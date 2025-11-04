@@ -19,6 +19,7 @@ mod input;
 mod hud;
 mod timer;
 mod generator;
+mod tables;
 
 pub struct Grapher {
     renderer: Renderer,

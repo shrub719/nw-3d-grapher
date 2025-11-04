@@ -1,7 +1,8 @@
 use crate::{
     grapher::{
         mat::*,
-        mesh::Domain
+        mesh::Domain,
+        tables::*
     },
     trig::*,
     constants::limits::*
@@ -59,6 +60,14 @@ pub fn explicit_func(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain) {
     }
 }
 
+pub fn march_that_cube(
+    tris: &mut Vec<Triangle3, { MAX_TRIS }>,
+    v0: Vector3, v1: Vector3, v2: Vector3, v3: Vector3,
+    v4: Vector3, v5: Vector3, v6: Vector3, v7: Vector3
+) {
+     
+}
+
 pub fn implicit_func(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain) {
     let dx = (domain.x1 - domain.x0) / EXPLICIT_N as f32;
     let dy = (domain.y1 - domain.y0) / EXPLICIT_N as f32;
@@ -74,7 +83,37 @@ pub fn implicit_func(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain) {
                 let y1 = y0 + dy;
                 let z1 = z0 + dz;
                 
-                
+                // TODO: don't do manually
+                let edges: [[Vector3; 2]; 12] = [
+                    [Vector3::new(x0, y0, z0), Vector3::new(x1, y0, z0)],
+                    [Vector3::new(x0, y0, z0), Vector3::new(x0, y1, z0)],
+                    [Vector3::new(x0, y0, z0), Vector3::new(x0, y0, z1)],
+
+                    [Vector3::new(x1, y0, z0), Vector3::new(x1, y1, z0)],
+                    [Vector3::new(x1, y0, z0), Vector3::new(x1, y0, z1)],
+
+                    [Vector3::new(x0, y1, z0), Vector3::new(x1, y1, z0)],
+                    [Vector3::new(x0, y1, z0), Vector3::new(x0, y1, z1)],
+
+                    [Vector3::new(x0, y0, z1), Vector3::new(x1, y0, z1)],
+                    [Vector3::new(x0, y0, z1), Vector3::new(x0, y1, z1)],
+
+                    [Vector3::new(x1, y1, z1), Vector3::new(x0, y1, z1)],
+                    [Vector3::new(x1, y1, z1), Vector3::new(x1, y0, z1)],
+                    [Vector3::new(x1, y1, z1), Vector3::new(x1, y1, z0)],
+                ];
+
+                for edge in edges {
+                    let v0 = edge[0];
+                    let v1 = edge[1];
+                    let t0 = test_surface(v0.x, v0.y, v0.z);
+                    let t1 = test_surface(v1.x, v1.y, v1.z);
+
+                    // has intersection
+                    if t0 * t1 < 0.0 {
+                        
+                    }
+                }
             }
         }
     }
