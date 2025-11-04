@@ -139,7 +139,7 @@ impl Mesh {
 
     pub fn generate_mesh(&mut self) {
         self.tris.clear();
-        explicit_func(&mut self.tris, self.domain);
+        implicit_func(&mut self.tris, self.domain);
     }
 
 

@@ -42,12 +42,12 @@ fn add_explicit_tris(tris: &mut Vec<Triangle3, { MAX_TRIS }>, x0: f32, y0: f32, 
             let y = y0 + j as f32 * dy;
             let z = test_curve(x, y);
 
-            let index = if i == 0 { i*2 + j } else { i*2 + 1-j };
-            vertices[index] = Vector3::new(x, y, z);
+            vertices[i*2 + j] = Vector3::new(x, y, z);
         }
     }
 
-    add_poly(tris, &vertices);
+    add_tri(tris, [vertices[1], vertices[2], vertices[0]]);
+    add_tri(tris, [vertices[1], vertices[2], vertices[3]]);
 }
 
 pub fn explicit_func(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain) {
@@ -64,32 +64,79 @@ pub fn explicit_func(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain) {
     }
 }
 
-pub fn march_that_cube(
+fn interpolate_vertex(v0: Vector3, v1: Vector3, t0: f32, t1: f32) -> Vector3 {
+    let mu = -t0 / (t1 - t0);
+    
+    Vector3::new(
+        v0.x + mu * (v1.x - v0.x),
+        v0.y + mu * (v1.y - v0.y),
+        v0.z + mu * (v1.z - v0.z)
+    )
+}
+
+fn march_that_cube(
     tris: &mut Vec<Triangle3, { MAX_TRIS }>,
     v0: Vector3, v1: Vector3, v2: Vector3, v3: Vector3,
     v4: Vector3, v5: Vector3, v6: Vector3, v7: Vector3
 ) {
-    let mut edge_index: usize = 0;
+    let t0 = implicit(v0);
+    let t1 = implicit(v1);
+    let t2 = implicit(v2);
+    let t3 = implicit(v3);
+    let t4 = implicit(v4);
+    let t5 = implicit(v5);
+    let t6 = implicit(v6);
+    let t7 = implicit(v7);
+
+    let mut cube_index: usize = 0;
     
-    if implicit(v0) < 0.0 { edge_index |= 1 << 0 };
-    if implicit(v1) < 0.0 { edge_index |= 1 << 1 };
-    if implicit(v2) < 0.0 { edge_index |= 1 << 2 };
-    if implicit(v3) < 0.0 { edge_index |= 1 << 3 };
-    if implicit(v4) < 0.0 { edge_index |= 1 << 4 };
-    if implicit(v5) < 0.0 { edge_index |= 1 << 5 };
-    if implicit(v6) < 0.0 { edge_index |= 1 << 6 };
-    if implicit(v7) < 0.0 { edge_index |= 1 << 7 };
+    if t0 < 0.0 { cube_index |= 1 << 0 };
+    if t1 < 0.0 { cube_index |= 1 << 1 };
+    if t2 < 0.0 { cube_index |= 1 << 2 };
+    if t3 < 0.0 { cube_index |= 1 << 3 };
+    if t4 < 0.0 { cube_index |= 1 << 4 };
+    if t5 < 0.0 { cube_index |= 1 << 5 };
+    if t6 < 0.0 { cube_index |= 1 << 6 };
+    if t7 < 0.0 { cube_index |= 1 << 7 };
 
-    let mut edge = EDGE_TABLE[edge_index];
-    let mut vertices: [Vector3; 12];
+    let mut edge = EDGE_TABLE[cube_index];
+    let mut vertices: [Vector3; 12] = [Vector3::new(0.0, 0.0, 0.0); 12];
 
-    // TODO: just use a bunch of if statements
-    let mut i = 0;
-    while edge != 0 {
-        let curr_edge = edge % 2;
-        
-        i += 1;
-        edge = edge >> 1;
+    if edge & (1 << 0) != 0 {
+        vertices[0] = interpolate_vertex(v0, v1, t0, t1);
+    } else if edge & (1 << 1) != 0 {
+        vertices[1] = interpolate_vertex(v1, v2, t1, t2);
+    } else if edge & (1 << 2) != 0 {
+        vertices[2] = interpolate_vertex(v2, v3, t2, t3);
+    } else if edge & (1 << 3) != 0 {
+        vertices[3] = interpolate_vertex(v3, v0, t3, t0);
+    } else if edge & (1 << 4) != 0 {
+        vertices[4] = interpolate_vertex(v4, v5, t4, t5);
+    } else if edge & (1 << 5) != 0 {
+        vertices[5] = interpolate_vertex(v5, v6, t5, t6);
+    } else if edge & (1 << 6) != 0 {
+        vertices[6] = interpolate_vertex(v6, v7, t6, t7);
+    } else if edge & (1 << 7) != 0 {
+        vertices[7] = interpolate_vertex(v7, v4, t7, t4);
+    } else if edge & (1 << 8) != 0 {
+        vertices[8] = interpolate_vertex(v0, v4, t0, t4);
+    } else if edge & (1 << 9) != 0 {
+        vertices[9] = interpolate_vertex(v1, v5, t1, t5);
+    } else if edge & (1 << 10) != 0 {
+        vertices[10] = interpolate_vertex(v2, v6, t2, t6);
+    } else if edge & (1 << 11) != 0 {
+        vertices[11] = interpolate_vertex(v3, v7, t3, t7);
+    }
+
+    let triangle = TRI_TABLE[cube_index];
+
+    let i = 0;
+    while triangle[i] != 255 {
+        add_tri(tris, [
+            vertices[triangle[0]],
+            vertices[triangle[1]],
+            vertices[triangle[2]]
+        ]);
     }
 }
 
