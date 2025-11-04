@@ -5,8 +5,7 @@ use crate::{
     },
     constants::*
 };
-#[cfg(target_os = "none")]
-use alloc::vec::Vec;
+use heapless::Vec;
 #[cfg(feature = "obj")]
 use crate::external::obj::load_tris;
 
@@ -117,8 +116,8 @@ impl Domain {
 }
 
 pub struct Mesh {
-    pub tris: Vec<Triangle3>,
-    pub transformed_tris: Vec<RTriangle3>,
+    pub tris: Vec<Triangle3, { limits::MAX_TRIS }>,
+    pub transformed_tris: Vec<RTriangle3, { limits::MAX_TRIS }>,
     // pub lines: Vec<Line>,
     pub axes: [Line3; 3],  // in order: x, y, z
     pub transformed_axes:  [RLine3; 3],
@@ -129,10 +128,8 @@ pub struct Mesh {
 impl Mesh {
     pub fn new() -> Self {
         Self {
-            tris: Vec::with_capacity(limits::MAX_TRIS), // TODO: DON'T let these be reallocated lmao
-            // TODO: maybe use arrays instead cause these don't seem to be properly initialised
-            // (attempt to subtract with overflow errors in random places when n > ~824)
-            transformed_tris: Vec::with_capacity(limits::MAX_TRIS),
+            tris: Vec::new(), 
+            transformed_tris: Vec::new(),
             // lines:  Vec::with_capacity(limits::MAX_LINES), // TODO: transform lines
             axes: [Line3([Vector3::new(0.0, 0.0, 0.0); 2]); 3],
             transformed_axes: [RLine3([RVector3::new(0, 0, 0.0); 2]); 3],

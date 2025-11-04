@@ -6,8 +6,7 @@ use crate::{
     trig::*,
     constants::limits::*
 };
-#[cfg(target_os = "none")]
-use alloc::vec::Vec;
+use heapless::Vec;
 
 fn test_curve(x: f32, y: f32) -> f32 {
     sin(x * sin(y))
@@ -18,18 +17,18 @@ fn test_surface(x: f32, y: f32, z: f32) -> f32 {
 }
 
 // TODO: clip
-fn add_tri(tris: &mut Vec<Triangle3>, vertices: [Vector3; 3]) {
+fn add_tri(tris: &mut Vec<Triangle3, { MAX_TRIS }>, vertices: [Vector3; 3]) {
     tris.push(Triangle3(vertices));
 }
 
 // TODO: split poly into tris
-fn add_poly(tris: &mut Vec<Triangle3>, poly: &[Vector3]) {
+fn add_poly(tris: &mut Vec<Triangle3, { MAX_TRIS }>, poly: &[Vector3]) {
     for v in 1..poly.len()-1 {
         add_tri(tris, [poly[0], poly[v], poly[v+1]]);
     }
 }
 
-fn add_explicit_tris(tris: &mut Vec<Triangle3>, x0: f32, y0: f32, dx: f32, dy: f32) {
+fn add_explicit_tris(tris: &mut Vec<Triangle3, { MAX_TRIS }>, x0: f32, y0: f32, dx: f32, dy: f32) {
     let mut vertices = [Vector3::new(0.0, 0.0, 0.0); 4];
 
     for i in 0..2 {
@@ -46,7 +45,7 @@ fn add_explicit_tris(tris: &mut Vec<Triangle3>, x0: f32, y0: f32, dx: f32, dy: f
     add_poly(tris, &vertices);
 }
 
-pub fn explicit_func(tris: &mut Vec<Triangle3>, domain: Domain) {
+pub fn explicit_func(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain) {
     let dx = (domain.x1 - domain.x0) / EXPLICIT_N as f32;
     let dy = (domain.y1 - domain.y0) / EXPLICIT_N as f32;
 
@@ -60,7 +59,7 @@ pub fn explicit_func(tris: &mut Vec<Triangle3>, domain: Domain) {
     }
 }
 
-pub fn implicit_func(tris: &mut Vec<Triangle3>, domain: Domain) {
+pub fn implicit_func(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain) {
     let dx = (domain.x1 - domain.x0) / EXPLICIT_N as f32;
     let dy = (domain.y1 - domain.y0) / EXPLICIT_N as f32;
     let dz = (domain.z1 - domain.z0) / EXPLICIT_N as f32;

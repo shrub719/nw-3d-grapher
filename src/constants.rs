@@ -42,7 +42,7 @@ pub mod graphics {
 }
 
 pub mod limits {
-    pub const MAX_TRIS: usize = 2000;
+    pub const MAX_TRIS: usize = 1000;
     pub const EXPLICIT_N: usize = 18;
     pub const IMPLICIT_N: usize = 18;
     // pub const MAX_LINES: usize = 20;  // TODO: add lines
