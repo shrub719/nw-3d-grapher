@@ -14,12 +14,10 @@ use alloc::format;
 
 pub mod mat;
 mod renderer;
-mod mesh;
+pub mod mesh;
 mod input;
 mod hud;
 mod timer;
-mod generator;
-mod tables;
 
 pub struct Grapher {
     renderer: Renderer,

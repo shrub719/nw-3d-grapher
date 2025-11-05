@@ -2,58 +2,19 @@ use crate::{
     grapher::{
         mat::*,
         mesh::Domain,
-        tables::*
     },
+    generator::tables::*,
     trig::*,
     constants::limits::*
 };
 use heapless::Vec;
 
-fn test_curve(x: f32, y: f32) -> f32 {
-    sin(x * sin(y))
-}
-
-fn test_surface(x: f32, y: f32, z: f32) -> f32 {
+fn placeholder_func(x: f32, y: f32, z: f32) -> f32 {
     x*x*x*x + 2.0*x*x*y*y + 2.0*x*x*z*z + y*y*y*y + 2.0*y*y*z*z + z*z*z*z + 8.0*x*y*z - 10.0*x*x - 10.0*y*y - 10.0*z*z + 20.0
 }
 
-fn implicit(v: Vector3) -> f32 {
-    test_surface(v.x, v.y, v.z)
-}
-
-fn add_tri(tris: &mut Vec<Triangle3, { MAX_TRIS }>, vertices: [Vector3; 3]) {
-    let _ = tris.push(Triangle3(vertices));
-}
-
-fn add_explicit_tris(tris: &mut Vec<Triangle3, { MAX_TRIS }>, x0: f32, y0: f32, dx: f32, dy: f32) {
-    let mut vertices = [Vector3::new(0.0, 0.0, 0.0); 4];
-
-    for i in 0..2 {
-        for j in 0..2 {
-            let x = x0 + i as f32 * dx;
-            let y = y0 + j as f32 * dy;
-            let z = test_curve(x, y);
-
-            vertices[i*2 + j] = Vector3::new(x, y, z);
-        }
-    }
-
-    add_tri(tris, [vertices[1], vertices[2], vertices[0]]);
-    add_tri(tris, [vertices[1], vertices[2], vertices[3]]);
-}
-
-pub fn explicit_func(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain) {
-    let dx = (domain.x1 - domain.x0) / EXPLICIT_N as f32;
-    let dy = (domain.y1 - domain.y0) / EXPLICIT_N as f32;
-
-    for i in 0..EXPLICIT_N {
-        for j in 0..EXPLICIT_N {
-            let x = domain.x0 + dx * i as f32;
-            let y = domain.y0 + dy * j as f32;
-            
-            add_explicit_tris(tris, x, y, dx, dy);
-        }
-    }
+fn test_surface(v: Vector3) -> f32 {
+    placeholder_func(v.x, v.y, v.z)
 }
 
 fn interpolate_vertex(v0: Vector3, v1: Vector3, t0: f32, t1: f32) -> Vector3 {
@@ -71,14 +32,14 @@ fn march_that_cube(
     v0: Vector3, v1: Vector3, v2: Vector3, v3: Vector3,
     v4: Vector3, v5: Vector3, v6: Vector3, v7: Vector3
 ) {
-    let t0 = implicit(v0);
-    let t1 = implicit(v1);
-    let t2 = implicit(v2);
-    let t3 = implicit(v3);
-    let t4 = implicit(v4);
-    let t5 = implicit(v5);
-    let t6 = implicit(v6);
-    let t7 = implicit(v7);
+    let t0 = test_surface(v0);
+    let t1 = test_surface(v1);
+    let t2 = test_surface(v2);
+    let t3 = test_surface(v3);
+    let t4 = test_surface(v4);
+    let t5 = test_surface(v5);
+    let t6 = test_surface(v6);
+    let t7 = test_surface(v7);
 
     let mut cube_index: usize = 0;
     
@@ -135,16 +96,16 @@ fn march_that_cube(
 
     let mut i = 0;
     while triangle[i] != 255 {
-        add_tri(tris, [
+        let _ = tris.push(Triangle3([
             vertices[triangle[i]],
             vertices[triangle[i+1]],
             vertices[triangle[i+2]]
-        ]);
+        ]));
         i += 3;
     }
 }
 
-pub fn implicit_func(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain) {
+pub fn generate_mesh(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain) {
     let dx = (domain.x1 - domain.x0) / IMPLICIT_N as f32;
     let dy = (domain.y1 - domain.y0) / IMPLICIT_N as f32;
     let dz = (domain.z1 - domain.z0) / IMPLICIT_N as f32;

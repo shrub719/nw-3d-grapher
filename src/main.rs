@@ -38,6 +38,7 @@ pub mod eadk;
 mod constants;
 mod trig;
 mod grapher;
+mod generator;
 use grapher::Grapher;
 
 #[unsafe(no_mangle)]

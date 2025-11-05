@@ -1,8 +1,8 @@
 use crate::{
     grapher::{
         mat::*,
-        generator::*
     },
+    generator,
     constants::*
 };
 use heapless::Vec;
@@ -139,7 +139,7 @@ impl Mesh {
 
     pub fn generate_mesh(&mut self) {
         self.tris.clear();
-        implicit_func(&mut self.tris, self.domain);
+        generator::implicit::generate_mesh(&mut self.tris, self.domain);
     }
 
 
