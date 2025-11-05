@@ -7,12 +7,14 @@ use crate::{
 };
 use heapless::Vec;
 
-const PROJECTION_MATRIX: Matrix4 = Matrix4 ( [
-    [120.0, 0.0, 0.0, 160.0],
-    [0.0, 120.0, 0.0, 110.0],
-    [0.0, 0.0, 1.0, 0.0],
-    [0.0, 0.0, 0.0, 1.0]
-] );
+fn get_projection_matrix(scale: f32) -> Matrix4 {
+    Matrix4 ([
+        [120.0, 0.0  , 0.0      , 160.0],
+        [0.0  , 120.0, 0.0      , 110.0],
+        [0.0  , 0.0  , 0.8/scale, 0.0  ],
+        [0.0  , 0.0  , 0.0      , 1.0  ]
+    ])
+}
 
 fn get_scale_matrix(scale: f32) -> Matrix4 {
     Matrix4 ([
@@ -170,7 +172,7 @@ impl Mesh {
     }
 
     pub fn transform(&mut self) {
-        let mut matrix = PROJECTION_MATRIX;
+        let mut matrix = get_projection_matrix(self.scale);
         matrix *= self.rotation.get_rotation_matrix();
         matrix *= get_scale_matrix(self.scale);
         matrix *= self.domain.matrix;
