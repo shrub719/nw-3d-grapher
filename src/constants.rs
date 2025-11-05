@@ -43,7 +43,7 @@ pub mod graphics {
 
 #[cfg(target_os = "none")]
 pub mod limits {
-    pub const MAX_TRIS: usize = 1000;
+    pub const MAX_TRIS: usize = 1200;
     pub const EXPLICIT_N: usize = 18;
     pub const IMPLICIT_N: usize = 10;
     // pub const MAX_LINES: usize = 20;  // TODO: add lines
