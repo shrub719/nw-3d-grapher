@@ -74,10 +74,10 @@ impl InputHandler {
                 quit: false
             },
             keyboard_state: KeyboardState::scan(),
-            rotation_direction: Vector3::new(0.0, 0.0, 0.0),
-            domain_trans_direction: Vector3::new(0.0, 0.0, 0.0),
+            rotation_direction: v!(0.0, 0.0, 0.0),
+            domain_trans_direction: v!(0.0, 0.0, 0.0),
             scale_change: 0.0,
-            domain_scale_direction: Vector3::new(0.0, 0.0, 0.0),
+            domain_scale_direction: v!(0.0, 0.0, 0.0),
             mode: Mode::View,
             help: false,
             domain_cooldown: 0.1,
@@ -86,10 +86,10 @@ impl InputHandler {
 
     pub fn update(&mut self) {
         self.keyboard_state = KeyboardState::scan();
-        self.rotation_direction = Vector3::new(0.0, 0.0, 0.0);
-        self.domain_trans_direction = Vector3::new(0.0, 0.0, 0.0);
+        self.rotation_direction = v!(0.0, 0.0, 0.0);
+        self.domain_trans_direction = v!(0.0, 0.0, 0.0);
         self.scale_change = 0.0;
-        self.domain_scale_direction = Vector3::new(0.0, 0.0, 0.0);
+        self.domain_scale_direction = v!(0.0, 0.0, 0.0);
         self.upd = Updates::default();
 
         if self.mode == Mode::View {
@@ -137,7 +137,7 @@ impl InputHandler {
 
                     let mut scale_change = 0.0;
                     bind_keys(&self.keyboard_state, DECREASE, INCREASE, &mut self.upd.domain, &mut scale_change);
-                    self.domain_scale_direction = Vector3::new(scale_change, scale_change, scale_change);
+                    self.domain_scale_direction = v!(scale_change, scale_change, scale_change);
                 }
             }
         }

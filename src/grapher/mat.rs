@@ -46,6 +46,13 @@ impl Sub for RVector3 {
     }
 }
 
+macro_rules! v {
+    ($x:expr, $y:expr, $z:expr) => {
+        Vector3::new($x, $y, $z)
+    };
+}
+pub(crate) use v;
+
 #[repr(C)]
 #[derive(Clone, Copy, Debug)]
 pub struct Vector3 {
@@ -84,7 +91,7 @@ impl Vector3 {
 //     type Output = Vector3;
 
 //     fn mul(self, matrix: &Matrix3) -> Vector3 {
-//         let mut result = Vector3::new(0.0, 0.0, 0.0);
+//         let mut result = v!(0.0, 0.0, 0.0);
 //         for i in 0..3 {
 //             let mut sum: f32 = 0.0;
 //             for j in 0..3 {

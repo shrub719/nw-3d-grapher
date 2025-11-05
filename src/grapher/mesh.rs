@@ -78,16 +78,16 @@ impl Domain {
 
     pub fn set_axes(&mut self, axes: &mut [Line3; 3]) {
         axes[0] = Line3([
-            Vector3::new(self.x0, self.y0, self.z0),
-            Vector3::new(self.x1, self.y0, self.z0)
+            v!(self.x0, self.y0, self.z0),
+            v!(self.x1, self.y0, self.z0)
         ]);
         axes[1] = Line3([
-            Vector3::new(self.x0, self.y0, self.z0),
-            Vector3::new(self.x0, self.y1, self.z0)
+            v!(self.x0, self.y0, self.z0),
+            v!(self.x0, self.y1, self.z0)
         ]);
         axes[2] = Line3([
-            Vector3::new(self.x0, self.y0, self.z0),
-            Vector3::new(self.x0, self.y0, self.z1)
+            v!(self.x0, self.y0, self.z0),
+            v!(self.x0, self.y0, self.z1)
         ]);
     }
 
@@ -129,7 +129,7 @@ impl Mesh {
             tris: Vec::new(), 
             transformed_tris: Vec::new(),
             // lines:  Vec::with_capacity(limits::MAX_LINES), // TODO: transform lines
-            axes: [Line3([Vector3::new(0.0, 0.0, 0.0); 2]); 3],
+            axes: [Line3([v!(0.0, 0.0, 0.0); 2]); 3],
             transformed_axes: [RLine3([RVector3::new(0, 0, 0.0); 2]); 3],
             domain: Domain::new(),
             rotation: Quaternion::default(),

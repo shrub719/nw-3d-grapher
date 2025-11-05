@@ -14,7 +14,7 @@ fn placeholder_func(x: f32, y: f32) -> f32 {
 }
 
 fn add_explicit_tris(tris: &mut Vec<Triangle3, { MAX_TRIS }>, x0: f32, y0: f32, dx: f32, dy: f32) {
-    let mut vertices = [Vector3::new(0.0, 0.0, 0.0); 4];
+    let mut vertices = [v!(0.0, 0.0, 0.0); 4];
 
     for i in 0..2 {
         for j in 0..2 {
@@ -22,7 +22,7 @@ fn add_explicit_tris(tris: &mut Vec<Triangle3, { MAX_TRIS }>, x0: f32, y0: f32, 
             let y = y0 + j as f32 * dy;
             let z = placeholder_func(x, y);
 
-            vertices[i*2 + j] = Vector3::new(x, y, z);
+            vertices[i*2 + j] = v!(x, y, z);
         }
     }
 

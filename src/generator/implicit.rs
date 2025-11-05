@@ -10,8 +10,8 @@ use crate::{
 use heapless::Vec;
 
 fn placeholder_func(x: f32, y: f32, z: f32) -> f32 {
-    // x*x*x*x + 2.0*x*x*y*y + 2.0*x*x*z*z + y*y*y*y + 2.0*y*y*z*z + z*z*z*z + 8.0*x*y*z - 10.0*x*x - 10.0*y*y - 10.0*z*z + 20.0
-    400.0 * (x*x*y*y + y*y*z*z + x*x*z*z) - (1.0-x*x-y*y-z*z)*(1.0-x*x-y*y-z*z)*(1.0-x*x-y*y-z*z)
+    x*x*x*x + 2.0*x*x*y*y + 2.0*x*x*z*z + y*y*y*y + 2.0*y*y*z*z + z*z*z*z + 8.0*x*y*z - 10.0*x*x - 10.0*y*y - 10.0*z*z + 20.0
+    // 400.0 * (x*x*y*y + y*y*z*z + x*x*z*z) - (1.0-x*x-y*y-z*z)*(1.0-x*x-y*y-z*z)*(1.0-x*x-y*y-z*z)
 }
 
 fn test_surface(v: Vector3) -> f32 {
@@ -21,7 +21,7 @@ fn test_surface(v: Vector3) -> f32 {
 fn interpolate_vertex(v0: Vector3, v1: Vector3, t0: f32, t1: f32) -> Vector3 {
     let mu = -t0 / (t1 - t0);
     
-    Vector3::new(
+    v!(
         v0.x + mu * (v1.x - v0.x),
         v0.y + mu * (v1.y - v0.y),
         v0.z + mu * (v1.z - v0.z)
@@ -54,7 +54,7 @@ fn march_that_cube(
     if t7 < 0.0 { cube_index |= 1 << 7 };
 
     let mut edge = EDGE_TABLE[cube_index];
-    let mut vertices: [Vector3; 12] = [Vector3::new(5.0, 0.0, 0.0); 12];
+    let mut vertices: [Vector3; 12] = [v!(5.0, 0.0, 0.0); 12];
 
     if edge & (1 << 0) != 0 {
         vertices[0] = interpolate_vertex(v0, v1, t0, t1);
@@ -123,14 +123,14 @@ pub fn generate_mesh(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain) {
                 
                 march_that_cube(
                     tris,
-                    Vector3::new(x0, y0, z0),
-                    Vector3::new(x1, y0, z0),
-                    Vector3::new(x1, y1, z0),
-                    Vector3::new(x0, y1, z0),
-                    Vector3::new(x0, y0, z1),
-                    Vector3::new(x1, y0, z1),
-                    Vector3::new(x1, y1, z1),
-                    Vector3::new(x0, y1, z1)
+                    v!(x0, y0, z0),
+                    v!(x1, y0, z0),
+                    v!(x1, y1, z0),
+                    v!(x0, y1, z0),
+                    v!(x0, y0, z1),
+                    v!(x1, y0, z1),
+                    v!(x1, y1, z1),
+                    v!(x0, y1, z1)
                 );
             }
         }
