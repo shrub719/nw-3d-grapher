@@ -4,7 +4,6 @@ use crate::{
         mesh::Domain,
     },
     generator::tables::*,
-    trig::*,
     constants::limits::*
 };
 use heapless::Vec;
@@ -53,7 +52,7 @@ fn march_that_cube(
     if t6 < 0.0 { cube_index |= 1 << 6 };
     if t7 < 0.0 { cube_index |= 1 << 7 };
 
-    let mut edge = EDGE_TABLE[cube_index];
+    let edge = EDGE_TABLE[cube_index];
     let mut vertices: [Vector3; 12] = [v!(5.0, 0.0, 0.0); 12];
 
     if edge & (1 << 0) != 0 {

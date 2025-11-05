@@ -3,7 +3,6 @@ use crate::{
         mat::*,
         mesh::Domain,
     },
-    generator::tables::*,
     trig::*,
     constants::limits::*
 };
