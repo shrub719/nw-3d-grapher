@@ -110,16 +110,16 @@ impl Renderer {
             };
 
             let mut x_left = v0.x as f32 + ((v2.x - v0.x) as f32 * height_progress);
-            let mut z_left = v0.z + ((v2.z - v0.z) * height_progress);
+            let mut z_left = v0.z as f32 + ((v2.z - v0.z) as f32 * height_progress);
 
             let mut x_right;
             let mut z_right;
             if is_second_half {
                 x_right = v1.x as f32 + ((v2.x - v1.x) as f32 * segment_progress);
-                z_right = v1.z + ((v2.z - v1.z) * segment_progress);
+                z_right = v1.z as f32 + ((v2.z - v1.z) as f32 * segment_progress);
             } else {
                 x_right = v0.x as f32 + ((v1.x - v0.x) as f32 * segment_progress);
-                z_right = v0.z + ((v1.z - v0.z) * segment_progress);
+                z_right = v0.z as f32 + ((v1.z - v0.z) as f32 * segment_progress);
             }
 
             if x_left > x_right {
