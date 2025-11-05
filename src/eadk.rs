@@ -1,5 +1,4 @@
 // thanks to yannis300307 for the extended eadk (most of this file)
-// thanks to fricht for their external data functions (indicated)
 
 use crate::constants::palette::*;
 
@@ -31,25 +30,6 @@ pub struct Rect {
 pub struct Point {
     pub x: u16,
     pub y: u16,
-}
-
-pub mod backlight {
-    pub fn set_brightness(brightness: u8) {
-        unsafe {
-            eadk_backlight_set_brightness(brightness);
-        }
-    }
-    pub fn brightness() -> u8 {
-        unsafe {
-            return eadk_backlight_brightness();
-        }
-    }
-
-    unsafe extern "C" {
-        fn eadk_backlight_set_brightness(brightness: u8);
-        fn eadk_backlight_brightness() -> u8;
-    }
-
 }
 
 pub mod display {
@@ -90,11 +70,9 @@ pub mod display {
         text_color: Color,
         background_color: Color,
     ) {
-        let c_string =
-            CString::new(text).expect("Can't convert str to C_String. Maybe invalid caracter.");
         unsafe {
             eadk_display_draw_string(
-                c_string.as_ptr(),
+                CString::new(text).unwrap().as_ptr(),
                 point,
                 large_font,
                 text_color,
@@ -156,7 +134,7 @@ unsafe extern "C" {
 pub mod input {
     use enum_iterator::Sequence;
 
-    type EadkKeyboardState = u64;
+    type EADKKeyboardState = u64;
 
     #[allow(dead_code)]
     #[derive(Clone, Copy, PartialEq, Eq, Sequence, Debug)]
@@ -211,41 +189,26 @@ pub mod input {
     }
 
     unsafe extern "C" {
-        fn eadk_keyboard_scan() -> EadkKeyboardState;
+        fn eadk_keyboard_scan() -> EADKKeyboardState;
     }
 
     #[derive(Clone, Copy)]
-    pub struct KeyboardState(EadkKeyboardState);
-
-    impl Default for KeyboardState {
-        fn default() -> Self {
-            Self::new()
-        }
-    }
-
+    pub struct KeyboardState(EADKKeyboardState);
     impl KeyboardState {
-        pub fn scan() -> Self {
-            Self::from_raw(unsafe { eadk_keyboard_scan() })
-        }
-
         pub fn new() -> Self {
             KeyboardState(0)
         }
 
-        pub fn from_raw(state: EadkKeyboardState) -> Self {
+        pub fn from_raw(state: EADKKeyboardState) -> Self {
             Self(state)
+        }
+    
+        pub fn scan() -> Self {
+            Self::from_raw(unsafe { eadk_keyboard_scan() })
         }
 
         pub fn key_down(&self, key: Key) -> bool {
             (self.0 >> (key as u8)) & 1 != 0
-        }
-
-        pub fn get_just_pressed(&self, old: KeyboardState) -> Self {
-            KeyboardState(self.0 & (!old.0))
-        }
-
-        pub fn get_just_realeased(&self, old: KeyboardState) -> Self {
-            KeyboardState((!self.0) & old.0)
         }
     }
 
@@ -379,46 +342,12 @@ pub mod input {
         UpperZ = 207,
     }
 
-    impl Event {
-        pub fn is_digit(&self) -> bool {
-            matches!(
-                self,
-                Event::Zero
-                    | Event::One
-                    | Event::Two
-                    | Event::Three
-                    | Event::Four
-                    | Event::Five
-                    | Event::Six
-                    | Event::Seven
-                    | Event::Eight
-                    | Event::Nine
-            )
-        }
-
-        pub fn to_digit(&self) -> Option<u8> {
-            match self {
-                Event::Zero => Some(0),
-                Event::One => Some(1),
-                Event::Two => Some(2),
-                Event::Three => Some(3),
-                Event::Four => Some(4),
-                Event::Five => Some(5),
-                Event::Six => Some(6),
-                Event::Seven => Some(7),
-                Event::Eight => Some(8),
-                Event::Nine => Some(9),
-                _ => None,
-            }
-        }
+    pub fn event_get(timeout: i32) -> Event {
+        unsafe { eadk_event_get(&timeout) }
     }
 
     unsafe extern "C" {
         fn eadk_event_get(timeout: &i32) -> Event;
-    }
-
-    pub fn event_get(timeout: i32) -> Event {
-        unsafe { eadk_event_get(&timeout) }
     }
 }
 
@@ -466,13 +395,13 @@ fn panic(panic: &PanicInfo<'_>) -> ! {
             height: 240,
         },
         Color { rgb565: 63488 },
-    ); // Show a red screen
+    );
 
     write_wrapped(format!("{}", panic).as_str(), 42);
 
     loop {
         
-    } // FIXME: Do something better. Exit the app maybe?
+    } 
 }
 
 pub fn debug_info(text: &str, wait: usize) {
