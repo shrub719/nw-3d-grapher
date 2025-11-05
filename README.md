@@ -70,10 +70,7 @@ As this repo (the NEA program) is part of my A level Computer Science coursework
 - **Until August 14 2026** all rights are reserved by me. No permission is granted to copy, use, modify, or distribute any part of this project during this period.
 - **After August 15 2026**, the project is released under the [MIT License](LICENSE).
 
-Dog model in `obj/Mesh_Beagle.obj` and `dog.pbj`: [Beagle](https://poly.pizza/m/0BnDT3T1wTE) by [Poly by Google](https://poly.pizza/u/Poly%20by%20Google) [[CC-BY](https://creativecommons.org/licenses/by/3.0/)] via Poly Pizza.
-
 This project is a third-party app and is not affiliated with NumWorks. NumWorks is a registered trademark of NumWorks SAS.
 
 Thanks to:
    - [yannis300307](https://github.com/yannis30030) for parts of the extended EADK, and for [NumcraftRust](https://github.com/yannis300307/NumcraftRust) which inspired this project
-   - [fricht](https://github.com/fricht) for the external data EADK additions
