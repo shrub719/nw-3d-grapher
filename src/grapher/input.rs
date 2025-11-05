@@ -37,7 +37,6 @@ pub enum Mode {
 
 #[derive(Default)]
 pub struct Updates {
-    // TODO: use mod? or embedded struct
     pub domain: bool,
     pub rotation: bool,
     pub scale: bool,

@@ -8,16 +8,16 @@
     - [x] Use quaternions in rotation
 - [x] Generate domain space mesh from explicit function
     - [ ] Lines (and maybe inheritance from a 3D/R3D struct)
-- [ ] Generate domain space mesh from implicit function with marching cubes
-    - [ ] March those cubes (create cube loop that minimises redundant calculation)
-    - [ ] Create tris by linearly interpolating vertex tests
+- [x] Generate domain space mesh from implicit function with marching cubes
+    - [x] March those cubes (create cube loop that minimises redundant calculation)
+    - [x] Create tris by linearly interpolating vertex tests
 - [ ] UI
     - [ ] Settings menu (vsync, delta time)
 - [ ] Pompeiu
 
 
 ## Better to do
-- [ ] Remove TODOs
+- [x] Remove TODOs
 - [ ] Move generator and tables to a separate mod/folder
 - [ ] Make shading not dependent on VIEW scale
 - [ ] Add credits to README, remove dog.obj

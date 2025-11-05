@@ -21,7 +21,6 @@ fn implicit(v: Vector3) -> f32 {
     test_surface(v.x, v.y, v.z)
 }
 
-// TODO: clip
 fn add_tri(tris: &mut Vec<Triangle3, { MAX_TRIS }>, vertices: [Vector3; 3]) {
     let _ = tris.push(Triangle3(vertices));
 }

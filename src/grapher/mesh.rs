@@ -144,8 +144,6 @@ impl Mesh {
 
 
     pub fn update_domain(&mut self, trans_direction: Vector3, scale_direction: Vector3) {
-        // TODO: transforms for very large numbers make everything go haywire
-        // don't calculate the tris in terms of the domain
         self.domain.translate(trans_direction);
         self.domain.scale(scale_direction);
         self.domain.update_matrix();

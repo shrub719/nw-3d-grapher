@@ -93,7 +93,6 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_on: bool, scale: f32, domain
             bg_color
         );
     } else if mode == Mode::Domain {
-        // TODO: do nicer
         draw_hud_string_table(&format!("x: {:.1}  ", domain.x0), 0, 0, bg_color);
         draw_hud_string_table(&format!("   {:.1}  ", domain.x1), 1, 0, bg_color);
         draw_hud_string_table(&format!("y: {:.1}  ", domain.y0), 0, 1, bg_color);
