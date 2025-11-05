@@ -41,10 +41,19 @@ pub mod graphics {
     pub const AXIS_COLORS: [Color; 3] = [RED, GREEN, BLUE];
 }
 
+#[cfg(target_os = "none")]
 pub mod limits {
     pub const MAX_TRIS: usize = 1000;
     pub const EXPLICIT_N: usize = 18;
     pub const IMPLICIT_N: usize = 10;
+    // pub const MAX_LINES: usize = 20;  // TODO: add lines
+}
+
+#[cfg(not(target_os = "none"))]
+pub mod limits {
+    pub const MAX_TRIS: usize = 9000;
+    pub const EXPLICIT_N: usize = 30;
+    pub const IMPLICIT_N: usize = 30;
     // pub const MAX_LINES: usize = 20;  // TODO: add lines
 }
 
