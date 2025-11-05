@@ -18,7 +18,7 @@
 
 ## Better to do
 - [x] Remove TODOs
-- [ ] Move generator and tables to a separate mod/folder
+- [x] Move generator and tables to a separate mod/folder
 - [ ] Make shading not dependent on VIEW scale
-- [ ] Add credits to README, remove dog.obj
+- [x] Add credits to README, remove dog.obj
 

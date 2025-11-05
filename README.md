@@ -74,3 +74,4 @@ This project is a third-party app and is not affiliated with NumWorks. NumWorks 
 
 Thanks to:
    - [yannis300307](https://github.com/yannis30030) for parts of the extended EADK, and for [NumcraftRust](https://github.com/yannis300307/NumcraftRust) which inspired this project
+   - [Paul Borke](https://paulbourke.net) for the marching cubes lookup tables [here](https://paulbourke.net/geometry/polygonise/)

@@ -9,7 +9,7 @@ use crate::{
 };
 use heapless::Vec;
 
-fn test_curve(x: f32, y: f32) -> f32 {
+fn placeholder_func(x: f32, y: f32) -> f32 {
     sin(x * sin(y))
 }
 
@@ -20,7 +20,7 @@ fn add_explicit_tris(tris: &mut Vec<Triangle3, { MAX_TRIS }>, x0: f32, y0: f32, 
         for j in 0..2 {
             let x = x0 + i as f32 * dx;
             let y = y0 + j as f32 * dy;
-            let z = test_curve(x, y);
+            let z = placeholder_func(x, y);
 
             vertices[i*2 + j] = Vector3::new(x, y, z);
         }
