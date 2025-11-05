@@ -1,27 +1,27 @@
 {
-    "D_DOWN": ["DOWN", "S"],
-    "D_UP": ["UP", "W"],
-    "D_LEFT": ["LEFT", "A"],
-    "D_RIGHT": ["RIGHT", "D"],
-    "D_SP_1": ["LCTRL", "RCTRL", "E"],
-    "D_SP_2": ["LSHIFT", "RSHIFT", "Q"],
+    "Down": ["DOWN", "S"],
+    "Up": ["UP", "W"],
+    "Left": ["LEFT", "A"],
+    "Right": ["RIGHT", "D"],
+    "Alpha": ["LCTRL", "RCTRL", "E"],
+    "Shift": ["LSHIFT", "RSHIFT", "Q"],
 
-    "INCREASE": ["KP_PLUS", "EQUALS", "R", "KP_MINUS"],
-    "DECREASE": ["MINUS", "F"],
-    "MODIFIER": ["0", "X"],
+    "Plus": ["KP_PLUS", "EQUALS", "R", "KP_MINUS"],
+    "Minus": ["MINUS", "F"],
+    "Multiplication": ["0", "X"],
 
-    "CONFIRM": ["RETURN"],
-    "BACK": ["ESCAPE"],
+    "OK": ["RETURN"],
+    "Back": ["ESCAPE"],
 
-    "HELP": ["TAB"],
-    "RESET": ["BACKSPACE"],
+    "Toolbox": ["TAB"],
+    "Backspace": ["BACKSPACE"],
 
-    "MODE_1": ["7"],
-    "MODE_1B": ["1"],
-    "MODE_2": ["8"],
-    "MODE_2B": ["2"],
-    "MODE_3": ["9"],
-    "MODE_3B": ["3"],
+    "Seven": ["7"],
+    "One": ["1"],
+    "Eight": ["8"],
+    "Two": ["2"],
+    "Nine": ["9"],
+    "Three": ["3"],
 
-    "EXIT": []
+    "Home": []
 }

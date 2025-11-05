@@ -38,8 +38,8 @@ def convert_inputs(inputs):
 
     for ion_code, scancodes in inputs.items():
         for scancode in scancodes:
-            spaces = (30 - len(ion_code)) * " "
-            key_pair = f"  KeySDLKeyPair({ion_code},{spaces}SDL_SCANCODE_{scancode}),\n"
+            spaces = (20 - len(ion_code)) * " "
+            key_pair = f"  KeySDLKeyPair(Key::{ion_code},{spaces}SDL_SCANCODE_{scancode}),\n"
             key_pairs = key_pairs + key_pair
     key_pairs = key_pairs + "};"
 
@@ -66,11 +66,11 @@ def remap_file(sim_input_file, key_pairs):
 
 sim_dir = sys.argv[1]
 sim_input_file = sim_dir + "/ion/src/simulator/shared/keyboard.cpp"
-app_controls_file = "src/constants.rs"
+# app_controls_file = "src/constants.rs"
 
 inputs = read_inputs("build/sim/inputs.json")
 
-remap_controls(app_controls_file, inputs)
+# remap_controls(app_controls_file, inputs)
 
 key_pairs = convert_inputs(inputs)
 
