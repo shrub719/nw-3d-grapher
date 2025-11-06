@@ -49,6 +49,16 @@ impl Domain {
     }
 
     pub fn translate(&mut self, trans_direction: Vector3) {
+        if trans_direction.x.is_nan() {
+            self.x0 = -10.0;
+            self.y0 = -10.0;
+            self.z0 = -10.0;
+            self.x1 = 10.0;
+            self.y1 = 10.0;
+            self.z1 = 10.0;
+
+            return
+        }
         let dx = (self.x1 - self.x0) * 0.1 * trans_direction.x;
         let dy = (self.y1 - self.y0) * 0.1 * trans_direction.y;
         let dz = (self.z1 - self.z0) * 0.1 * trans_direction.z;

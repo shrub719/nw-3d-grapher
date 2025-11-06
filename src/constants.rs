@@ -64,20 +64,20 @@ pub mod strings {
 
     type Help<'a> = [&'a str; 10];
     pub const ROTATE_HELP: Help = [
-        "D-pad, Sh/Al:",  // max line length
-        "  Rotate",
+        "Rotate:",
+        "  D-Pad ( )",
         "",
-        "+/-:",
-        "  Zoom",
+        "Zoom:",
+        "  + -",
         "",
-        "Backspace:",
-        "  Reset",
+        "Reset:",
+        "  Bcksp",
         "",
-        "",
+        ""
     ];
     pub const TRACE_HELP: Help = [
-        "OK:",
-        "  Load obj",
+        "WIP",
+        "",
         "",
         "",
         "",
@@ -88,15 +88,15 @@ pub mod strings {
         ""
     ];
     pub const DOMAIN_HELP: Help = [
-        "D-pad, Sh/Al:",
-        "  Translate",
+        "Translate:",
+        "  D-Pad ( )",
         "",
-        "+/-:",
-        "  Scale",
+        "Scale:",
+        "  + -",
         "",
-        "X + D-pad:",
-        "  Scale w/",
-        "  direction",
+        "Reset:",
+        "  Bcksp",
+        "",
         ""
     ];
 }
