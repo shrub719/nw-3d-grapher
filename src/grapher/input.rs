@@ -139,18 +139,24 @@ impl InputHandler {
                     bind_keys(&self.keyboard_state, DECREASE, INCREASE, &mut self.upd.domain, &mut scale_change);
                     self.domain_scale_direction = v!(scale_change, scale_change, scale_change);
                 }
+                if self.keyboard_state.key_down(RESET) {
+                    self.upd.domain = true;
+                    self.domain_trans_direction.x = f32::NAN;
+                }
             }
         }
         
-        if self.keyboard_state.key_down(MODE_1) || self.keyboard_state.key_down(MODE_1B) { 
-            self.upd.mode = self.mode != Mode::View;
-            self.mode = Mode::View; 
-        } else if self.keyboard_state.key_down(MODE_2) || self.keyboard_state.key_down(MODE_2B) { 
-            self.upd.mode = self.mode != Mode::Trace;
-            self.mode = Mode::Trace;
-        } else if self.keyboard_state.key_down(MODE_3) || self.keyboard_state.key_down(MODE_3B) { 
-            self.upd.mode = self.mode != Mode::Domain;
-            self.mode = Mode::Domain;
+        if self.keyboard_state.key_down(MODE_SWITCH) {
+            if self.keyboard_state.key_down(MODE_1) { 
+                self.upd.mode = self.mode != Mode::View;
+                self.mode = Mode::View; 
+            } else if self.keyboard_state.key_down(MODE_2) { 
+                self.upd.mode = self.mode != Mode::Trace;
+                self.mode = Mode::Trace;
+            } else if self.keyboard_state.key_down(MODE_3) { 
+                self.upd.mode = self.mode != Mode::Domain;
+                self.mode = Mode::Domain;
+            }
         }
 
         if self.keyboard_state.key_down(HELP) {

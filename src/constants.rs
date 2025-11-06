@@ -108,8 +108,8 @@ pub mod controls {
     pub const D_UP: Key =       Key::Up;
     pub const D_LEFT: Key =     Key::Left;
     pub const D_RIGHT: Key =    Key::Right;
-    pub const D_SP_1: Key =     Key::Alpha;
-    pub const D_SP_2: Key =     Key::Shift;
+    pub const D_SP_1: Key =     Key::RightParenthesis;
+    pub const D_SP_2: Key =     Key::LeftParenthesis;
 
     pub const INCREASE: Key =   Key::Plus;
     pub const DECREASE: Key =   Key::Minus;
@@ -121,12 +121,10 @@ pub mod controls {
     pub const HELP: Key =       Key::Toolbox;
     pub const RESET: Key =      Key::Backspace;
 
+    pub const MODE_SWITCH: Key = Key::OK;
     pub const MODE_1: Key =     Key::Seven;
-    pub const MODE_1B: Key =    Key::One;
     pub const MODE_2: Key =     Key::Eight;
-    pub const MODE_2B: Key =    Key::Two;
     pub const MODE_3: Key =     Key::Nine;
-    pub const MODE_3B: Key =    Key::Three;
 
     pub const EXIT: Key =       Key::Home;
 }
