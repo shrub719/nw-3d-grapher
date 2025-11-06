@@ -122,9 +122,6 @@ pub mod controls {
     pub const RESET: Key =      Key::Backspace;
 
     pub const MODE_SWITCH: Key = Key::OK;
-    pub const MODE_1: Key =     Key::Seven;
-    pub const MODE_2: Key =     Key::Eight;
-    pub const MODE_3: Key =     Key::Nine;
 
     pub const EXIT: Key =       Key::Home;
 }

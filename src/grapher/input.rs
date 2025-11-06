@@ -34,6 +34,16 @@ pub enum Mode {
     Trace,
     Domain
 }
+impl Mode {
+    fn next(&self) -> Mode {
+        use Mode::*;
+        match *self {
+            View => Domain, // TODO: View => Trace
+            Trace => Domain,
+            Domain => View
+        }
+    }
+}
 
 #[derive(Default)]
 pub struct Updates {
@@ -85,6 +95,7 @@ impl InputHandler {
     }
 
     pub fn update(&mut self) {
+        let switch_pressed_before = self.keyboard_state.key_down(MODE_SWITCH);
         self.keyboard_state = KeyboardState::scan();
         self.rotation_direction = v!(0.0, 0.0, 0.0);
         self.domain_trans_direction = v!(0.0, 0.0, 0.0);
@@ -146,17 +157,19 @@ impl InputHandler {
             }
         }
         
-        if self.keyboard_state.key_down(MODE_SWITCH) {
-            if self.keyboard_state.key_down(MODE_1) { 
-                self.upd.mode = self.mode != Mode::View;
-                self.mode = Mode::View; 
-            } else if self.keyboard_state.key_down(MODE_2) { 
-                self.upd.mode = self.mode != Mode::Trace;
-                self.mode = Mode::Trace;
-            } else if self.keyboard_state.key_down(MODE_3) { 
-                self.upd.mode = self.mode != Mode::Domain;
-                self.mode = Mode::Domain;
-            }
+        if self.keyboard_state.key_down(MODE_SWITCH) && !switch_pressed_before {
+            // if self.keyboard_state.key_down(MODE_1) { 
+            //     self.upd.mode = self.mode != Mode::View;
+            //     self.mode = Mode::View; 
+            // } else if self.keyboard_state.key_down(MODE_2) { 
+            //     self.upd.mode = self.mode != Mode::Trace;
+            //     self.mode = Mode::Trace;
+            // } else if self.keyboard_state.key_down(MODE_3) { 
+            //     self.upd.mode = self.mode != Mode::Domain;
+            //     self.mode = Mode::Domain;
+            // }
+            self.mode = self.mode.next();
+            self.upd.mode = true;
         }
 
         if self.keyboard_state.key_down(HELP) {

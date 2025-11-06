@@ -3,25 +3,18 @@
     "Up": ["UP", "W"],
     "Left": ["LEFT", "A"],
     "Right": ["RIGHT", "D"],
-    "Alpha": ["LCTRL", "RCTRL", "E"],
-    "Shift": ["LSHIFT", "RSHIFT", "Q"],
+    "RightParenthesis": ["0", "E"],
+    "LeftParenthesis": ["9", "Q"],
 
-    "Plus": ["KP_PLUS", "EQUALS", "R", "KP_MINUS"],
-    "Minus": ["MINUS", "F"],
-    "Multiplication": ["0", "X"],
+    "Plus": ["KP_PLUS", "EQUALS", "R"],
+    "Minus": ["KP_MINUS", "MINUS", "F"],
+    "Multiplication": ["X"],
 
-    "OK": ["RETURN"],
+    "OK": ["RETURN", "Z"],
     "Back": ["ESCAPE"],
 
     "Toolbox": ["TAB"],
     "Backspace": ["BACKSPACE"],
-
-    "Seven": ["7"],
-    "One": ["1"],
-    "Eight": ["8"],
-    "Two": ["2"],
-    "Nine": ["9"],
-    "Three": ["3"],
 
     "Home": []
 }
