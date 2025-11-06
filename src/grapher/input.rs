@@ -1,7 +1,7 @@
 use crate::{ 
     grapher::mat::*, 
     eadk::input::*,
-    constants::grapher_controls::*
+    constants::controls::*
 };
 
 fn bind_keys(keyboard_state: &KeyboardState, pos_key: Key, neg_key: Key, update: &mut bool, value: &mut f32) {
@@ -32,8 +32,7 @@ fn bind_keys_directional(
 pub enum Mode {
     View,
     Trace,
-    Domain,
-    SwitchMode
+    Domain
 }
 
 #[derive(Default)]
@@ -143,16 +142,16 @@ impl InputHandler {
             }
         }
         
-        // if self.keyboard_state.key_down(MODE_1) { 
-        //     self.upd.mode = self.mode != Mode::View;
-        //     self.mode = Mode::View; 
-        // } else if self.keyboard_state.key_down(MODE_2) { 
-        //     self.upd.mode = self.mode != Mode::Trace;
-        //     self.mode = Mode::Trace;
-        // } else if self.keyboard_state.key_down(MODE_3) { 
-        //     self.upd.mode = self.mode != Mode::Domain;
-        //     self.mode = Mode::Domain;
-        // }
+        if self.keyboard_state.key_down(MODE_1) || self.keyboard_state.key_down(MODE_1B) { 
+            self.upd.mode = self.mode != Mode::View;
+            self.mode = Mode::View; 
+        } else if self.keyboard_state.key_down(MODE_2) || self.keyboard_state.key_down(MODE_2B) { 
+            self.upd.mode = self.mode != Mode::Trace;
+            self.mode = Mode::Trace;
+        } else if self.keyboard_state.key_down(MODE_3) || self.keyboard_state.key_down(MODE_3B) { 
+            self.upd.mode = self.mode != Mode::Domain;
+            self.mode = Mode::Domain;
+        }
 
         if self.keyboard_state.key_down(HELP) {
             self.upd.help_on = self.help != true || self.upd.mode;

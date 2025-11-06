@@ -53,8 +53,7 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_on: bool, scale: f32, domain
     let bg_color = match mode {
         Mode::View => RED,
         Mode::Trace => GREEN,
-        Mode::Domain => BLUE,
-        Mode::SwitchMode => GREY
+        Mode::Domain => BLUE
     };
     
     if mode_update {
@@ -71,8 +70,7 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_on: bool, scale: f32, domain
         let text = match mode {
             Mode::View => ROTATE_NAME,
             Mode::Trace => TRACE_NAME,
-            Mode::Domain => DOMAIN_NAME,
-            Mode::SwitchMode => SWITCH_NAME
+            Mode::Domain => DOMAIN_NAME
         };
         let length = text.len() as u16;
         display::draw_string(
@@ -107,8 +105,7 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_on: bool, scale: f32, domain
         let help_lines = match mode {
             Mode::View => ROTATE_HELP,
             Mode::Trace => TRACE_HELP,
-            Mode::Domain => DOMAIN_HELP,
-            Mode::SwitchMode => SWITCH_HELP
+            Mode::Domain => DOMAIN_HELP
         };
 
         display::push_rect_uniform(
