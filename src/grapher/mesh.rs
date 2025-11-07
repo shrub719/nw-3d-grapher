@@ -149,9 +149,13 @@ impl Mesh {
         }
     }
 
-    pub fn generate_mesh(&mut self) {
+    pub fn generate_mesh(&mut self, slot: u8) {
         self.tris.clear();
-        generator::implicit::generate_mesh(&mut self.tris, self.domain);
+        if slot == 1 {
+            generator::explicit::generate_mesh(&mut self.tris, self.domain);
+        } else if slot == 2 {
+            generator::implicit::generate_mesh(&mut self.tris, self.domain);
+        }
     }
 
 
