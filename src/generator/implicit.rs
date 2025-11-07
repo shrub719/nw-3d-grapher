@@ -97,9 +97,9 @@ fn march_that_cube(
     let mut i = 0;
     while triangle[i] != 255 {
         let _ = tris.push(Triangle3([
-            vertices[triangle[i]],
-            vertices[triangle[i+1]],
-            vertices[triangle[i+2]]
+            vertices[triangle[i] as usize],
+            vertices[triangle[i+1] as usize],
+            vertices[triangle[i+2] as usize]
         ]));
         i += 3;
     }
