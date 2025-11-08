@@ -7,7 +7,6 @@ build:
     cargo build --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
 # builds dev profile
-[default]
 dev:
     cargo build --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
@@ -82,6 +81,8 @@ clean-sim:
 clean-all: clean clean-sim
 
 # ===== UTILS =====
+
+default: dev
 
 clean:
     cargo clean
