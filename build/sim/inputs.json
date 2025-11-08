@@ -3,8 +3,8 @@
     "Up": ["UP", "W"],
     "Left": ["LEFT", "A"],
     "Right": ["RIGHT", "D"],
-    "RightParenthesis": ["0", "E"],
-    "LeftParenthesis": ["9", "Q"],
+    "RightParenthesis": ["0", "E", "RIGHTBRACKET"],
+    "LeftParenthesis": ["9", "Q", "LEFTBRACKET"],
 
     "Plus": ["KP_PLUS", "EQUALS", "R"],
     "Minus": ["KP_MINUS", "MINUS", "F"],
