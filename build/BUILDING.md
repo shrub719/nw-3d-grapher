@@ -41,34 +41,6 @@ To load the app to the calculator, run:
 just load
 ```
 
-### NumWorks calculator (with PBJ file)
-
-> **Note:** To import 3D models to your NumWorks calculator or simulator, use [3Dino](https://github.com/shrub719/nw-3dino) instead.
-
-The app supports importing 3D models as `.pbj`.
-
-To convert a `.obj` file to `.pbj`, run:
-```sh
-just obj [file location] [object name]
-
-# Example usage:
-just obj build/obj/Mesh_Beagle.obj dog
-```
-This creates a `.pbj` file in `/target/obj/`.
-
-To build the app with PBJ support, run:
-```sh
-just build o
-```
-
-To load the app to the calculator with a converted PBJ, run:
-```sh
-just load [object name]
-
-# Example usage:
-just load dog
-```
-
 ### Simulator
 
 To build the app for the simulator, run:
@@ -76,6 +48,10 @@ To build the app for the simulator, run:
 just nwb-build
 ```
 This creates a binary (`.nwb`) file at `/target/[your Rust host]/release/libnw_3d_grapher_sim`, with a file extension according to your operating system.
+
+### PBJ files
+
+To import 3D models to your NumWorks calculator or simulator, use [3Dino](https://github.com/shrub719/nw-3dino) instead.
 
 
 ## Building the simulator
@@ -85,24 +61,35 @@ This creates a binary (`.nwb`) file at `/target/[your Rust host]/release/libnw_3
 1. Install the [Epsilon SDK](https://www.numworks.com/engineering/software/build/)
 
 1. Install [Python 3.10](https://www.python.org/downloads/release/python-3100/)  
-   *lz4 is broken for more recent versions of Python.*
+   > **Note:** lz4 is broken for more recent versions of Python.
 
-1. Run:
-
+1. Clone [Epsilon](https://github.com/numworks/epsilon) version 20:
    ```sh
-   just setup-sim
+   git clone https://github.com/numworks/epsilon epsilon_simulator -b version-20
    ```
 
-   This will:
-   1. Clone Epsilon
-   1. Run `build/setup.sh`
-   1. Remap the simulator controls
+1. Remap the simulator keyboard inputs:
+   ```sh
+   python3 build/sim/remap_inputs.py epsilon_simulator
+   ```
+
+1. In the simulator directory, run `setup.sh`:
+   ```sh
+   cd epsilon_simulator
+   ./build/setup.sh --only-simulator
+   ```
 
 ### Building
 
 To build the simulator, run:
 ```sh
-just build-sim [jobs]
+cd epsilon_simulator
+
+# linux/wsl 
+make PLATFORM=simulator epsilon.bin -j [jobs]
+
+# macos
+make PLATFORM=simulator epsilon.app -j [jobs]
 ```
 where `[jobs]` is the number of jobs to use when making.
 
