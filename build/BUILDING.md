@@ -63,8 +63,10 @@ To import 3D models to your NumWorks calculator or simulator, use [3Dino](https:
 1. Install [Python 3.10](https://www.python.org/downloads/release/python-3100/)  
    > **Note:** lz4 is broken for more recent versions of Python.
 
-1. Clone [Epsilon](https://github.com/numworks/epsilon) version 20:
+1. Clone 3D Grapher and [Epsilon](https://github.com/numworks/epsilon) version 20:
    ```sh
+   git clone https://github.com/shrub719/nw-3d-grapher
+   cd nw-3d-grapher
    git clone https://github.com/numworks/epsilon epsilon_simulator -b version-20
    ```
 
@@ -83,15 +85,13 @@ To import 3D models to your NumWorks calculator or simulator, use [3Dino](https:
 
 To build the simulator, run:
 ```sh
-cd epsilon_simulator
-
 # linux/wsl 
 make PLATFORM=simulator epsilon.bin -j [jobs]
 
 # macos
 make PLATFORM=simulator epsilon.app -j [jobs]
 ```
-where `[jobs]` is the number of jobs to use when making.
+inside the Epsilon directory, where `[jobs]` is the number of jobs to use when building.
 
 This creates a binary/app file at `/epsilon_simulator/output/release/simulator/[your operating system]/epsilon`, with a file extension according to your operating system.
 
