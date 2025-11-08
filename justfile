@@ -30,6 +30,19 @@ nwb-build:
 nwb-dev:
     cargo build --lib --target={{current_target}}
 
+# runs dev profile on simulator
+[macos]
+run: nwb-dev
+    ./sim/epsilon.app/Contents/MacOS/Epsilon --nwb ./target/{{current_target}}/debug/libnw_3d_grapher_sim.dylib
+[linux]
+run: nwb-dev
+    ./sim/epsilon.bin --nwb ./target/{{current_target}}/debug/libnw_3d_grapher_sim.so
+
+   
+ 
+# ===== SIMULATOR: LEGACY =====
+# only kept these for build/BUILDING.md
+
 # remaps sim inputs
 # sim_dir is the directory containing epsilon
 remap-sim sim_dir="epsilon_simulator":
@@ -63,15 +76,13 @@ nwb-dev-run: nwb-dev
 nwb-dev-run: nwb-dev
     ./epsilon_simulator/output/release/simulator/linux/epsilon.bin --nwb ./target/{{current_target}}/debug/libnw_3d_grapher_sim.so
 
-
-# ===== UTILS =====
-
-ndev: nwb-dev-run
-
-clean:
-    cargo clean
-
 clean-sim:
     cd ./epsilon_simulator && make clean
 
 clean-all: clean clean-sim
+
+# ===== UTILS =====
+
+clean:
+    cargo clean
+

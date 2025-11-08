@@ -1,13 +1,11 @@
 # Todo 
 
-## Short term
 - [x] Make RTriangle3 smaller
 - [x] Make shading not dependent on VIEW scale
 - [x] Make second table smaller with u8 (convert to usize when indexing)
 - [x] New HUD/UI
 - [x] Remap controls/change sim remap workflow
-
-## Long term 
+- [ ] Rewrite build/BUILDING.md
 - [ ] Accept + parse expression input
 - [ ] Pretty print expressions
 - [ ] Trace mode
