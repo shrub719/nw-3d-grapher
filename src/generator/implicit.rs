@@ -9,11 +9,11 @@ use crate::{
 };
 use heapless::Vec;
 
-fn placeholder_func_3(x: f32, y: f32, z: f32) -> f32 {
+pub fn placeholder_func_3(x: f32, y: f32, z: f32) -> f32 {
     x*x + y*y + z*z + sin(4.0*x) + sin(4.0*y) + sin(4.0*z) - 1.11
 }
 
-fn placeholder_func_2(x: f32, y: f32, z: f32) -> f32 {
+pub fn placeholder_func_2(x: f32, y: f32, z: f32) -> f32 {
     let x2 = x * x;
     let y2 = y * y;
     let z2 = z * z;
@@ -29,18 +29,9 @@ fn placeholder_func_2(x: f32, y: f32, z: f32) -> f32 {
     term1 + term2 + term3 - 0.02   
 }
 
-fn placeholder_func(x: f32, y: f32, z: f32) -> f32 {
+pub fn placeholder_func_1(x: f32, y: f32, z: f32) -> f32 {
     x*x*x*x + 2.0*x*x*y*y + 2.0*x*x*z*z + y*y*y*y + 2.0*y*y*z*z + z*z*z*z + 8.0*x*y*z - 10.0*x*x - 10.0*y*y - 10.0*z*z + 20.0
     // 400.0 * (x*x*y*y + y*y*z*z + x*x*z*z) - (1.0-x*x-y*y-z*z)*(1.0-x*x-y*y-z*z)*(1.0-x*x-y*y-z*z)
-}
-
-fn test_surface(v: Vector3, slot: u8) -> f32 {
-    match slot {
-        2 => placeholder_func(v.x, v.y, v.z),
-        3 => placeholder_func_2(v.x, v.y, v.z),
-        4 => placeholder_func_3(v.x, v.y, v.z),
-        _ => 0.0
-    }
 }
 
 fn interpolate_vertex(v0: Vector3, v1: Vector3, t0: f32, t1: f32) -> Vector3 {
@@ -55,18 +46,18 @@ fn interpolate_vertex(v0: Vector3, v1: Vector3, t0: f32, t1: f32) -> Vector3 {
 
 fn march_that_cube(
     tris: &mut Vec<Triangle3, { MAX_TRIS }>,
-    slot: u8,
+    func: fn(f32, f32, f32) -> f32,
     v0: Vector3, v1: Vector3, v2: Vector3, v3: Vector3,
     v4: Vector3, v5: Vector3, v6: Vector3, v7: Vector3
 ) {
-    let t0 = test_surface(v0, slot);
-    let t1 = test_surface(v1, slot);
-    let t2 = test_surface(v2, slot);
-    let t3 = test_surface(v3, slot);
-    let t4 = test_surface(v4, slot);
-    let t5 = test_surface(v5, slot);
-    let t6 = test_surface(v6, slot);
-    let t7 = test_surface(v7, slot);
+    let t0 = func(v0.x, v0.y, v0.z);
+    let t1 = func(v1.x, v1.y, v1.z);
+    let t2 = func(v2.x, v2.y, v2.z);
+    let t3 = func(v3.x, v3.y, v3.z);
+    let t4 = func(v4.x, v4.y, v4.z);
+    let t5 = func(v5.x, v5.y, v5.z);
+    let t6 = func(v6.x, v6.y, v6.z);
+    let t7 = func(v7.x, v7.y, v7.z);
 
     let mut cube_index: usize = 0;
     
@@ -132,7 +123,7 @@ fn march_that_cube(
     }
 }
 
-pub fn generate_mesh(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain, slot: u8) {
+pub fn generate_mesh(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain, func: fn(f32, f32, f32) -> f32) {
     let dx = (domain.x1 - domain.x0) / IMPLICIT_N as f32;
     let dy = (domain.y1 - domain.y0) / IMPLICIT_N as f32;
     let dz = (domain.z1 - domain.z0) / IMPLICIT_N as f32;
@@ -149,7 +140,7 @@ pub fn generate_mesh(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain, sl
                 
                 march_that_cube(
                     tris,
-                    slot,
+                    func,
                     v!(x0, y0, z0),
                     v!(x1, y0, z0),
                     v!(x1, y1, z0),

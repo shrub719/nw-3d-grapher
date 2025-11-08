@@ -154,7 +154,15 @@ impl Mesh {
         if slot == 1 {
             generator::explicit::generate_mesh(&mut self.tris, self.domain);
         } else {
-            generator::implicit::generate_mesh(&mut self.tris, self.domain, slot);
+            generator::implicit::generate_mesh(
+                &mut self.tris, self.domain, 
+                match slot {
+                    2 => generator::implicit::placeholder_func_1,
+                    3 => generator::implicit::placeholder_func_2,
+                    4 => generator::implicit::placeholder_func_3,
+                    _ => generator::implicit::placeholder_func_1
+                }
+            );
         }
     }
 
