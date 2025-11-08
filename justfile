@@ -7,6 +7,7 @@ build:
     cargo build --release --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
 # builds dev profile
+[default]
 dev:
     cargo build --bin nw_3d_grapher --target=thumbv7em-none-eabihf
 
@@ -36,7 +37,6 @@ run: nwb-dev
 [linux]
 run: nwb-dev
     ./sim/epsilon.bin --nwb ./target/{{current_target}}/debug/libnw_3d_grapher_sim.so
-
    
  
 # ===== SIMULATOR: LEGACY =====
@@ -80,9 +80,8 @@ clean-sim:
 
 clean-all: clean clean-sim
 
-# ===== UTILS =====
 
-default: dev
+# ===== UTILS =====
 
 clean:
     cargo clean
