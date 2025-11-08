@@ -183,6 +183,9 @@ impl InputHandler {
         } else if self.keyboard_state.key_down(Key::Three) {
             self.graph_slot = 3;
             self.upd.domain = true;
+        } else if self.keyboard_state.key_down(Key::Four) {
+            self.graph_slot = 4;
+            self.upd.domain = true;
         }
 
         if self.keyboard_state.key_down(HELP) {

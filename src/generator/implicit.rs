@@ -4,11 +4,16 @@ use crate::{
         mesh::Domain,
     },
     generator::tables::*,
-    constants::limits::*
+    constants::limits::*,
+    trig::*
 };
 use heapless::Vec;
 
-fn benchmark_func(x: f32, y: f32, z: f32) -> f32 {
+fn placeholder_func_3(x: f32, y: f32, z: f32) -> f32 {
+    x*x + y*y + z*z + sin(4.0*x) + sin(4.0*y) + sin(4.0*z) - 1.11
+}
+
+fn placeholder_func_2(x: f32, y: f32, z: f32) -> f32 {
     let x2 = x * x;
     let y2 = y * y;
     let z2 = z * z;
@@ -27,12 +32,13 @@ fn benchmark_func(x: f32, y: f32, z: f32) -> f32 {
 fn placeholder_func(x: f32, y: f32, z: f32) -> f32 {
     x*x*x*x + 2.0*x*x*y*y + 2.0*x*x*z*z + y*y*y*y + 2.0*y*y*z*z + z*z*z*z + 8.0*x*y*z - 10.0*x*x - 10.0*y*y - 10.0*z*z + 20.0
     // 400.0 * (x*x*y*y + y*y*z*z + x*x*z*z) - (1.0-x*x-y*y-z*z)*(1.0-x*x-y*y-z*z)*(1.0-x*x-y*y-z*z)
-    }
+}
 
 fn test_surface(v: Vector3, slot: u8) -> f32 {
     match slot {
         2 => placeholder_func(v.x, v.y, v.z),
-        3 => benchmark_func(v.x, v.y, v.z),
+        3 => placeholder_func_2(v.x, v.y, v.z),
+        4 => placeholder_func_3(v.x, v.y, v.z),
         _ => 0.0
     }
 }
