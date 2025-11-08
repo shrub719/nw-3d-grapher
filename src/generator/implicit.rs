@@ -29,8 +29,12 @@ fn placeholder_func(x: f32, y: f32, z: f32) -> f32 {
     // 400.0 * (x*x*y*y + y*y*z*z + x*x*z*z) - (1.0-x*x-y*y-z*z)*(1.0-x*x-y*y-z*z)*(1.0-x*x-y*y-z*z)
     }
 
-fn test_surface(v: Vector3) -> f32 {
-    placeholder_func(v.x, v.y, v.z)
+fn test_surface(v: Vector3, slot: u8) -> f32 {
+    match slot {
+        2 => placeholder_func(v.x, v.y, v.z),
+        3 => benchmark_func(v.x, v.y, v.z),
+        _ => 0.0
+    }
 }
 
 fn interpolate_vertex(v0: Vector3, v1: Vector3, t0: f32, t1: f32) -> Vector3 {
@@ -45,17 +49,18 @@ fn interpolate_vertex(v0: Vector3, v1: Vector3, t0: f32, t1: f32) -> Vector3 {
 
 fn march_that_cube(
     tris: &mut Vec<Triangle3, { MAX_TRIS }>,
+    slot: u8,
     v0: Vector3, v1: Vector3, v2: Vector3, v3: Vector3,
     v4: Vector3, v5: Vector3, v6: Vector3, v7: Vector3
 ) {
-    let t0 = test_surface(v0);
-    let t1 = test_surface(v1);
-    let t2 = test_surface(v2);
-    let t3 = test_surface(v3);
-    let t4 = test_surface(v4);
-    let t5 = test_surface(v5);
-    let t6 = test_surface(v6);
-    let t7 = test_surface(v7);
+    let t0 = test_surface(v0, slot);
+    let t1 = test_surface(v1, slot);
+    let t2 = test_surface(v2, slot);
+    let t3 = test_surface(v3, slot);
+    let t4 = test_surface(v4, slot);
+    let t5 = test_surface(v5, slot);
+    let t6 = test_surface(v6, slot);
+    let t7 = test_surface(v7, slot);
 
     let mut cube_index: usize = 0;
     
@@ -121,7 +126,7 @@ fn march_that_cube(
     }
 }
 
-pub fn generate_mesh(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain) {
+pub fn generate_mesh(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain, slot: u8) {
     let dx = (domain.x1 - domain.x0) / IMPLICIT_N as f32;
     let dy = (domain.y1 - domain.y0) / IMPLICIT_N as f32;
     let dz = (domain.z1 - domain.z0) / IMPLICIT_N as f32;
@@ -138,6 +143,7 @@ pub fn generate_mesh(tris: &mut Vec<Triangle3, { MAX_TRIS }>, domain: Domain) {
                 
                 march_that_cube(
                     tris,
+                    slot,
                     v!(x0, y0, z0),
                     v!(x1, y0, z0),
                     v!(x1, y1, z0),

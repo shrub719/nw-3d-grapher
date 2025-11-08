@@ -153,8 +153,8 @@ impl Mesh {
         self.tris.clear();
         if slot == 1 {
             generator::explicit::generate_mesh(&mut self.tris, self.domain);
-        } else if slot == 2 {
-            generator::implicit::generate_mesh(&mut self.tris, self.domain);
+        } else {
+            generator::implicit::generate_mesh(&mut self.tris, self.domain, slot);
         }
     }
 
