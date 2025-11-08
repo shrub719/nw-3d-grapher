@@ -57,11 +57,27 @@ To import 3D models to your NumWorks calculator or simulator, use [3Dino](https:
 
 ### NumWorks calculator
 
-<!-- TODO: controls, features -->
+<!-- TODO: pompeiu -->
+
+In the grapher, switch modes with `OK`. Press `Toolbox` for controls for the current mode.
+
 
 ### Simulator
 
-<!-- TODO: remapped sim controls -->
+- `Toolbox`:  
+    - `Tab`  
+- `D-pad`:  
+    - `WASD` `Arrow keys`  
+- `( )`:                   
+    - `( )` `Q E`          
+- `+ -`:                   
+    - `+ -` `R F`          
+- `OK`:                    
+    - `Enter`              
+- `Backspace`:             
+    - `Backspace`          
+
+> **Note:** On-screen calculator controls work as well.
 
 
 ## Building
