@@ -1,4 +1,9 @@
-# NumWorks 3D Grapher
+<h1 align="center">
+    <img src="assets/icons/icon_128.png" alt="3D Grapher logo" height="100px"> 
+    <br />
+    3D Grapher
+</h1>
+
 > [Documentation](https://github.com/shrub719/nw-3d-grapher-docs)
 
 3D Grapher app for NumWorks Epsilon.  
