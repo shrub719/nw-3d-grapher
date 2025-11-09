@@ -37,6 +37,14 @@ run: nwb-dev
 [linux]
 run: nwb-dev
     ./sim/epsilon.bin --nwb ./target/{{current_target}}/debug/libnw_3d_grapher_sim.so
+
+# runs release profile on simulator
+[macos]
+run-r: nwb-build
+    ./sim/epsilon.app/Contents/MacOS/Epsilon --nwb ./target/{{current_target}}/release/libnw_3d_grapher_sim.dylib
+[linux]
+run-r: nwb-build
+    ./sim/epsilon.bin --nwb ./target/{{current_target}}/release/libnw_3d_grapher_sim.so
    
  
 # ===== SIMULATOR: LEGACY =====
