@@ -50,7 +50,7 @@ pub mod limits {
     pub const MAX_TRIS: usize = 1500;
     pub const EXPLICIT_N: usize = 18;
     pub const IMPLICIT_N: usize = 10;
-    pub const MARCH_N: usize = 500;
+    pub const MARCH_N: usize = 300;
     // pub const MAX_LINES: usize = 20;  // TODO: add lines
 }
 
