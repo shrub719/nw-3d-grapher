@@ -46,11 +46,19 @@ pub mod graphics {
 
 #[cfg(target_os = "none")]
 pub mod limits {
+    #[cfg(not(debug_assertions))]
     pub const MAX_TRIS: usize = 1500;
+    #[cfg(debug_assertions)]
+    pub const MAX_TRIS: usize = 1000;
+
     pub const EXPLICIT_N: usize = 18;
     pub const IMPLICIT_N: usize = 10;
     pub const MARCH_N: usize = 300;
+
+    #[cfg(not(debug_assertions))]
     pub const MAX_ROW_TIME: u64 = 100;
+    #[cfg(debug_assertions)]
+    pub const MAX_ROW_TIME: u64 = 200;
     // pub const MAX_LINES: usize = 20;  // TODO: add lines
 }
 
