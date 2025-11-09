@@ -123,6 +123,10 @@ impl Grapher {
                 self.renderer.draw_screen(&self.mesh, self.input.help);
             }
 
+            if self.input.upd.enhance {
+                self.mesh.generate_screen(self.input.graph_slot);
+            }
+
             self.input.update();
             self.timer.update();
             

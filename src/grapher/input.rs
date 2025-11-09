@@ -52,6 +52,7 @@ pub struct Updates {
     pub scale: bool,
     pub redraw: bool,
     pub mode: bool,
+    pub enhance: bool,
     pub hud: bool,
     pub help_on: bool,
     pub help_off: bool,
@@ -79,6 +80,7 @@ impl InputHandler {
                 scale: true,
                 redraw: true,
                 mode: true,
+                enhance: false,
                 hud: true,
                 help_on: false,
                 help_off: false,
@@ -186,6 +188,10 @@ impl InputHandler {
         } else if self.keyboard_state.key_down(Key::Four) {
             self.graph_slot = 4;
             self.upd.domain = true;
+        }
+
+        if self.keyboard_state.key_down(ENHANCE) && self.domain_cooldown >= 0.1 {
+            self.upd.enhance = true;
         }
 
         if self.keyboard_state.key_down(HELP) {
