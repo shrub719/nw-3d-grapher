@@ -45,6 +45,26 @@ impl Sub for RVector3 {
         }
     }
 }
+impl Mul<Matrix4> for RVector3 {
+    type Output = Vector3;
+
+    fn mul(self, matrix: Matrix4) -> Vector3 {
+        let self_4 = [self.x as f32, self.y as f32, self.z as f32, 1.0];
+        let mut result = [0.0; 4];
+        for i in 0..4 {
+            let mut sum: f32 = 0.0;
+            for j in 0..4 {
+                sum += matrix.0[i][j] * self_4[j];
+            }
+            result[i] = sum;
+        }
+        Vector3 {
+            x: result[0],
+            y: result[1],
+            z: result[2]
+        }
+    }
+}
 
 macro_rules! v {
     ($x:expr, $y:expr, $z:expr) => {
