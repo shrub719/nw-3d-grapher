@@ -17,7 +17,7 @@ pub struct Renderer {
 impl Renderer {
     pub fn new() -> Self {
         Renderer {
-            buffer: [Color{ rgb565: 0x000 }; FB_WIDTH_SIZE * FB_HEIGHT_SIZE],
+            buffer: [BG; FB_WIDTH_SIZE * FB_HEIGHT_SIZE],
             depth_buffer: [5.0; FB_WIDTH_SIZE * FB_HEIGHT_SIZE]
         }
     }

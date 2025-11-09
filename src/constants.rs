@@ -21,17 +21,21 @@ pub mod palette {
 pub mod graphics {
     pub const SCREEN_WIDTH: u16 = 320;
     pub const SCREEN_HEIGHT: u16 = 240;
+    pub const SCREEN_WIDTH_SIZE: usize = SCREEN_WIDTH as usize;
 
     pub const HUD_HEIGHT: u16 = 36;
 
     pub const MARGIN_TOP: u16 = 18;
     pub const MARGIN_BOTTOM: u16 = HUD_HEIGHT;
 
+    pub const FRAME_HEIGHT: u16 = SCREEN_HEIGHT - (MARGIN_TOP + MARGIN_BOTTOM);
+    pub const FRAME_HEIGHT_SIZE: usize = FRAME_HEIGHT as usize;
+
     // 2 is possible with margins and very few triangles... i kinda wanna try stretch it further
     pub const FB_TILE: u16 = 3;
 
     pub const FB_WIDTH: u16 = SCREEN_WIDTH / FB_TILE;
-    pub const FB_HEIGHT: u16 = (SCREEN_HEIGHT - (MARGIN_TOP + MARGIN_BOTTOM)) / FB_TILE;
+    pub const FB_HEIGHT: u16 = FRAME_HEIGHT / FB_TILE;
     pub const FB_WIDTH_SIZE: usize = FB_WIDTH as usize;
     pub const FB_HEIGHT_SIZE: usize = FB_HEIGHT as usize;
 
