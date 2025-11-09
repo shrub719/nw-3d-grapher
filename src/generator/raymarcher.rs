@@ -72,7 +72,7 @@ pub fn generate_screen(func: fn(f32, f32, f32) -> f32, matrix: Matrix4) {
         
         let progress = (y - MARGIN_TOP) as f32 / (FRAME_HEIGHT) as f32;
         header_info(&format!(
-            "{:.0}%       ", progress*100.0
+            "{:.0}%         ", progress*100.0
         ));
 
         keyboard_state = KeyboardState::scan();
