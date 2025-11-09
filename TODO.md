@@ -7,7 +7,6 @@
 - [x] Remap controls/change sim remap workflow
 - [x] Rewrite build/BUILDING.md
 - [x] Ray tracing??
-    - [ ] Progress indicator + cancel ray tracing
 - [ ] Settings (e.g. domain/reversed direction)
 - [ ] Accept + parse expression input
 - [ ] Pretty print expressions

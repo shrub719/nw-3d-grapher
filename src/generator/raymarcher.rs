@@ -1,13 +1,19 @@
 use crate::{
-    eadk::*,
+    eadk::{
+        *,
+        input::*
+    },
     grapher::{
         mat::*
     },
     constants::{
         limits::*,
-        graphics::*
+        graphics::*,
+        controls::*
     }
 };
+#[cfg(target_os = "none")]
+use alloc::format;
 
 fn get_coord(matrix: Matrix4, x: u16, y: u16, z: f32) -> Vector3 {
     let r_vector = RVector3::new(
@@ -47,6 +53,7 @@ fn march_that_ray(func: fn(f32, f32, f32) -> f32, matrix: Matrix4, x: u16, y: u1
 
 pub fn generate_screen(func: fn(f32, f32, f32) -> f32, matrix: Matrix4) {
     let mut row_buffer: [Color; SCREEN_WIDTH_SIZE] = [BG; SCREEN_WIDTH_SIZE];
+    let mut keyboard_state: KeyboardState;
 
     for y in MARGIN_TOP..MARGIN_TOP+FRAME_HEIGHT {
         for x in 0..SCREEN_WIDTH {
@@ -62,6 +69,16 @@ pub fn generate_screen(func: fn(f32, f32, f32) -> f32, matrix: Matrix4) {
             },
             &row_buffer
         );
+        
+        let progress = (y - MARGIN_TOP) as f32 / (FRAME_HEIGHT) as f32;
+        header_info(&format!(
+            "{:.0}%       ", progress*100.0
+        ));
+
+        keyboard_state = KeyboardState::scan();
+        if keyboard_state.key_down(BACK) {
+            break;
+        }
     }
 }
 
