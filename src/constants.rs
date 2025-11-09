@@ -29,7 +29,6 @@ pub mod graphics {
     pub const MARGIN_BOTTOM: u16 = HUD_HEIGHT;
 
     pub const FRAME_HEIGHT: u16 = SCREEN_HEIGHT - (MARGIN_TOP + MARGIN_BOTTOM);
-    pub const FRAME_HEIGHT_SIZE: usize = FRAME_HEIGHT as usize;
 
     // 2 is possible with margins and very few triangles... i kinda wanna try stretch it further
     pub const FB_TILE: u16 = 3;

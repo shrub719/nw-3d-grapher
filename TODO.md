@@ -5,10 +5,10 @@
 - [x] Make second table smaller with u8 (convert to usize when indexing)
 - [x] New HUD/UI
 - [x] Remap controls/change sim remap workflow
-- [ ] Rewrite build/BUILDING.md
+- [x] Rewrite build/BUILDING.md
+- [x] Ray tracing??
 - [ ] Settings (e.g. domain/reversed direction)
 - [ ] Accept + parse expression input
 - [ ] Pretty print expressions
 - [ ] Trace mode
     - [ ] Change how mode switching works
-- [ ] Ray tracing??
