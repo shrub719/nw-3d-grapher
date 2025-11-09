@@ -216,7 +216,7 @@ impl Mesh {
 
     pub fn generate_screen(&mut self, slot: u8) {
         let mut matrix = self.get_matrix(); 
-        // matrix = matrix.inverse();
+        matrix = matrix.inverse();
 
         if slot != 1 {
             generator::raymarcher::generate_screen(
