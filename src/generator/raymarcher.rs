@@ -20,27 +20,29 @@ fn get_coord(matrix: Matrix4, x: u16, y: u16, z: f32) -> Vector3 {
 }
 
 fn march_that_ray(func: fn(f32, f32, f32) -> f32, matrix: Matrix4, x: u16, y: u16) -> Color {
-    let z0 = -10.0;
-    let z1 = 10.0;
+    let z0 = -5.0;
+    let z1 = 5.0;
     let dz = (z1 - z0) / MARCH_N as f32;
     let mut z = z0;
     
     let mut c = get_coord(matrix, x, y, z);
     let mut prev_t = func(c.x, c.y, c.z);
-    for _ in 0..MARCH_N {
+    let mut i = 0;
+    while i < MARCH_N {
         z += dz;
         c = get_coord(matrix, x, y, z);
         if prev_t * func(c.x, c.y, c.z) < 0.0 {
             break;
         }
         prev_t = func(c.x, c.y, c.z);
+        i += 1;
     }
     
     let mut value = (-z + 1.0) / 2.0 * 255.0;
     if value > 255.0 { value = 255.0 };
     if value < 0.0 { value = 0.0 };
 
-    Color::from_rgb(0, value as u16, 255)
+    if i == MARCH_N { BG } else { Color::from_rgb(0, value as u16, 255) }
 }
 
 pub fn generate_screen(func: fn(f32, f32, f32) -> f32, matrix: Matrix4) {
