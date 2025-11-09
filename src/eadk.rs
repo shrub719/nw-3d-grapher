@@ -183,9 +183,9 @@ pub mod input {
         Minus = 46,
         Zero = 48,
         Dot = 49,
-        Ee = 50,
+        EE = 50,
         Ans = 51,
-        Exe = 52,
+        EXE = 52,
     }
 
     unsafe extern "C" {
@@ -257,9 +257,9 @@ pub mod input {
         Minus = 46,
         Zero = 48,
         Dot = 49,
-        Ee = 50,
+        EE = 50,
         Ans = 51,
-        Exe = 52,
+        EXE = 52,
         ShiftLeft = 54,
         ShiftUp = 55,
         ShiftDown = 56,

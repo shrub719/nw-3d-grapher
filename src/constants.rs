@@ -138,7 +138,7 @@ pub mod controls {
 
     pub const MODE_SWITCH: Key = Key::OK;
 
-    pub const ENHANCE: Key =    Key::Exe;
+    pub const ENHANCE: Key =    Key::EXE;
 
     pub const EXIT: Key =       Key::Home;
 }
