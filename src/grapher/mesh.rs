@@ -193,11 +193,17 @@ impl Mesh {
         if self.scale < 0.0 { self.scale = 0.0 }
     }
 
-    pub fn transform(&mut self) {
+    fn get_matrix(&mut self) -> Matrix4 {
         let mut matrix = get_projection_matrix(self.scale);
         matrix *= self.rotation.get_rotation_matrix();
         matrix *= get_scale_matrix(self.scale);
         matrix *= self.domain.matrix;
+
+        matrix
+    }
+
+    pub fn transform(&mut self) {
+        let matrix = self.get_matrix();
 
         self.transformed_tris.clear();
         for tri in &self.tris {
@@ -205,6 +211,23 @@ impl Mesh {
         }
         for i in 0..3 {
             self.transformed_axes[i] = self.axes[i] * matrix;
+        }
+    }
+
+    pub fn generate_screen(&mut self, slot: u8) {
+        let mut matrix = self.get_matrix(); 
+        // matrix = matrix.inverse();
+
+        if slot != 1 {
+            generator::raymarcher::generate_screen(
+                match slot {
+                    2 => generator::implicit::placeholder_func_1,
+                    3 => generator::implicit::placeholder_func_2,
+                    4 => generator::implicit::placeholder_func_3,
+                    _ => generator::implicit::placeholder_func_1
+                },
+                matrix
+            );
         }
     }
 }
