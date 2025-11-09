@@ -26,8 +26,8 @@ fn get_coord(matrix: Matrix4, x: u16, y: u16, z: f32) -> Vector3 {
 }
 
 fn march_that_ray(func: fn(f32, f32, f32) -> f32, matrix: Matrix4, n: usize, x: u16, y: u16) -> Color {
-    let z0 = -5.0;
-    let z1 = 5.0;
+    let z0 = -1.0;
+    let z1 = 1.0;
     let dz = (z1 - z0) / MARCH_N as f32;
     let mut z = z0;
     
