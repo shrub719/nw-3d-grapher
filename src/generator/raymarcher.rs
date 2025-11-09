@@ -82,6 +82,10 @@ pub fn generate_screen(func: fn(f32, f32, f32) -> f32, matrix: Matrix4) {
         header_info(&format!(
             "{:.0}%         ", progress * 100.0
         ));
+        #[cfg(debug_assertions)]
+        header_info(&format!(
+            "{}             ", n
+        ));
 
         keyboard_state = KeyboardState::scan();
         if keyboard_state.key_down(BACK) {
