@@ -8,6 +8,8 @@
 - [x] Rewrite build/BUILDING.md
 - [x] Ray tracing??
 - [ ] Settings (e.g. domain/reversed direction)
+- [ ] Abstract colouring function from renderer.rs and raymarcher.rs
+- [ ] Don't use heapless on simulator (no need for tri # limit)
 - [ ] Accept + parse expression input
 - [ ] Pretty print expressions
 - [ ] Trace mode
