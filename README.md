@@ -64,18 +64,14 @@ In the grapher, switch modes with `OK`. Press `Toolbox` for controls for the cur
 
 ### Simulator
 
-- `Toolbox`:  
-    - `Tab`  
-- `D-pad`:  
-    - `WASD` `Arrow keys`  
-- `( )`:                   
-    - `( )` `Q E`          
-- `+ -`:                   
-    - `+ -` `R F`          
-- `OK`:                    
-    - `Enter`              
-- `Backspace`:             
-    - `Backspace`          
+Calculator | Simulator
+--- | ---
+`Toolbox` | `Tab`
+`D-pad` | `WASD`, `Arrow keys`
+`( )` | `( )`, `Q E`
+`+ -` | `+ -`, `R F`
+`OK` | `Enter`
+`Backspace` | `Backspace`
 
 > **Note:** On-screen calculator controls work as well.
 
