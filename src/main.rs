@@ -34,7 +34,8 @@ pub static EADK_APP_API_LEVEL: u32 = 0;
 #[unsafe(link_section = ".rodata.eadk_app_icon")]
 pub static EADK_APP_ICON: [u8; 4900] = *include_bytes!("../target/icon.nwi");
 
-pub mod eadk;
+#[macro_use]
+mod eadk;
 mod constants;
 mod trig;
 mod grapher;
@@ -45,7 +46,7 @@ use grapher::Grapher;
 pub fn main() -> isize {
     #[cfg(target_os = "none")]
     {
-        let heap_size: usize = heap_size();
+        let heap_size: usize = 100_000;
         unsafe { HEAP.init(eadk::HEAP_START as usize, heap_size) }
     }
 
