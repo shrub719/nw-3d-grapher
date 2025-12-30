@@ -39,7 +39,8 @@ mod constants;
 mod trig;
 mod grapher;
 mod generator;
-use grapher::Grapher;
+mod menu;
+use menu::Menu;
 
 #[unsafe(no_mangle)]
 pub fn main() -> isize {
@@ -49,8 +50,8 @@ pub fn main() -> isize {
         unsafe { HEAP.init(eadk::HEAP_START as usize, heap_size) }
     }
 
-    let mut grapher = Grapher::new();
-    grapher.main_loop();
+    let mut menu = Menu::new();
+    menu.main_loop();
 
     0
 }
