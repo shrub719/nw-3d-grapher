@@ -358,7 +358,7 @@ use core::panic::PanicInfo;
 use alloc::string::String;
 
 #[cfg(target_os = "none")]
-fn write_wrapped(text: &str, limit: usize) {
+pub fn write_wrapped(text: &str, limit: usize) {
     let mut line_count = 0;
 
     let mut line = String::new();

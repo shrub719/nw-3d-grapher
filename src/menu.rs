@@ -21,9 +21,9 @@ impl Menu {
     }
     
     pub fn main_loop(&self) {
-        // temp
         loop {
-            let mut grapher = Grapher::new();
+            let graph = ui::get_graph();
+            let mut grapher = Grapher::new(graph);
             grapher.main_loop();
         }
     }

@@ -19,19 +19,23 @@ mod input;
 mod hud;
 mod timer;
 
+pub type Graph = fn(f32, f32, f32) -> f32;
+
 pub struct Grapher {
     renderer: Renderer,
-    mesh: Mesh,
+    pub mesh: Mesh,
     input: InputHandler,
-    timer: Timer
+    timer: Timer,
+    pub graph: Graph
 }
 impl Grapher {
-    pub fn new() -> Self {
+    pub fn new(graph: Graph) -> Self {
         Grapher {
             renderer: Renderer::new(),
             mesh: Mesh::new(),
             input: InputHandler::new(),
-            timer: Timer::new()
+            timer: Timer::new(),
+            graph
         }
     }
 
@@ -101,7 +105,8 @@ impl Grapher {
         while !self.input.upd.quit {
             if self.input.upd.domain {
                 self.mesh.update_domain(self.input.domain_trans_direction, self.input.domain_scale_direction);
-                self.mesh.generate_mesh(self.input.graph_slot);
+                // temp: check for exp
+                self.generate_mesh_imp();
                 self.input.domain_cooldown = 0.0;
             } else {
                 self.input.domain_cooldown += self.timer.delta_time;
@@ -124,7 +129,7 @@ impl Grapher {
             }
 
             if self.input.upd.enhance {
-                self.mesh.generate_screen(self.input.graph_slot);
+                self.mesh.generate_screen(self.graph);
             }
 
             self.input.update();

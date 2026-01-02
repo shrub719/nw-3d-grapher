@@ -1,6 +1,7 @@
 use crate::{
     grapher::{
         mat::*,
+        Graph
     },
     generator,
     constants::*
@@ -149,24 +150,6 @@ impl Mesh {
         }
     }
 
-    pub fn generate_mesh(&mut self, slot: u8) {
-        self.tris.clear();
-        if slot == 1 {
-            generator::explicit::generate_mesh(&mut self.tris, self.domain);
-        } else {
-            generator::implicit::generate_mesh(
-                &mut self.tris, self.domain, 
-                match slot {
-                    2 => generator::implicit::placeholder_func_1,
-                    3 => generator::implicit::placeholder_func_2,
-                    4 => generator::implicit::placeholder_func_3,
-                    _ => generator::implicit::placeholder_func_1
-                }
-            );
-        }
-    }
-
-
     pub fn update_domain(&mut self, trans_direction: Vector3, scale_direction: Vector3) {
         self.domain.translate(trans_direction);
         self.domain.scale(scale_direction);
@@ -214,20 +197,13 @@ impl Mesh {
         }
     }
 
-    pub fn generate_screen(&mut self, slot: u8) {
+    pub fn generate_screen(&mut self, graph: Graph) {
         let mut matrix = self.get_matrix(); 
         matrix = matrix.inverse();
 
-        if slot != 1 {
-            generator::raymarcher::generate_screen(
-                match slot {
-                    2 => generator::implicit::placeholder_func_1,
-                    3 => generator::implicit::placeholder_func_2,
-                    4 => generator::implicit::placeholder_func_3,
-                    _ => generator::implicit::placeholder_func_1
-                },
-                matrix
-            );
-        }
+        generator::raymarcher::generate_screen(
+            graph,
+            matrix
+        );
     }
 }
