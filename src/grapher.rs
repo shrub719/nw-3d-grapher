@@ -106,6 +106,7 @@ impl Grapher {
             if self.input.upd.domain {
                 self.mesh.update_domain(self.input.domain_trans_direction, self.input.domain_scale_direction);
                 // temp: check for exp
+                self.mesh.tris.clear();
                 self.generate_mesh_imp();
                 self.input.domain_cooldown = 0.0;
             } else {
