@@ -6,12 +6,16 @@ use crate::{
 
 #[derive(Debug)]
 pub enum ParserError {
-    ParserError
+    ParserError,
+    InvalidCharacter,
+    Overflow
 }
 
 #[derive(Debug)]
 pub enum EvalError {
-    EvalError
+    EvalError,
+    Underflow,
+    Overflow
 }
 
 #[derive(Debug)]
@@ -39,10 +43,13 @@ impl Expr {
                 "*" => Token::Mul, "/" => Token::Div,
                 "^" => Token::Pow,
                 "sin" => Token::Sin, "cos" => Token::Cos, "tan" => Token::Tan,
-                _ => Token::Const(split.parse().unwrap())
+                _ => Token::Const(
+                    split.parse()
+                        .map_err(|_| ParserError::InvalidCharacter)?
+                )
             };
 
-            tokens.push(token).unwrap();
+            tokens.push(token).map_err(|_| ParserError::Overflow)?
         }
         
         Ok(Self { 
@@ -62,30 +69,30 @@ impl Expr {
                 Token::Const(n) => result = n,
 
                 Token::Add => {
-                    let b = stack.pop().unwrap();
-                    let a = stack.pop().unwrap();
+                    let b = stack.pop().ok_or(EvalError::Underflow)?;
+                    let a = stack.pop().ok_or(EvalError::Underflow)?;
                     result = a + b;
                 },
                 Token::Sub => {
-                    let b = stack.pop().unwrap();
-                    let a = stack.pop().unwrap();
+                    let b = stack.pop().ok_or(EvalError::Underflow)?;
+                    let a = stack.pop().ok_or(EvalError::Underflow)?;
                     result = a - b;
                 },
                 Token::Mul => {
-                    let b = stack.pop().unwrap();
-                    let a = stack.pop().unwrap();
+                    let b = stack.pop().ok_or(EvalError::Underflow)?;
+                    let a = stack.pop().ok_or(EvalError::Underflow)?;
                     result = a * b;
                 },
                 Token::Div => {
-                    let b = stack.pop().unwrap();
-                    let a = stack.pop().unwrap();
+                    let b = stack.pop().ok_or(EvalError::Underflow)?;
+                    let a = stack.pop().ok_or(EvalError::Underflow)?;
                     result = a / b;
                 },
 
                 Token::Pow => {
-                    let b = stack.pop().unwrap();
+                    let b = stack.pop().ok_or(EvalError::Underflow)?;
                     let i = b as i32;
-                    let a = stack.pop().unwrap();
+                    let a = stack.pop().ok_or(EvalError::Underflow)?;
                     result = 1.0;
                     
                     if i > 0 {
@@ -100,23 +107,24 @@ impl Expr {
                 }
 
                 Token::Sin => {
-                    let x = stack.pop().unwrap();
+                    let x = stack.pop().ok_or(EvalError::Underflow)?;
                     result = sin(x);
                 },
                 Token::Cos => {
-                    let x = stack.pop().unwrap();
+                    let x = stack.pop().ok_or(EvalError::Underflow)?;
                     result = cos(x);
                 },
                 Token::Tan => {
-                    let x = stack.pop().unwrap();
+                    let x = stack.pop().ok_or(EvalError::Underflow)?;
                     result = sin(x) / cos(x);
                 }
             };
             
-            stack.push(result).unwrap();
+            stack.push(result)
+                .map_err(|_| EvalError::Overflow);
         }
 
-        Ok(stack.pop().unwrap())
+        Ok(stack.pop().ok_or(EvalError::Underflow)?)
     }
 }
 
