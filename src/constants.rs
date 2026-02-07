@@ -59,6 +59,9 @@ pub mod limits {
     pub const MAX_ROW_TIME: u64 = 100;
     #[cfg(debug_assertions)]
     pub const MAX_ROW_TIME: u64 = 200;
+
+    pub const MAX_TOKENS: usize = 32;
+    pub const PARSE_STACK: usize = 16;
 }
 
 #[cfg(not(target_os = "none"))]
@@ -68,6 +71,8 @@ pub mod limits {
     pub const IMPLICIT_N: usize = 30;
     pub const MARCH_N: usize = 500; // what should the limits be?
     pub const MAX_ROW_TIME: u64 = 50;
+    pub const MAX_TOKENS: usize = 128;
+    pub const PARSE_STACK: usize = 32;
 }
 
 pub mod strings {
