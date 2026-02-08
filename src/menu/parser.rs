@@ -29,7 +29,7 @@ enum Token {
 }
 
 pub struct Expr {
-    is_implicit: bool,
+    pub is_implicit: bool,
     rpn: Vec<Token, MAX_TOKENS>
 }
 impl Expr {

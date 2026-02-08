@@ -106,7 +106,13 @@ impl Grapher {
                 self.mesh.update_domain(self.input.domain_trans_direction, self.input.domain_scale_direction);
                 // temp: check for exp
                 self.mesh.tris.clear();
-                self.generate_mesh_imp();
+
+                if self.expr.is_implicit {
+                    self.generate_mesh_imp();
+                } else {
+                    self.generate_mesh_exp();
+                }
+
                 self.input.domain_cooldown = 0.0;
             } else {
                 self.input.domain_cooldown += self.timer.delta_time;
@@ -128,7 +134,7 @@ impl Grapher {
                 self.renderer.draw_screen(&self.mesh, self.input.help);
             }
 
-            if self.input.upd.enhance {
+            if self.input.upd.enhance && self.expr.is_implicit {
                 self.mesh.generate_screen(&self.expr);
             }
 

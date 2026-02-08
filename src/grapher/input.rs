@@ -69,7 +69,6 @@ pub struct InputHandler {
     pub mode: Mode,
     pub help: bool,
     pub domain_cooldown: f32,
-    pub graph_slot: u8
 }
 impl InputHandler {
     pub fn new() -> Self {
@@ -94,7 +93,6 @@ impl InputHandler {
             mode: Mode::View,
             help: false,
             domain_cooldown: 0.1,
-            graph_slot: 2
         }
     }
 
@@ -174,20 +172,6 @@ impl InputHandler {
             // }
             self.mode = self.mode.next();
             self.upd.mode = true;
-        }
-
-        if self.keyboard_state.key_down(Key::One) {
-            self.graph_slot = 1;
-            self.upd.domain = true;
-        } else if self.keyboard_state.key_down(Key::Two) {
-            self.graph_slot = 2;
-            self.upd.domain = true;
-        } else if self.keyboard_state.key_down(Key::Three) {
-            self.graph_slot = 3;
-            self.upd.domain = true;
-        } else if self.keyboard_state.key_down(Key::Four) {
-            self.graph_slot = 4;
-            self.upd.domain = true;
         }
 
         if self.keyboard_state.key_down(ENHANCE) && self.domain_cooldown >= 0.1 {
