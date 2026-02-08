@@ -7,7 +7,8 @@ use crate::{
         timer::*
     },
     eadk::*,
-    constants::{ graphics::*, palette::* }
+    constants::{ graphics::*, palette::* },
+    menu::parser::Expr
 };
 #[cfg(target_os = "none")]
 use alloc::format;
@@ -19,23 +20,21 @@ mod input;
 mod hud;
 mod timer;
 
-pub type Graph = fn(f32, f32, f32) -> f32;
-
 pub struct Grapher {
     renderer: Renderer,
     pub mesh: Mesh,
     input: InputHandler,
     timer: Timer,
-    pub graph: Graph
+    pub expr: Expr
 }
 impl Grapher {
-    pub fn new(graph: Graph) -> Self {
+    pub fn new(expr: Expr) -> Self {
         Grapher {
             renderer: Renderer::new(),
             mesh: Mesh::new(),
             input: InputHandler::new(),
             timer: Timer::new(),
-            graph
+            expr
         }
     }
 
@@ -130,7 +129,7 @@ impl Grapher {
             }
 
             if self.input.upd.enhance {
-                self.mesh.generate_screen(self.graph);
+                self.mesh.generate_screen(&self.expr);
             }
 
             self.input.update();

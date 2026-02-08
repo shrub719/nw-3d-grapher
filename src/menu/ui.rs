@@ -1,7 +1,7 @@
 use crate::{
-    grapher::Graph
+    menu::parser::Expr
 };
 
-pub fn get_graph() -> Graph {
-    |x, y, z| x*y*z
+pub fn get_graph() -> Expr {
+    Expr::new("x 2 ^ y 2 ^ + z 2 ^ + 4 x * sin + 4 y * sin + 4 z * sin + 1.11 -", false).unwrap()
 }

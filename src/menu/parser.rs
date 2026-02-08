@@ -91,7 +91,8 @@ impl Expr {
 
                 Token::Pow => {
                     let b = stack.pop().ok_or(EvalError::Underflow)?;
-                    let i = b as i32;
+                    let i = b as i32;   // power only works with integers
+                    // TODO: use e/ln method?
                     let a = stack.pop().ok_or(EvalError::Underflow)?;
                     result = 1.0;
                     
@@ -120,7 +121,7 @@ impl Expr {
                 }
             };
             
-            stack.push(result)
+            let _ = stack.push(result)
                 .map_err(|_| EvalError::Overflow);
         }
 

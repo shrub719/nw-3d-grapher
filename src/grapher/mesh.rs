@@ -1,10 +1,10 @@
 use crate::{
     grapher::{
-        mat::*,
-        Graph
+        mat::*
     },
     generator,
-    constants::*
+    constants::*,
+    menu::parser::Expr
 };
 use heapless::Vec;
 
@@ -197,12 +197,12 @@ impl Mesh {
         }
     }
 
-    pub fn generate_screen(&mut self, graph: Graph) {
+    pub fn generate_screen(&mut self, expr: &Expr) {
         let mut matrix = self.get_matrix(); 
         matrix = matrix.inverse();
 
         generator::raymarcher::generate_screen(
-            graph,
+            expr,
             matrix
         );
     }

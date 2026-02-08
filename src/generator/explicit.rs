@@ -14,7 +14,7 @@ impl Grapher {
             for j in 0..2 {
                 let x = x0 + i as f32 * dx;
                 let y = y0 + j as f32 * dy;
-                let z = (self.graph)(x, y, 0.0);
+                let z = self.expr.eval(x, y, 0.0).unwrap();
 
                 vertices[i*2 + j] = v!(x, y, z);
             }
