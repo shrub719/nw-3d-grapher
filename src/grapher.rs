@@ -38,7 +38,7 @@ impl Grapher {
         }
     }
 
-    fn setup_ui() {
+    pub fn setup_ui() {
         display::push_rect_uniform(
             Rect {
                 x: 0,
