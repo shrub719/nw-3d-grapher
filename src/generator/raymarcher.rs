@@ -11,7 +11,7 @@ use crate::{
         graphics::*,
         controls::*
     },
-    input::parser::Expr
+    input::parser::{ Expr, EvalError }
 };
 #[cfg(target_os = "none")]
 use alloc::format;
@@ -26,22 +26,22 @@ fn get_coord(matrix: Matrix4, x: u16, y: u16, z: f32) -> Vector3 {
     r_vector * matrix
 }
 
-fn march_that_ray(expr: &Expr, matrix: Matrix4, n: usize, x: u16, y: u16) -> Color {
+fn march_that_ray(expr: &Expr, matrix: Matrix4, n: usize, x: u16, y: u16) -> Result<Color, EvalError> {
     let z0 = -1.0;
     let z1 = 1.0;
     let dz = (z1 - z0) / n as f32;
     let mut z = z0;
     
     let mut c = get_coord(matrix, x, y, z);
-    let mut prev_t = expr.eval(c.x, c.y, c.z).unwrap();
+    let mut prev_t = expr.eval(c.x, c.y, c.z)?;
     let mut i = 0;
     while i < n {
         z += dz;
         c = get_coord(matrix, x, y, z);
-        if prev_t * expr.eval(c.x, c.y, c.z).unwrap() < 0.0 {
+        if prev_t * expr.eval(c.x, c.y, c.z)? < 0.0 {
             break;
         }
-        prev_t = expr.eval(c.x, c.y, c.z).unwrap();
+        prev_t = expr.eval(c.x, c.y, c.z)?;
         i += 1;
     }
     
@@ -49,7 +49,9 @@ fn march_that_ray(expr: &Expr, matrix: Matrix4, n: usize, x: u16, y: u16) -> Col
     if value > 255.0 { value = 255.0 };
     if value < 0.0 { value = 0.0 };
 
-    if i == n { BG } else { Color::from_rgb(0, value as u16, 255) }
+    Ok(
+        if i == n { BG } else { Color::from_rgb(0, value as u16, 255) }
+    )
 }
 
 pub fn generate_screen(expr: &Expr, matrix: Matrix4) {
@@ -60,7 +62,10 @@ pub fn generate_screen(expr: &Expr, matrix: Matrix4) {
     let mut prev_time = timing::millis();
     for y in MARGIN_TOP..MARGIN_TOP+FRAME_HEIGHT {
         for x in 0..SCREEN_WIDTH {
-            row_buffer[x as usize] = march_that_ray(expr, matrix, n, x, y);
+            row_buffer[x as usize] = match march_that_ray(expr, matrix, n, x, y) {
+                Ok(c) => c,
+                Err(_) => BG
+            };
         }
 
         display::push_rect(

@@ -6,14 +6,12 @@ use crate::{
 
 #[derive(Debug)]
 pub enum ParserError {
-    ParserError,
     InvalidCharacter,
     Overflow
 }
 
 #[derive(Debug)]
 pub enum EvalError {
-    EvalError,
     Underflow,
     Overflow
 }

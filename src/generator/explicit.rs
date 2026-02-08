@@ -3,18 +3,19 @@ use crate::{
         Grapher,
         mat::*,
     },
-    constants::limits::*
+    constants::limits::*,
+    input::parser::EvalError
 };
 
 impl Grapher {
-    fn add_explicit_tris(&mut self, x0: f32, y0: f32, dx: f32, dy: f32) {
+    fn add_explicit_tris(&mut self, x0: f32, y0: f32, dx: f32, dy: f32) -> Result<(), EvalError> {
         let mut vertices = [v!(0.0, 0.0, 0.0); 4];
 
         for i in 0..2 {
             for j in 0..2 {
                 let x = x0 + i as f32 * dx;
                 let y = y0 + j as f32 * dy;
-                let z = self.expr.eval(x, y, 0.0).unwrap();
+                let z = self.expr.eval(x, y, 0.0)?;
 
                 vertices[i*2 + j] = v!(x, y, z);
             }
@@ -22,6 +23,8 @@ impl Grapher {
 
         let _ = self.mesh.tris.push(Triangle3([vertices[1], vertices[2], vertices[0]]));
         let _ = self.mesh.tris.push(Triangle3([vertices[1], vertices[2], vertices[3]]));
+
+        Ok(())
     }
 
     pub fn generate_mesh_exp(&mut self) { 
@@ -33,7 +36,7 @@ impl Grapher {
                 let x = self.mesh.domain.x0 + dx * i as f32;
                 let y = self.mesh.domain.y0 + dy * j as f32;
                 
-                self.add_explicit_tris(x, y, dx, dy);
+                let _ = self.add_explicit_tris(x, y, dx, dy);
             }
         }
     }

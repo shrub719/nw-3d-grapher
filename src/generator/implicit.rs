@@ -5,6 +5,7 @@ use crate::{
     },
     generator::tables::*,
     constants::limits::*,
+    input::parser::EvalError
 };
 
 // pub fn placeholder_func_3(x: f32, y: f32, z: f32) -> f32 {
@@ -47,15 +48,15 @@ impl Grapher {
         &mut self,
         v0: Vector3, v1: Vector3, v2: Vector3, v3: Vector3,
         v4: Vector3, v5: Vector3, v6: Vector3, v7: Vector3
-    ) {
-        let t0 = self.expr.eval(v0.x, v0.y, v0.z).unwrap();
-        let t1 = self.expr.eval(v1.x, v1.y, v1.z).unwrap();
-        let t2 = self.expr.eval(v2.x, v2.y, v2.z).unwrap();
-        let t3 = self.expr.eval(v3.x, v3.y, v3.z).unwrap();
-        let t4 = self.expr.eval(v4.x, v4.y, v4.z).unwrap();
-        let t5 = self.expr.eval(v5.x, v5.y, v5.z).unwrap();
-        let t6 = self.expr.eval(v6.x, v6.y, v6.z).unwrap();
-        let t7 = self.expr.eval(v7.x, v7.y, v7.z).unwrap();
+    ) -> Result<(), EvalError> {
+        let t0 = self.expr.eval(v0.x, v0.y, v0.z)?;
+        let t1 = self.expr.eval(v1.x, v1.y, v1.z)?;
+        let t2 = self.expr.eval(v2.x, v2.y, v2.z)?;
+        let t3 = self.expr.eval(v3.x, v3.y, v3.z)?;
+        let t4 = self.expr.eval(v4.x, v4.y, v4.z)?;
+        let t5 = self.expr.eval(v5.x, v5.y, v5.z)?;
+        let t6 = self.expr.eval(v6.x, v6.y, v6.z)?;
+        let t7 = self.expr.eval(v7.x, v7.y, v7.z)?;
 
         let mut cube_index: usize = 0;
         
@@ -119,6 +120,8 @@ impl Grapher {
             ]));
             i += 3;
         }
+
+        Ok(())
     }
 
     pub fn generate_mesh_imp(&mut self) {
@@ -136,7 +139,7 @@ impl Grapher {
                     let y1 = y0 + dy;
                     let z1 = z0 + dz;
                     
-                    self.march_that_cube(
+                    let _ = self.march_that_cube(
                         v!(x0, y0, z0),
                         v!(x1, y0, z0),
                         v!(x1, y1, z0),
