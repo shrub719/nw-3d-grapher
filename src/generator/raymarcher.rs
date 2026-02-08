@@ -11,7 +11,7 @@ use crate::{
         graphics::*,
         controls::*
     },
-    menu::parser::Expr
+    input::parser::Expr
 };
 #[cfg(target_os = "none")]
 use alloc::format;

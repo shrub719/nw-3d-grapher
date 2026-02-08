@@ -39,7 +39,7 @@ mod constants;
 mod trig;
 mod grapher;
 mod generator;
-mod menu;
+mod input;
 
 #[unsafe(no_mangle)]
 pub fn main() -> isize {
@@ -49,7 +49,7 @@ pub fn main() -> isize {
         unsafe { HEAP.init(eadk::HEAP_START as usize, heap_size) }
     }
 
-    menu::main_loop();
+    input::main_loop();
 
     0
 }

@@ -1,5 +1,5 @@
 use crate::{
-    menu::parser::Expr
+    input::parser::Expr
 };
 
 pub fn get_graph() -> Expr {
