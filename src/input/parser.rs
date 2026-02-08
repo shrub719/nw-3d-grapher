@@ -13,7 +13,8 @@ pub enum ParserError {
 #[derive(Debug)]
 pub enum EvalError {
     Underflow,
-    Overflow
+    Overflow,
+    ZeroDiv
 }
 
 #[derive(Debug)]
@@ -84,6 +85,7 @@ impl Expr {
                 Token::Div => {
                     let b = stack.pop().ok_or(EvalError::Underflow)?;
                     let a = stack.pop().ok_or(EvalError::Underflow)?;
+                    if b == 0.0 { return Err(EvalError::ZeroDiv) };
                     result = a / b;
                 },
 
