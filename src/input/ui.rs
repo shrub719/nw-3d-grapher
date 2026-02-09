@@ -36,14 +36,16 @@ fn write(text: &str) {
     }
 }
 
-pub fn get_expr() -> Expr {
+pub fn get_expr() -> Option<Expr> {
     let expr: &str = "x 2 ^ y 2 ^ + z 2 ^ + 4 x * sin + 4 y * sin + 4 z * sin + 1.11 -";
     write(expr);
     
     let mut keyboard_state = KeyboardState::scan();
     while !keyboard_state.key_down(CONFIRM) {
         keyboard_state = KeyboardState::scan();
+
+        if keyboard_state.key_down(EXIT) { return None }
     }
 
-    Expr::new(expr, false).unwrap()
+    Some(Expr::new(expr, true).unwrap())
 }

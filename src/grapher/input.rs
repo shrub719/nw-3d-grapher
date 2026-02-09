@@ -98,6 +98,7 @@ impl InputHandler {
 
     pub fn update(&mut self) {
         let switch_pressed_before = self.keyboard_state.key_down(MODE_SWITCH);
+        let ignore_back = self.keyboard_state.key_down(ENHANCE) || self.keyboard_state.key_down(BACK);
         self.keyboard_state = KeyboardState::scan();
         self.rotation_direction = v!(0.0, 0.0, 0.0);
         self.domain_trans_direction = v!(0.0, 0.0, 0.0);
@@ -186,7 +187,7 @@ impl InputHandler {
             self.help = false;
         }
 
-        if self.keyboard_state.key_down(EXIT) {
+        if self.keyboard_state.key_down(BACK) && !ignore_back || self.keyboard_state.key_down(EXIT) {
             self.upd.quit = true;
         }
 
