@@ -1,17 +1,32 @@
 use crate::{
     input::parser::Expr,
     eadk::{
-        display::draw_string,
+        display::*,
         Point,
         Color,
+        Rect,
         input::*
     },
-    constants::controls::*
+    constants::{
+        controls::*,
+        graphics::*,
+        palette::*
+    }
 };
 #[cfg(target_os = "none")]
 use alloc::string::String;
 
 fn write(text: &str) {
+    push_rect_uniform(
+        Rect {
+            x: 0,
+            y: MARGIN_TOP,
+            width: SCREEN_WIDTH,
+            height: SCREEN_HEIGHT - MARGIN_TOP
+        },
+        WHITE
+    );
+
     let limit = 30;
     let mut line_count = 0;
 
@@ -48,8 +63,8 @@ pub fn get_expr() -> Option<Expr> {
         
         if event == Backspace {
             expr.pop();
-            while !(expr.pop() == Some(' ')) { }
-            expr.push(' ');
+            while !(expr.pop() == Some(' ') || expr.pop() == None) { }
+            if !expr.is_empty() { expr.push(' ') }
             write(&expr);
         } else {
             let c: &str = match event {
@@ -68,8 +83,6 @@ pub fn get_expr() -> Option<Expr> {
                 write(&expr);
             }
         }
-        
-        write(&expr);
 
         if keyboard_state.key_down(EXIT) { return None }
     }
