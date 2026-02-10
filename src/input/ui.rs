@@ -37,15 +37,42 @@ fn write(text: &str) {
 }
 
 pub fn get_expr() -> Option<Expr> {
-    let expr: &str = "x 2 ^ y 2 ^ + z 2 ^ + 4 x * sin + 4 y * sin + 4 z * sin + 1.11 -";
-    write(expr);
+    let mut expr = String::new();
     
     let mut keyboard_state = KeyboardState::scan();
     while !keyboard_state.key_down(CONFIRM) {
         keyboard_state = KeyboardState::scan();
 
+        use Event::*;
+        let event = event_get(200);
+        
+        if event == Backspace {
+            expr.pop();
+            while !(expr.pop() == Some(' ')) { }
+            expr.push(' ');
+            write(&expr);
+        } else {
+            let c: &str = match event {
+                Shift => "z", Alpha => "y", Xnt => "x",
+                Zero => "0", One => "1", Two => "2", Three => "3", Four => "4", 
+                Five => "5", Six => "6", Seven => "7", Eight => "8", Nine => "9",
+                Plus => "+", Minus => "-", Multiplication => "*", Division => "/",
+                Power => "^",
+                Sine => "sin", Cosine => "cos", Tangent => "tan",
+                _ => ""
+            };
+
+            if c != "" {
+                expr.push_str(c);
+                expr.push(' ');
+                write(&expr);
+            }
+        }
+        
+        write(&expr);
+
         if keyboard_state.key_down(EXIT) { return None }
     }
 
-    Some(Expr::new(expr, true).unwrap())
+    Some(Expr::new(&expr, true).unwrap())
 }
