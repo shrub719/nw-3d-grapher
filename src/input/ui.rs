@@ -63,23 +63,21 @@ pub fn get_expr() -> Option<Expr> {
         
         if event == Backspace {
             expr.pop();
-            while !(expr.pop() == Some(' ') || expr.pop() == None) { }
-            if !expr.is_empty() { expr.push(' ') }
             write(&expr);
         } else {
             let c: &str = match event {
-                Shift => "z", Alpha => "y", Xnt => "x",
+                Shift => "z ", Alpha => "y ", Xnt => "x ",
                 Zero => "0", One => "1", Two => "2", Three => "3", Four => "4", 
                 Five => "5", Six => "6", Seven => "7", Eight => "8", Nine => "9",
-                Plus => "+", Minus => "-", Multiplication => "*", Division => "/",
-                Power => "^",
-                Sine => "sin", Cosine => "cos", Tangent => "tan",
+                Plus => "+ ", Minus => "- ", Multiplication => "* ", Division => "/ ",
+                Power => "^ ",
+                Sine => "sin ", Cosine => "cos ", Tangent => "tan ",
+                EXE => " ",
                 _ => ""
             };
 
             if c != "" {
                 expr.push_str(c);
-                expr.push(' ');
                 write(&expr);
             }
         }
