@@ -15,8 +15,11 @@ use crate::{
 };
 #[cfg(target_os = "none")]
 use alloc::string::String;
+#[cfg(target_os = "none")]
+use alloc::format;
 
 fn write(text: &str) {
+    let text_c = format!("{}|", text);
     push_rect_uniform(
         Rect {
             x: 0,
@@ -31,10 +34,10 @@ fn write(text: &str) {
     let mut line_count = 0;
 
     let mut line = String::new();
-    for i in 0..text.len() {
-        line.push(text.as_bytes()[i] as char);
+    for i in 0..text_c.len() {
+        line.push(text_c.as_bytes()[i] as char);
 
-        if line.len() >= limit || i >= text.len() - 1 {
+        if line.len() >= limit || i >= text_c.len() - 1 {
             draw_string(
                 line.as_str(),
                 Point {
