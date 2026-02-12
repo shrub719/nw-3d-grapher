@@ -15,7 +15,7 @@ use alloc::format;
 
 fn write(text: &str, is_implicit: bool) {
     let pre = if is_implicit { "0" } else { "z" };
-    let text_c = format!("{} = {}| ", pre, text);
+    let text_c = format!("{} = {}_ ", pre, text);
 
     let limit = 30;
     let mut line_count = 0;
