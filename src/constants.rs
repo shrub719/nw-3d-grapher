@@ -133,7 +133,7 @@ pub mod controls {
     pub const DECREASE: Key =   Key::Minus;
     pub const MODIFIER: Key =   Key::Multiplication;
 
-    pub const CONFIRM: Key =    Key::OK;
+    // pub const CONFIRM: Key =    Key::OK;
     pub const BACK: Key =       Key::Back;
 
     pub const HELP: Key =       Key::Toolbox;

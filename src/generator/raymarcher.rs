@@ -11,7 +11,7 @@ use crate::{
         graphics::*,
         controls::*
     },
-    input::parser::{ Expr, EvalError }
+    expr::parser::{ Expr, EvalError }
 };
 #[cfg(target_os = "none")]
 use alloc::format;

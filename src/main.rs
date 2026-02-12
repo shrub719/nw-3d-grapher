@@ -6,8 +6,8 @@
 #[cfg(target_os = "none")]
 use cortex_m;
 
-#[cfg(target_os = "none")]
-use eadk::heap_size;
+// #[cfg(target_os = "none")]
+// use eadk::heap_size;
 
 #[cfg(target_os = "none")]
 use embedded_alloc::LlffHeap as Heap;
@@ -39,7 +39,7 @@ mod constants;
 mod trig;
 mod grapher;
 mod generator;
-mod input;
+mod expr;
 
 #[unsafe(no_mangle)]
 pub fn main() -> isize {
@@ -49,7 +49,7 @@ pub fn main() -> isize {
         unsafe { HEAP.init(eadk::HEAP_START as usize, heap_size) }
     }
 
-    input::main_loop();
+    expr::main_loop();
 
     0
 }

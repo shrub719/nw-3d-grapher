@@ -4,7 +4,7 @@ use crate::{
         mat::*,
     },
     constants::limits::*,
-    input::parser::EvalError
+    expr::parser::EvalError
 };
 
 impl Grapher {

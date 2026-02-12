@@ -8,7 +8,7 @@ use crate::{
     },
     eadk::*,
     constants::{ graphics::*, palette::* },
-    input::parser::Expr
+    expr::parser::Expr
 };
 #[cfg(target_os = "none")]
 use alloc::format;
