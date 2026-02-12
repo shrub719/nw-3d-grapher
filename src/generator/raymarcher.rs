@@ -98,5 +98,7 @@ pub fn generate_screen(expr: &Expr, matrix: Matrix4) {
             break;
         }
     }
+
+    while !KeyboardState::scan().key_down(BACK) { timing::msleep(100) }
 }
 
