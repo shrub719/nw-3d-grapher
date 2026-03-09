@@ -30,6 +30,18 @@ nwb-build:
 nwb-dev:
     cargo build --lib --target={{current_target}}
 
+# builds test profile for simulator
+nwb-test:
+    cargo build --lib --target={{current_target}} --features test
+
+# runs tests on simulator
+[macos]
+test: nwb-test
+    ./sim/epsilon.app/Contents/MacOS/Epsilon --nwb ./target/{{current_target}}/debug/libnw_3d_grapher_sim.dylib
+[linux]
+test: nwb-test
+    ./sim/epsilon.bin --nwb ./target/{{current_target}}/debug/libnw_3d_grapher_sim.so
+
 # runs dev profile on simulator
 [macos]
 run: nwb-dev

@@ -17,8 +17,8 @@ pub enum EvalError {
     ZeroDiv
 }
 
-#[derive(Debug)]
-enum Token {
+#[derive(Debug, PartialEq)]
+pub enum Token {
     X, Y, Z,
     Const(f32),
     Add, Sub,
@@ -29,7 +29,7 @@ enum Token {
 
 pub struct Expr {
     pub is_implicit: bool,
-    rpn: Vec<Token, MAX_TOKENS>
+    pub rpn: Vec<Token, MAX_TOKENS>
 }
 impl Expr {
     pub fn new(expr: &str, is_implicit: bool) -> Result<Self, ParserError> {

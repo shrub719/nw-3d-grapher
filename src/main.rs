@@ -41,6 +41,9 @@ mod grapher;
 mod generator;
 mod expr;
 
+#[cfg(feature = "test")]
+mod tests;
+
 #[unsafe(no_mangle)]
 pub fn main() -> isize {
     #[cfg(target_os = "none")]
@@ -49,6 +52,13 @@ pub fn main() -> isize {
         unsafe { HEAP.init(eadk::HEAP_START as usize, heap_size) }
     }
 
+    #[cfg(feature = "test")]
+    {
+        tests::run_all();
+        return 0;
+    }
+
+    #[allow(unreachable_code)]
     expr::main_loop();
 
     0
