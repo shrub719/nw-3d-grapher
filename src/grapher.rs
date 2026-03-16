@@ -104,7 +104,6 @@ impl Grapher {
         while !self.input.upd.quit {
             if self.input.upd.domain {
                 self.mesh.update_domain(self.input.domain_trans_direction, self.input.domain_scale_direction);
-                // temp: check for exp
                 self.mesh.tris.clear();
 
                 if self.expr.is_implicit {
