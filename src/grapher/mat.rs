@@ -295,7 +295,6 @@ impl MulAssign for Matrix4 {
 //     }
 // }
 
-// TODO: add normals to triangle struct? for lighting
 #[derive(Clone, Copy)]
 pub struct Triangle3(pub [Vector3; 3]);
 impl Mul<Matrix4> for Triangle3 {
@@ -337,7 +336,6 @@ impl Sub<RVector3> for RTriangle3 {
     type Output = RTriangle3;
 
     fn sub(self, vector: RVector3) -> RTriangle3 {
-        // TODO: map
         let mut tri = RTriangle3::new();
         for i in 0..3 {
             tri.v[i] = self.v[i] - vector;
@@ -363,7 +361,6 @@ pub struct Quaternion {
     pub y: f32,
     pub z: f32
 }
-// TODO: default angle is pi/2 rotated on the x-axis. work that out please
 impl Default for Quaternion {
     fn default() -> Self {
         Quaternion {

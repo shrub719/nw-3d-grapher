@@ -12,7 +12,7 @@ use crate::{
 
 pub struct Renderer {
     buffer: [Color; FB_WIDTH_SIZE * FB_HEIGHT_SIZE],
-    depth_buffer: [f16; FB_WIDTH_SIZE * FB_HEIGHT_SIZE],  // TODO: switching to f32 breaks rendering??
+    depth_buffer: [f16; FB_WIDTH_SIZE * FB_HEIGHT_SIZE],
 }
 impl Renderer {
     pub fn new() -> Self {
@@ -27,7 +27,7 @@ impl Renderer {
             *px = BG;
         }
         for d in self.depth_buffer.iter_mut() {
-            *d = 5.0; // TODO: stop with this nonsense (maybe?)
+            *d = 5.0;
         }
     }
 
@@ -55,7 +55,7 @@ impl Renderer {
                 }
 
                 // draw axes
-                let mut i = 0;  // TODO: is there rust enumerate?
+                let mut i = 0;
                 for axis in &mesh.transformed_axes {
                     let color = AXIS_COLORS[i];
                     self.fill_line(

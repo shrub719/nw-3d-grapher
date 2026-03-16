@@ -31,15 +31,13 @@ fn bind_keys_directional(
 #[derive(Clone, Copy, Eq, PartialEq)]
 pub enum Mode {
     View,
-    Trace,
     Domain
 }
 impl Mode {
     fn next(&self) -> Mode {
         use Mode::*;
         match *self {
-            View => Domain, // TODO: View => Trace
-            Trace => Domain,
+            View => Domain,
             Domain => View
         }
     }
@@ -124,10 +122,6 @@ impl InputHandler {
             }
         } 
 
-        else if self.mode == Mode::Trace {
-         
-        }
-        
         else if self.mode == Mode::Domain {
             if self.domain_cooldown >= 0.1 {
                 if self.keyboard_state.key_down(MODIFIER) {
@@ -161,16 +155,6 @@ impl InputHandler {
         }
         
         if self.keyboard_state.key_down(MODE_SWITCH) && !switch_pressed_before {
-            // if self.keyboard_state.key_down(MODE_1) { 
-            //     self.upd.mode = self.mode != Mode::View;
-            //     self.mode = Mode::View; 
-            // } else if self.keyboard_state.key_down(MODE_2) { 
-            //     self.upd.mode = self.mode != Mode::Trace;
-            //     self.mode = Mode::Trace;
-            // } else if self.keyboard_state.key_down(MODE_3) { 
-            //     self.upd.mode = self.mode != Mode::Domain;
-            //     self.mode = Mode::Domain;
-            // }
             self.mode = self.mode.next();
             self.upd.mode = true;
         }

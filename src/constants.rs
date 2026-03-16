@@ -14,7 +14,6 @@ pub mod palette {
     pub const BLACK: Color = Color::from_rgb(0, 0, 0);
 
     pub const RED: Color = Color::from_rgb(255, 90, 75);
-    pub const GREEN: Color = Color::from_rgb(75, 200, 90);
     pub const BLUE: Color = Color::from_rgb(75, 90, 255);
 }
 
@@ -77,7 +76,6 @@ pub mod limits {
 
 pub mod strings {
     pub const ROTATE_NAME: &str = "VIEW";
-    pub const TRACE_NAME: &str = "TRACE";
     pub const DOMAIN_NAME: &str = "DOMAIN";
 
     type Help<'a> = [&'a str; 10];
@@ -90,18 +88,6 @@ pub mod strings {
         "",
         "Reset:",
         "  Bcksp",
-        "",
-        ""
-    ];
-    pub const TRACE_HELP: Help = [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
         "",
         ""
     ];

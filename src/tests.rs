@@ -76,11 +76,32 @@ fn t22b() -> bool {
     test_evaluation_approx("3.14159 sin", 0.0)
 }
 
+fn t22di() -> bool {
+    print!("2.2.d.i");
+    test_evaluation("2 3 ^", 8.0)
+}
+
+fn t22dii() -> bool {
+    print!("2.2.d.ii");
+    test_evaluation("2 -1 ^", 0.5)
+}
+
+fn t22diii() -> bool {
+    print!("2.2.d.iii");
+    test_evaluation_approx("2 0.5 ^", 1.41)
+}
+
+fn t22e() -> bool {
+    print!("2.2.e");
+    test_evaluation_approx("2 ln", 0.693)
+}
+
 // TODO: all the other functions...
 
 const TESTS: &[fn() -> bool] = &[
     t11a, t11b, t11c, t11d,
-    t22a, t22b
+    t22a, t22b,
+    t22di, t22dii, t22diii, t22e
 ];
 
 pub fn run_all() {

@@ -141,7 +141,6 @@ impl Mesh {
         Self {
             tris: Vec::new(), 
             transformed_tris: Vec::new(),
-            // lines:  Vec::with_capacity(limits::MAX_LINES), // TODO: transform lines
             axes: [Line3([v!(0.0, 0.0, 0.0); 2]); 3],
             transformed_axes: [RLine3([RVector3::new(0, 0, 0.0); 2]); 3],
             domain: Domain::new(),

@@ -52,7 +52,6 @@ fn draw_help_string(text: &str, offset: u16) {
 pub fn draw_hud(mode: Mode, mode_update: bool, help_on: bool, scale: f32, domain: Domain) {
     let bg_color = match mode {
         Mode::View => RED,
-        Mode::Trace => GREEN,
         Mode::Domain => BLUE
     };
     
@@ -69,7 +68,6 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_on: bool, scale: f32, domain
 
         let text = match mode {
             Mode::View => ROTATE_NAME,
-            Mode::Trace => TRACE_NAME,
             Mode::Domain => DOMAIN_NAME
         };
         let length = text.len() as u16;
@@ -87,11 +85,6 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_on: bool, scale: f32, domain
             &format!("scale: {:.2}", scale),
             bg_color
         );
-    } else if mode == Mode::Trace {
-        draw_hud_string(
-            "green",
-            bg_color
-        );
     } else if mode == Mode::Domain {
         draw_hud_string_table(&format!("x: {:.1}  ", domain.x0), 0, 0, bg_color);
         draw_hud_string_table(&format!("   {:.1}  ", domain.x1), 1, 0, bg_color);
@@ -104,7 +97,6 @@ pub fn draw_hud(mode: Mode, mode_update: bool, help_on: bool, scale: f32, domain
     if help_on {
         let help_lines = match mode {
             Mode::View => ROTATE_HELP,
-            Mode::Trace => TRACE_HELP,
             Mode::Domain => DOMAIN_HELP
         };
 
