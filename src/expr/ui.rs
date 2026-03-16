@@ -4,9 +4,13 @@ use crate::{
         display::*,
         Point,
         Color,
-        input::*
+        input::*,
+        timing::*
     },
-    constants::controls::*
+    constants::{ 
+        controls::*,
+        palette::*
+    }
 };
 #[cfg(target_os = "none")]
 use alloc::string::String;
@@ -47,37 +51,66 @@ pub fn get_expr() -> Option<Expr> {
     write(&expr, is_implicit);
     
     loop {
-        use Event::*;
-        let event = event_get(100);
-        
-        if event == Backspace {
-            expr.pop();
-            write(&expr, is_implicit);
-        } else if event == Toolbox {
-            is_implicit = !is_implicit;
-            write(&expr, is_implicit);
-        } else if event == OK {
-            break;
-        } else {
-            let c: &str = match event {
-                LowerZ => "z ", LowerY => "y ", Xnt => "x ", LowerX => "x ",
-                Zero => "0", One => "1", Two => "2", Three => "3", Four => "4", 
-                Five => "5", Six => "6", Seven => "7", Eight => "8", Nine => "9",
-                Plus => "+ ", Minus => "- ", Multiplication => "* ", Division => "/ ",
-                Power => "^ ", Square => "2 ^ ",
-                Sine => "sin ", Cosine => "cos ", Tangent => "tan ",
-                EXE => " ", Space => " ",
-                _ => ""
-            };
-
-            if c != "" {
-                expr.push_str(c);
+        loop {
+            use Event::*;
+            let event = event_get(100);
+            
+            if event == Backspace {
+                expr.pop();
                 write(&expr, is_implicit);
+            } else if event == Toolbox {
+                is_implicit = !is_implicit;
+                write(&expr, is_implicit);
+            } else if event == OK {
+                break;
+            } else {
+                let c: &str = match event {
+                    LowerZ => "z ", LowerY => "y ", Xnt => "x ", LowerX => "x ",
+                    Zero => "0", One => "1", Two => "2", Three => "3", Four => "4", 
+                    Five => "5", Six => "6", Seven => "7", Eight => "8", Nine => "9",
+                    Plus => "+ ", Minus => "- ", Multiplication => "* ", Division => "/ ",
+                    Power => "^ ", Square => "2 ^ ",
+                    Sine => "sin ", Cosine => "cos ", Tangent => "tan ",
+                    EXE => " ", Space => " ",
+                    _ => ""
+                };
+
+                if c != "" {
+                    expr.push_str(c);
+                    write(&expr, is_implicit);
+                }
             }
+
+            if KeyboardState::scan().key_down(EXIT) { return None }
         }
 
-        if KeyboardState::scan().key_down(EXIT) { return None }
+        match Expr::new(&expr, is_implicit) {
+            Ok(e) => return Some(e),
+            Err(e) => {
+                draw_string(
+                    e.as_str(),
+                    Point {
+                        x: 10,
+                        y: 25
+                    },
+                    true,
+                    Color::from_rgb(255, 255, 255),
+                    RED
+                );
+                msleep(500);
+                draw_string(
+                    "                                  ",
+                    Point {
+                        x: 10,
+                        y: 25
+                    },
+                    true,
+                    Color::from_rgb(255, 255, 255),
+                    Color::from_rgb(255, 255, 255)
+                );
+                write(&expr, is_implicit);
+            }
+        };
     }
 
-    Some(Expr::new(&expr, is_implicit).unwrap())
 }

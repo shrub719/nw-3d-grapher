@@ -14,6 +14,7 @@ pub mod palette {
     pub const BLACK: Color = Color::from_rgb(0, 0, 0);
 
     pub const RED: Color = Color::from_rgb(255, 90, 75);
+    pub const GREEN: Color = Color::from_rgb(775, 200, 90);
     pub const BLUE: Color = Color::from_rgb(75, 90, 255);
 }
 

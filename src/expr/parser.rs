@@ -9,6 +9,14 @@ pub enum ParserError {
     InvalidCharacter,
     Overflow
 }
+impl ParserError {
+    pub fn as_str(&self) -> &str {
+        match self {
+            ParserError::InvalidCharacter => "error: invalid character",
+            ParserError::Overflow => "error: expression too large"
+        }
+    }
+}
 
 #[derive(Debug)]
 pub enum EvalError {
