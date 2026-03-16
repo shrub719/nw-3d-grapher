@@ -162,7 +162,6 @@ impl Renderer {
         }
     }
 
-    // TEMP version
     fn fill_line(&mut self, v0: RVector3, v1: RVector3, offset_vector: RVector3, color: Color) {
         let v2 = RVector3::new(
             v0.x + 1,

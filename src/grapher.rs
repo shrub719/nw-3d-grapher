@@ -141,7 +141,7 @@ impl Grapher {
             self.input.update();
             self.timer.update();
             
-            if self.timer.fps < 800.0 {   // temp fix
+            if self.timer.fps < 800.0 {
                 header_info(&format!("fps: {:.1}   ", self.timer.fps));
             }
         }
