@@ -97,6 +97,7 @@ pub fn get_expr() -> Option<Expr> {
                     Color::from_rgb(255, 255, 255),
                     RED
                 );
+                KeyboardState::scan();
                 msleep(500);
                 draw_string(
                     "                                  ",
