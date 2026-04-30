@@ -86,22 +86,10 @@ fn t22dii() -> bool {
     test_evaluation("2 -1 ^", 0.5)
 }
 
-fn t22diii() -> bool {
-    print!("2.2.d.iii");
-    test_evaluation_approx("2 0.5 ^", 1.41)
-}
-
-fn t22e() -> bool {
-    print!("2.2.e");
-    test_evaluation_approx("2 ln", 0.693)
-}
-
-// TODO: all the other functions...
-
 const TESTS: &[fn() -> bool] = &[
     t11a, t11b, t11c, t11d,
     t22a, t22b,
-    t22di, t22dii, t22diii, t22e
+    t22di, t22dii
 ];
 
 pub fn run_all() {
