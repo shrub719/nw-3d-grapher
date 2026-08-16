@@ -81,6 +81,20 @@ Calculator | Simulator
 See [BUILDING.md](build/BUILDING.md) for instructions on how to build the app or the simulator.
 
 
+## Development
+
+Although as of August 2026 the grapher is functional and is capable of plotting explicit
+and implicit graphs, there are several QOL and edge features that I would like to add.
+
+- Storing entered expressions like other Epsilon apps
+- Custom input methods for lines, planes and other common graph objects
+- GSolve
+- Infix expression support
+
+Although none of these were required for the NEA in my opinion, they are features I would
+like for the final program. Until then, it's technically still in development.
+
+
 ## Licensing and credits
 
 As this repo (the NEA program) is part of my A level Computer Science coursework, it is under exam regulations. Therefore:
@@ -92,3 +106,4 @@ This project is a third-party app and is not affiliated with NumWorks. NumWorks 
 Thanks to:
    - [yannis300307](https://github.com/yannis30030) for parts of the extended EADK, and for [NumcraftRust](https://github.com/yannis300307/NumcraftRust) which inspired this project
    - [Paul Borke](https://paulbourke.net) for the marching cubes lookup tables [here](https://paulbourke.net/geometry/polygonise/)
+
